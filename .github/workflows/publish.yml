@@ -21,10 +21,8 @@ jobs:
           java-version: '16'
           distribution: 'adopt'
 
-      - uses: finnp/create-file-action@master
-        env:
-          FILE_NAME: "/home/runner/work/MinestomDataGenerator/MinestomDataGenerator/eula.txt"
-          FILE_DATA: "eula=true"
+      - name: Create EULA file
+        run: echo 'eula.txt' > /home/runner/work/MinestomDataGenerator/MinestomDataGenerator/eula.txt
 
       - name: Run 1.17 generators
         run: gradle generateData_1.17
