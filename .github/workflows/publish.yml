@@ -31,5 +31,7 @@ jobs:
           source-directory: 'MinestomData'
           destination-github-username: 'Minestom'
           destination-repository-name: 'MinestomData'
+          user-name: 'Minestom Bot'
           user-email: bot@minestom.net
+          commit-message: 'Update Data'
           target-branch: main
