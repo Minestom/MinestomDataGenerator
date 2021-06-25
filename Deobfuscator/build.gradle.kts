@@ -6,7 +6,7 @@ plugins {
 group = "de.articdive"
 
 application {
-    mainClass.set("de.articdive.articdata.Deobfuscator")
+    mainClass.set("net.minestom.Deobfuscator")
 }
 
 repositories {

@@ -24,7 +24,7 @@ tasks {
             dependsOn(
                 project(":DataGenerator:$implementedVersion").tasks.getByName<Jar>("jar"),
             )
-            mainClass.set("de.articdive.articdata.datagen.DataGen")
+            mainClass.set("net.minestom.datagen.DataGen")
             var classpath: FileCollection = project.objects.fileCollection()
 
             classpath = classpath.plus(

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" strict="true" name="Articdata">
+<Configuration status="WARN" strict="true" name="MinestomDataGenerator">
     <Appenders>
         <Appender type="Console" name="STDOUT">
             <Layout type="PatternLayout" pattern="[%t] [%d{HH:mm:ss}] [%p] - %m%n"/>

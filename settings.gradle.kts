@@ -1,9 +1,7 @@
-rootProject.name = "ArticData"
+rootProject.name = "MinestomDataGenerator"
 include("Deobfuscator")
 // DataGenerator
 include("DataGenerator")
-// DataPublisher
-include("DataPublisher")
 
 include("DataGenerator:core")
 findProject(":DataGenerator:core")?.name = "core"

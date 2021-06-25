@@ -13,14 +13,26 @@ jobs:
       packages: write
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 16
-      uses: actions/setup-java@v2
-      with:
-        java-version: '16'
-        distribution: 'adopt'
-    - name: Publish to Minestom Repository
-      run: gradle :DataPublisher:publish
-      env:
-        MINESTOM_REPO_CREDS_USR: ${{ secrets.MINESTOM_REPO_CREDS_USR }}
-        MINESTOM_REPO_CREDS_PSW: ${{ secrets.MINESTOM_REPO_CREDS_PSW }}
+      - uses: actions/checkout@v2
+      - name: Set up JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          distribution: 'adopt'
+      - name: Accept EULA
+        uses: finnp/create-file-action@master
+        env:
+          FILE_NAME: "eula.txt"
+          FILE_DATA: "eula=true"
+      - name: Run 1.17 generators
+        run: gradle generateData_1.17
+      - name: Push data to data repository.
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'MinestomData'
+          destination-github-username: 'Minestom'
+          destination-repository-name: 'MinestomData'
+          user-email: bot@minestom.net
+          target-branch: 1.17

@@ -1,10 +1,11 @@
-# ArticData
+# MinestomDataGenerator
 
-[![license](https://img.shields.io/github/license/Articdive/ArticData.svg)](../LICENSE)
+[![license](https://img.shields.io/github/license/Minestom/MinestomDataGenerator.svg)](../LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
-[![Discord Shield](https://discordapp.com/api/guilds/706185253441634317/widget.png?style=shield)](https://discord.gg/JnksJCFkE4)
+[![Discord Shield](https://discordapp.com/api/guilds/706185253441634317/widget.png?style=shield)](https://discord.gg/pkFRvqB)
 
-This is a data extractor and generator for Minecraft.
+This is a data extractor and generator for Minecraft.  
+It is based on [ArticData](https://github.com/Articdive/ArticData).
 
 It works in the JVM 16 (or higher) environment it takes advantage of [Gradle](https://gradle.org/) and is written in
 Java.
@@ -20,7 +21,6 @@ Java.
     - [Custom Statistics](#custom-statistics)
     - [Enchantments](#enchantments)
     - [Entities](#entities)
-    - [Entity Data Serializers](#entity-data-serializers)
     - [Fluids](#fluids)
     - [Game Events](#game-events)
     - [Items](#items)
@@ -40,58 +40,11 @@ Java.
 
 ### Maven and Gradle
 
-To add ArticData (not the generator) to your project using [Maven](http://maven.apache.org/)
-or [Gradle](https://gradle.org/):
-
-Repository (Maven):
-
-```
-<repository>
-    <id>minestom-repo</id>
-    <url>https://repo.minestom.com/repository/maven-public/</url>
-</repository>
-```
-
-Dependency (Maven):
-
-```
-<dependency>
-    <groupId>de.articdive</groupId>
-    <artifactId>articdata</artifactId>
-    <version>1.16.5</version>
-</dependency>
-```
-
-Repository (Gradle Kotlin DSL)
-
-```
-repositories {
-    maven {
-        name = "minestom-repo"
-        url = uri("https://repo.minestom.com/repository/maven-public/")
-    }
-}
-```
-
-Dependency (Gradle Kotlin DSL)
-
-```
-dependencies {
-    implementation("de.articdive:articdata:1.16.5")
-}
-```
+// TODO
 
 ## Usage
 
-The repository artifacts include the data located [here](../Articdata)
-
-They include JSON files full of useful data to do with Minecraft.
-
 ## Supported Data
-We emit data in two ways:
-- One JSON Object with namespaced identifiers as keys for json objects. [Example](../Articdata/1.17/1_17_blocks.json)
-- One JSON Array with many json objects. [Example](../Articdata/1.17/1_17_map_colors.json)
-
 If you require any data, open a GitHub Issue and specify the data you need.
 
 WARNING: There is no guarantee that the format of the data will stay the same.
@@ -212,13 +165,6 @@ WARNING: There is no guarantee that the format of the data will stay the same.
 | Width                     | :heavy_check_mark: | 1.16+        |
 | Client Tracking Range     | :heavy_check_mark: | 1.16+        |
 
-### Entity Data Serializers
-
-| Data Type                 | Supported?         | Versions     |
-| :-----------------------: | ------------------ | :----------: |
-| Protocol ID               | :heavy_check_mark: | 1.16+        |
-| Mojang Name               | :heavy_check_mark: | 1.16+        |
-
 ### Fluids
 
 | Data Type                 | Supported?         | Versions     |
@@ -331,4 +277,4 @@ See [the contributing file](CONTRIBUTING.md)!
 
 ## License
 
-[MIT License © Lukas Mansour (Articdive) ](../LICENSE)
+[MIT License © Minestom ](../LICENSE)
