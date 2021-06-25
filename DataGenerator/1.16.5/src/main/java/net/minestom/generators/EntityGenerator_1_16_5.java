@@ -2,18 +2,15 @@ package net.minestom.generators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minestom.generators.common.DataGenerator_1_16_5;
 import net.minecraft.core.Registry;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.player.Player;
-import net.minestom.datagen.DataGenHolder;
-import net.minestom.datagen.DataGenType;
+import net.minestom.generators.common.DataGenerator_1_16_5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +45,6 @@ public final class EntityGenerator_1_16_5 extends DataGenerator_1_16_5<EntityTyp
     @Override
     @SuppressWarnings("unchecked")
     public JsonObject generate() {
-        Map<EntityDataSerializer<?>, String> edsNames = (Map<EntityDataSerializer<?>, String>) DataGenHolder.getNameMap(DataGenType.ENTITY_DATA_SERIALIZERS);
-
         Set<ResourceLocation> entityRLs = Registry.ENTITY_TYPE.keySet();
         JsonObject entities = new JsonObject();
 
@@ -100,7 +95,6 @@ public final class EntityGenerator_1_16_5 extends DataGenerator_1_16_5<EntityTyp
 
                     entityMetadata.addProperty("mojangName", declaredField.getName().toLowerCase());
                     entityMetadata.addProperty("id", eda.getId());
-                    entityMetadata.addProperty("serializer", edsNames.get(eda.getSerializer()));
 
                     metadata.add(entityMetadata);
                 } catch (IllegalAccessException e) {
