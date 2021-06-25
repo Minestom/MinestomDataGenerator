@@ -14,7 +14,6 @@ Java.
 
 - [Install](#install)
 - [Usage](#usage)
-- [Supported Data](#supported-data)
     - [Attributes](#attributes)
     - [Biomes](#biomes)
     - [Blocks](#blocks)
@@ -38,13 +37,9 @@ Java.
 
 ## Install
 
-### Maven and Gradle
-
-// TODO
+The data cannot be "installed" you can find it [here](https://github.com/Minestom/MinestomData)
 
 ## Usage
-
-## Supported Data
 If you require any data, open a GitHub Issue and specify the data you need.
 
 WARNING: There is no guarantee that the format of the data will stay the same.
