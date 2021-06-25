@@ -23,12 +23,12 @@ jobs:
 
       - uses: finnp/create-file-action@master
         env:
-          FILE_NAME: "eula.txt"
+          FILE_NAME: "/home/runner/work/MinestomDataGenerator/MinestomDataGenerator/eula.txt"
           FILE_DATA: "eula=true"
 
       - name: Run 1.17 generators
         run: gradle generateData_1.17
-        
+
       - name: Push data to data repository.
         uses: cpina/github-action-push-to-another-repository@main
         env:
