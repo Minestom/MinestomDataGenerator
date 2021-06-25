@@ -2,7 +2,7 @@ plugins {
     java
 }
 
-group = "de.articdive"
+group = "net.minestom"
 
 repositories {
     mavenCentral()

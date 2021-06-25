@@ -32,4 +32,4 @@ jobs:
           destination-github-username: 'Minestom'
           destination-repository-name: 'MinestomData'
           user-email: bot@minestom.net
-          target-branch: 1.17
+          target-branch: main

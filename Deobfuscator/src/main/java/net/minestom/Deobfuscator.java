@@ -32,7 +32,7 @@ public class Deobfuscator {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            LOGGER.info("You must specify a version to deobfuscated.");
+            LOGGER.info("You must specify a version to deobfuscate.");
             return;
         }
         String version = args[0];

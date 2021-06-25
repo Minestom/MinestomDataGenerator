@@ -1,4 +1,4 @@
-group = "de.articdive.datagen"
+group = "net.minestom"
 
 subprojects {
     apply(plugin = "java")

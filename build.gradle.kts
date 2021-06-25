@@ -1,4 +1,4 @@
-group = "de.articdive"
+group = "net.minestom"
 version = "1.0"
 
 allprojects {
