@@ -13,8 +13,6 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
-import net.minestom.datagen.DataGenHolder;
-import net.minestom.datagen.DataGenType;
 import net.minestom.generators.common.DataGenerator_1_16_5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +41,7 @@ public final class BlockGenerator_1_16_5 extends DataGenerator_1_16_5<Block> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public JsonObject generate() {
-        Map<Property<?>, String> bsPropertyNames = (Map<Property<?>, String>) DataGenHolder.getNameMap(DataGenType.BLOCK_PROPERTIES);
-
         Set<ResourceLocation> blockRLs = Registry.BLOCK.keySet();
         JsonObject blocks = new JsonObject();
         for (ResourceLocation blockRL : blockRLs) {
@@ -54,7 +49,7 @@ public final class BlockGenerator_1_16_5 extends DataGenerator_1_16_5<Block> {
 
             JsonObject block = new JsonObject();
             block.addProperty("id", Registry.BLOCK.getId(b));
-            block.addProperty("mojangName", names.get(b));
+            block.addProperty("namespaceId", blockRL.toString());
             block.addProperty("translationKey", b.getDescriptionId());
             block.addProperty("explosionResistance", b.getExplosionResistance());
             block.addProperty("friction", b.getFriction());
