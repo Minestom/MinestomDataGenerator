@@ -25,7 +25,6 @@ public class DataGen {
             LOGGER.error("The generator will fallback to 1.16.5 and attempt to use its generators.");
             version = Version.MC_1_16_5;
         }
-        String versionPrefix = args[0].replace('.', '_') + "_";
 
         switch (version) {
             case MC_1_17, MC_1_17_1 -> {
@@ -114,11 +113,11 @@ public class DataGen {
 
         // Folder for the output.
         // Remove a character at the end since the prefix includes an _ at the end
-        File outputFolder = new File("../MinestomData/" + versionPrefix.substring(0, versionPrefix.length() - 1) + "/");
+        File outputFolder = new File("../MinestomData/");
         if (args.length >= 2) {
             outputFolder = new File(args[1]);
         }
-        DataGenHolder.runGenerators(new JsonOutputter(versionPrefix, outputFolder));
+        DataGenHolder.runGenerators(new JsonOutputter(outputFolder));
 
         LOGGER.info("Output data in: " + outputFolder.getAbsolutePath());
     }

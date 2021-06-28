@@ -1,6 +1,5 @@
 package net.minestom.generators;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.PushReaction;
 import net.minestom.datagen.DataGenHolder;
 import net.minestom.datagen.DataGenType;
 import net.minestom.generators.common.DataGenerator_1_16_5;
@@ -55,66 +55,125 @@ public final class BlockGenerator_1_16_5 extends DataGenerator_1_16_5<Block> {
             JsonObject block = new JsonObject();
             block.addProperty("id", Registry.BLOCK.getId(b));
             block.addProperty("mojangName", names.get(b));
-            // block.addProperty("langId", b.getDescriptionId());
+            block.addProperty("translationKey", b.getDescriptionId());
             block.addProperty("explosionResistance", b.getExplosionResistance());
             block.addProperty("friction", b.getFriction());
             block.addProperty("speedFactor", b.getSpeedFactor());
             block.addProperty("jumpFactor", b.getJumpFactor());
             block.addProperty("defaultStateId", Block.BLOCK_STATE_REGISTRY.getId(b.defaultBlockState()));
+            block.addProperty("blockEntity", b instanceof EntityBlock);
+            block.addProperty("gravity", b instanceof FallingBlock);
+            block.addProperty("canRespawnIn", b.isPossibleToRespawnInThis());
 
             Item correspondingItem = Item.BY_BLOCK.getOrDefault(b, null);
             if (correspondingItem != null) {
                 block.addProperty("correspondingItem", Registry.ITEM.getKey(correspondingItem).toString());
             }
-            block.addProperty("blockEntity", b instanceof EntityBlock);
-            block.addProperty("gravity", b instanceof FallingBlock);
-            block.addProperty("canRespawnIn", b.isPossibleToRespawnInThis());
-            block.addProperty("translationKey", b.getDescriptionId());
 
-            // Block proprties
-            {
-                JsonArray properties = new JsonArray();
-                for (Property<?> p : b.getStateDefinition().getProperties()) {
-                    properties.add(bsPropertyNames.get(p));
-                }
-                block.add("properties", properties);
-            }
+            // Default values
+            double defaultHardness = b.defaultBlockState().getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
+            block.addProperty("hardness", defaultHardness);
+
+            int defaultLightEmission = b.defaultBlockState().getLightEmission();
+            block.addProperty("lightEmission", defaultLightEmission);
+
+            PushReaction defaultPushReaction = b.defaultBlockState().getPistonPushReaction();
+            block.addProperty("pushReaction", defaultPushReaction.name());
+
+            int defaultMapColorId = b.defaultBlockState().getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id;
+            block.addProperty("mapColorId", defaultMapColorId);
+
+            boolean defaultOccludes = b.defaultBlockState().canOcclude();
+            block.addProperty("occludes", defaultOccludes);
+
+            boolean defaultBlocksMotion = b.defaultBlockState().getMaterial().blocksMotion();
+            block.addProperty("blocksMotion", defaultBlocksMotion);
+
+            boolean defaultFlammable = b.defaultBlockState().getMaterial().isFlammable();
+            block.addProperty("flammable", defaultFlammable);
+
+            boolean defaultAir = b.defaultBlockState().isAir();
+            block.addProperty("air", defaultAir);
+
+            boolean defaultLiquid = b.defaultBlockState().getMaterial().isLiquid();
+            block.addProperty("liquid", defaultLiquid);
+
+            boolean defaultReplaceable = b.defaultBlockState().getMaterial().isReplaceable();
+            block.addProperty("replaceable", defaultReplaceable);
+
+            boolean defaultSolid = b.defaultBlockState().getMaterial().isSolid();
+            block.addProperty("solid", defaultSolid);
+
+            boolean defaultSolidBlocking = b.defaultBlockState().getMaterial().isSolidBlocking();
+            block.addProperty("solidBlocking", defaultSolidBlocking);
+
             {
                 // Block states
-                JsonArray blockStates = new JsonArray();
+                JsonObject blockStates = new JsonObject();
                 for (BlockState bs : b.getStateDefinition().getPossibleStates()) {
                     JsonObject state = new JsonObject();
 
-                    {
-                        JsonObject properties = new JsonObject();
-                        for (Map.Entry<Property<?>, Comparable<?>> entry : bs.getValues().entrySet()) {
-                            Class<?> valClass = entry.getKey().getValueClass();
-                            if (valClass.equals(Integer.class)) {
-                                properties.addProperty(entry.getKey().getName(), (Integer) entry.getValue());
-                            } else if (valClass.equals(Boolean.class)) {
-                                properties.addProperty(entry.getKey().getName(), (Boolean) entry.getValue());
-                            } else {
-                                properties.addProperty(entry.getKey().getName(), String.valueOf(entry.getValue()));
-                            }
-                        }
-                        state.add("properties", properties);
+                    state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
+                    // Default values
+                    double hardness = bs.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
+                    if (hardness != defaultHardness) {
+                        state.addProperty("hardness", hardness);
                     }
 
-                    state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
+                    int lightEmission = bs.getLightEmission();
+                    if (lightEmission != defaultLightEmission) {
+                        state.addProperty("lightEmission", lightEmission);
+                    }
 
-                    // Default values
-                    state.addProperty("hardness", bs.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO));
-                    state.addProperty("lightEmission", bs.getLightEmission());
-                    state.addProperty("pushReaction", bs.getPistonPushReaction().name());
-                    state.addProperty("mapColorId", bs.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id);
-                    state.addProperty("occludes", bs.canOcclude());
-                    state.addProperty("blocksMotion", bs.getMaterial().blocksMotion());
-                    state.addProperty("flammable", bs.getMaterial().isFlammable());
-                    state.addProperty("air", bs.isAir());
-                    state.addProperty("liquid", bs.getMaterial().isLiquid());
-                    state.addProperty("replaceable", bs.getMaterial().isReplaceable());
-                    state.addProperty("solid", bs.getMaterial().isSolid());
-                    state.addProperty("solidBlocking", bs.getMaterial().isSolidBlocking());
+                    PushReaction pushReaction = bs.getPistonPushReaction();
+                    if (pushReaction != defaultPushReaction) {
+                        state.addProperty("pushReaction", pushReaction.name());
+                    }
+
+                    int mapColorId = bs.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id;
+                    if (mapColorId != defaultMapColorId) {
+                        state.addProperty("mapColorId", mapColorId);
+                    }
+
+                    boolean doesOcclude = bs.canOcclude();
+                    if (doesOcclude != defaultOccludes) {
+                        state.addProperty("occludes", doesOcclude);
+                    }
+
+                    boolean blocksMotion = bs.getMaterial().blocksMotion();
+                    if (blocksMotion != defaultBlocksMotion) {
+                        state.addProperty("blocksMotion", blocksMotion);
+                    }
+
+                    boolean flammable = bs.getMaterial().isFlammable();
+                    if (flammable != defaultFlammable) {
+                        state.addProperty("flammable", flammable);
+                    }
+
+                    boolean air = bs.isAir();
+                    if (air != defaultAir) {
+                        state.addProperty("air", air);
+                    }
+
+                    boolean liquid = bs.getMaterial().isLiquid();
+                    if (liquid != defaultLiquid) {
+                        state.addProperty("liquid", liquid);
+                    }
+
+                    boolean replaceable = bs.getMaterial().isReplaceable();
+                    if (replaceable != defaultReplaceable) {
+                        state.addProperty("replaceable", replaceable);
+                    }
+
+                    boolean solid = bs.getMaterial().isSolid();
+                    if (solid != defaultSolid) {
+                        state.addProperty("solid", solid);
+                    }
+
+                    boolean solidBlocking = bs.getMaterial().isSolidBlocking();
+                    if (solidBlocking != defaultSolidBlocking) {
+                        state.addProperty("solidBlocking", solidBlocking);
+                    }
 
                     // Shapes (Hitboxes)
                     state.addProperty("shape", bs.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
@@ -123,7 +182,18 @@ public final class BlockGenerator_1_16_5 extends DataGenerator_1_16_5<Block> {
                     state.addProperty("occlusionShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
                     state.addProperty("visualShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
 
-                    blockStates.add(state);
+                    StringBuilder stateName = new StringBuilder("[");
+                    for (Map.Entry<Property<?>, Comparable<?>> entry : bs.getValues().entrySet()) {
+                        stateName.append(entry.getKey().getName()).append("=").append(entry.getValue());
+                        stateName.append(",");
+                    }
+                    if (bs.getValues().entrySet().size() > 0) {
+                        // Remove last comma
+                        stateName.deleteCharAt(stateName.length() - 1);
+                    }
+                    stateName.append("]");
+
+                    blockStates.add(stateName.toString(), state);
                 }
                 block.add("states", blockStates);
             }

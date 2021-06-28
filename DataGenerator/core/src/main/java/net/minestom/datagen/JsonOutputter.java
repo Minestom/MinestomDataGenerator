@@ -14,11 +14,9 @@ import java.io.Writer;
 public final class JsonOutputter {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonOutputter.class);
-    private final String versionPrefix;
     private final File outputDirectory;
 
-    JsonOutputter(String versionPrefix, File outputDirectory) {
-        this.versionPrefix = versionPrefix;
+    JsonOutputter(File outputDirectory) {
         // Create output folder
         if (!outputDirectory.exists() && !outputDirectory.mkdirs()) {
             throw new ExceptionInInitializerError("Failed to create work folder.");
@@ -36,7 +34,7 @@ public final class JsonOutputter {
     }
 
     private void output(JsonElement output, String fileName, String subFolder) {
-        File outputSubDirectory = new File(this.outputDirectory, versionPrefix + subFolder);
+        File outputSubDirectory = new File(this.outputDirectory, subFolder);
         if (!outputSubDirectory.exists() && !outputSubDirectory.mkdirs()) {
             throw new ExceptionInInitializerError("Failed to create work sub-directory.");
         }
@@ -44,7 +42,7 @@ public final class JsonOutputter {
     }
 
     private void output(JsonElement output, String fileName, File outputDirectory) {
-        String filename = versionPrefix + fileName + ".json";
+        String filename = fileName + ".json";
         try {
             Writer writer = new FileWriter(new File(outputDirectory, filename), false);
             GSON.toJson(output, writer);

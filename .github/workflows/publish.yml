@@ -1,4 +1,4 @@
-name: Publish (Minestom Repo)
+name: Push to MinestomData GitHub Repository
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
           java-version: '16'
           distribution: 'adopt'
 
+      # UPDATE: Change these to the version
       - name: Run 1.17 generators
         run: gradle generateData_1.17 -Peula=true
 
@@ -34,4 +35,4 @@ jobs:
           user-name: 'Minestom Bot'
           user-email: bot@minestom.net
           commit-message: 'Update Data'
-          target-branch: main
+          target-branch: data
