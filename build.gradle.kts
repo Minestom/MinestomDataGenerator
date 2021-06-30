@@ -9,10 +9,9 @@ tasks {
     var eulaCheck = false
     for (mcVersion in supportedVersions) {
         val compileVersions = getVersionsRequiredForCompile(mcVersion)
-        if (!compileVersions.contains(mcVersion)) {
-            compileVersions.add(mcVersion)
-        }
         val implementedVersion = compileVersions[0]
+
+        val outputDirectory = (findProperty("output") ?: rootDir.resolve("MinestomData").absolutePath) as String
 
         register("generateData_$mcVersion") {
             if (!eulaCheck) {
@@ -54,13 +53,22 @@ tasks {
             // Run the DataGenerator
             dependsOn(project(":DataGenerator").tasks.getByName<JavaExec>("run_$implementedVersion") {
                 doFirst {
-                    args = arrayListOf(mcVersion, (findProperty("output") ?: rootDir.resolve("MinestomData").absolutePath) as String)
+                    args = arrayListOf(mcVersion, outputDirectory)
                 }
                 // Compile deobfuscation plus runtime deobufscation
-                for (compileVersion in compileVersions) {
+                for (compileVersion in compileVersions.distinct()) {
                     dependsOn(project(":Deobfuscator").tasks.getByName<JavaExec>("run_deobfuscator_$compileVersion"))
                 }
             })
+        }
+
+        register<Jar>("jar_$mcVersion") {
+            dependsOn("generateData_$mcVersion")
+
+            archiveBaseName.set("minestom-data")
+            archiveVersion.set(mcVersion)
+            destinationDirectory.set(layout.buildDirectory.dir("dist"))
+            from(outputDirectory)
         }
     }
 }
@@ -69,57 +77,30 @@ tasks {
 // Returns a List of versions required to get data for the specified version.
 fun getVersionsRequiredForCompile(version: String): ArrayList<String> {
     // IMPORTANT: THE FIRST RETURNED VERSION IS THE GENERATOR VERSION (IMPLEMENTED VERSION)
-    // TODO: Make sure this corresponds to DataGen and the versions required.
     when (version) {
-        "1.16" -> {
-            return arrayListOf("1.16.5")
-        }
-        "1.16.1" -> {
-            return arrayListOf("1.16.5")
-        }
-        "1.16.2" -> {
-            return arrayListOf("1.16.5")
-        }
-        "1.16.3" -> {
-            return arrayListOf("1.16.5")
-        }
-        "1.16.4" -> {
-            return arrayListOf("1.16.5")
-        }
+        "1.16",
+        "1.16.1",
+        "1.16.2",
+        "1.16.3",
+        "1.16.4",
         "1.16.5" -> {
-            return arrayListOf("1.16.5")
+            return arrayListOf("1.16.5", version)
         }
         // 1.17 (uses some 1.16.5 generators)
-        "1.17-pre1" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-pre2" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-pre3" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-pre4" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-pre5" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-rc1" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17-rc2" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
-        "1.17" -> {
-            return arrayListOf("1.17", "1.16.5")
-        }
+        "1.17-pre1",
+        "1.17-pre2",
+        "1.17-pre3",
+        "1.17-pre4",
+        "1.17-pre5",
+        "1.17-rc1",
+        "1.17-rc2",
+        "1.17",
         "1.17.1-pre1" -> {
-            return arrayListOf("1.17", "1.16.5")
+            return arrayListOf("1.17", "1.16.5", version)
         }
         // Attempt with 1.16.5
         else -> {
-            return arrayListOf("1.16.5")
+            return arrayListOf("1.16.5", version)
         }
     }
 
