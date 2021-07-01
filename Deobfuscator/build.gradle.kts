@@ -1,5 +1,6 @@
 plugins {
     java
+    application
 }
 
 group = "net.minestom"
@@ -26,27 +27,9 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_16
 }
 
-val supportedVersions = project.properties["supportedVersions"].toString().split(",").map(String::trim)
-tasks {
-    for (mcVersion in supportedVersions) {
-        register<JavaExec>("run_deobfuscator_$mcVersion") {
-            args = arrayListOf(mcVersion)
-            // Make sure we run the JAR task
-            dependsOn(this@tasks.getByName<Jar>("jar"))
-            mainClass.set("net.minestom.Deobfuscator")
+val mcVersion = project.properties["mcVersion"].toString()
 
-            var classpath: FileCollection = project.objects.fileCollection()
-
-            classpath = classpath.plus(
-                configurations.getByName("runtimeClasspath")
-            )
-            classpath = classpath.plus(
-                this@tasks.getByName<Jar>("jar").outputs.files
-            )
-            setClasspath(classpath)
-        }
-    }
-    test {
-        useJUnitPlatform()
-    }
+application {
+    mainClass.set("net.minestom.Deobfuscator")
 }
+
