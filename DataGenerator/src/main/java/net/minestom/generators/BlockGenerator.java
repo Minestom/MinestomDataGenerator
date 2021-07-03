@@ -11,14 +11,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 import net.minestom.generators.common.DataGeneratorCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Set;
 
 public final class BlockGenerator extends DataGeneratorCommon<Block> {
@@ -178,13 +177,16 @@ public final class BlockGenerator extends DataGeneratorCommon<Block> {
                     state.addProperty("visualShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
 
                     StringBuilder stateName = new StringBuilder("[");
-                    for (Map.Entry<Property<?>, Comparable<?>> entry : bs.getValues().entrySet()) {
-                        stateName.append(entry.getKey().getName()).append("=").append(entry.getValue());
-                        stateName.append(",");
-                    }
-                    if (bs.getValues().entrySet().size() > 0) {
-                        // Remove last comma
-                        stateName.deleteCharAt(stateName.length() - 1);
+                    boolean first = true;
+                    for (var entry : bs.getValues().entrySet()) {
+                        final String propertyName = entry.getKey().getName().toLowerCase(Locale.ROOT);
+                        final String propertyValue = entry.getValue().toString().toLowerCase(Locale.ROOT);
+                        if (!first) {
+                            stateName.append(",");
+                        }else{
+                            first = false;
+                        }
+                        stateName.append(propertyName).append("=").append(propertyValue);
                     }
                     stateName.append("]");
 
