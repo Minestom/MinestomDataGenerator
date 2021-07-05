@@ -44,14 +44,16 @@ tasks {
         // As long as the 1.16.5 JAR is also decompiled for compiling the 1.16.5 generators.
 
         // TL;DR: We decompile one (or more) version for compile, and only ever one for runtime.
+        // Run the deobfuscator
+        dependsOn(project(":Deobfuscator").tasks.getByName<JavaExec>("run") {
+            args = arrayListOf(mcVersion)
+        }).finalizedBy(
+            // Run the DataGenerator
+            project(":DataGenerator").tasks.getByName<JavaExec>("run") {
+                args = arrayListOf(outputDirectory)
+            }
+        )
 
-        // Run the DataGenerator
-        dependsOn(project(":DataGenerator").tasks.getByName<JavaExec>("run") {
-            args = arrayListOf(outputDirectory)
-            dependsOn(project(":Deobfuscator").tasks.getByName<JavaExec>("run") {
-                args = arrayListOf(mcVersion)
-            })
-        })
     }
     register<Jar>("dataJar") {
         dependsOn("generateData")
