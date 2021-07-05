@@ -65,7 +65,7 @@ tasks {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("MinestomData") {
             groupId = "net.minestom"
             artifactId = "minestom-data"
             version = mcVersion
