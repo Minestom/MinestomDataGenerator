@@ -1,9 +1,12 @@
 group = "net.minestom"
-version = "1.0"
+plugins {
+    id("maven-publish")
+}
 
 allprojects {
     version = "1.0"
 }
+
 val mcVersion = project.properties["mcVersion"].toString()
 val outputDirectory = (findProperty("output") ?: rootDir.resolve("MinestomData").absolutePath) as String
 
@@ -60,3 +63,14 @@ tasks {
     }
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "net.minestom"
+            artifactId = "minestom-data"
+            version = mcVersion
+
+            artifact(tasks.getByName("dataJar"))
+        }
+    }
+}
