@@ -16,7 +16,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0")
     implementation("com.google.code.gson:gson:2.8.6")
 
-    implementation(files("../Deobfuscator/deobfuscated_jars/deobfu_1.17.jar"))
+    implementation(files("../Deobfuscator/deobfuscated_jars/deobfu_1.17.1.jar"))
 
 }
 
