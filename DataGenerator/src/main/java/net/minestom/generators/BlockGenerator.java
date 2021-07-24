@@ -7,10 +7,10 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minestom.generators.common.DataGeneratorCommon;
 
 import java.lang.reflect.Field;
@@ -56,6 +56,12 @@ public final class BlockGenerator extends DataGeneratorCommon {
             blockJson.addProperty("replaceable", defaultBlockState.getMaterial().isReplaceable());
             blockJson.addProperty("solid", defaultBlockState.getMaterial().isSolid());
             blockJson.addProperty("solidBlocking", defaultBlockState.getMaterial().isSolidBlocking());
+            // Shapes (Hit-boxes)
+            blockJson.addProperty("shape", defaultBlockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
+            blockJson.addProperty("collisionShape", defaultBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
+            blockJson.addProperty("interactionShape", defaultBlockState.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
+            blockJson.addProperty("occlusionShape", defaultBlockState.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
+            blockJson.addProperty("visualShape", defaultBlockState.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString());
             // Block states
             JsonObject blockStates = new JsonObject();
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
@@ -75,11 +81,11 @@ public final class BlockGenerator extends DataGeneratorCommon {
                 addDifferent(blockJson, state, "solid", bs.getMaterial().isSolid(), boolean.class);
                 addDifferent(blockJson, state, "solidBlocking", bs.getMaterial().isSolidBlocking(), boolean.class);
                 // Shapes (Hit-boxes)
-                state.addProperty("shape", bs.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-                state.addProperty("collisionShape", bs.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-                state.addProperty("interactionShape", bs.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-                state.addProperty("occlusionShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-                state.addProperty("visualShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
+                addDifferent(blockJson, state, "shape", bs.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+                addDifferent(blockJson, state, "collisionShape", bs.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+                addDifferent(blockJson, state, "interactionShape", bs.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+                addDifferent(blockJson, state, "occlusionShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+                addDifferent(blockJson, state, "visualShape", bs.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString(), String.class);
 
                 StringBuilder stateName = new StringBuilder("[");
                 boolean first = true;
@@ -122,7 +128,19 @@ public final class BlockGenerator extends DataGeneratorCommon {
     private <T> void addDifferent(JsonObject main, JsonObject state, String key, T value, Class<T> valueType) {
         Gson gson = new Gson();
         if (!Objects.equals(value, gson.fromJson(main.get(key), valueType))) {
-            state.addProperty("hardness", gson.toJson(value));
+            if (value instanceof String s) {
+                state.addProperty(key, s);
+            } else if (value instanceof Integer i) {
+                state.addProperty(key, i);
+            } else if (value instanceof Double d) {
+                state.addProperty(key, d);
+            } else if (value instanceof Float f) {
+                state.addProperty(key, f);
+            } else if (value instanceof Boolean b) {
+                state.addProperty(key, b);
+            } else {
+                throw new IllegalStateException("Type " + valueType + " cannot be added to the json");
+            }
         }
     }
 }
