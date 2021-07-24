@@ -16,14 +16,12 @@ public class DataGen {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenHolder.class);
 
     private DataGen() {
-
     }
 
     public static void main(String[] args) {
         DataGeneratorCommon.prepare();
         DataGenHolder.addGenerator(DataGenType.ATTRIBUTES, new AttributeGenerator());
         DataGenHolder.addGenerator(DataGenType.BIOMES, new BiomeGenerator());
-        DataGenHolder.addGenerator(DataGenType.BLOCK_ENTITIES, new BlockEntityGenerator());
         DataGenHolder.addGenerator(DataGenType.BLOCKS, new BlockGenerator());
         DataGenHolder.addGenerator(DataGenType.CUSTOM_STATISTICS, new CustomStatisticGenerator());
         DataGenHolder.addGenerator(DataGenType.DIMENSION_TYPES, new DimensionTypeGenerator());
