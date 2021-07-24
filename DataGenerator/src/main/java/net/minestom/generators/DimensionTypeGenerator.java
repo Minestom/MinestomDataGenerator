@@ -1,23 +1,18 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minestom.generators.common.DataGeneratorCommon;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minestom.generators.common.DataGeneratorCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-public final class DimensionTypeGenerator extends DataGeneratorCommon<DimensionType> {
+public final class DimensionTypeGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(DimensionTypeGenerator.class);
-
-    @Override
-    public void generateNames() {
-        // Not required for dimension types.
-    }
 
     @Override
     public JsonObject generate() {

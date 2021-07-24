@@ -1,34 +1,12 @@
 package net.minestom.datagen;
 
-import net.minestom.generators.AttributeGenerator;
-import net.minestom.generators.BiomeGenerator;
-import net.minestom.generators.BlockEntityGenerator;
-import net.minestom.generators.BlockGenerator;
-import net.minestom.generators.CustomStatisticGenerator;
-import net.minestom.generators.DimensionTypeGenerator;
-import net.minestom.generators.EnchantmentGenerator;
-import net.minestom.generators.EntityGenerator;
-import net.minestom.generators.FluidGenerator;
-import net.minestom.generators.GameEventGenerator;
-import net.minestom.generators.MapColorGenerator;
-import net.minestom.generators.MaterialGenerator;
-import net.minestom.generators.MobEffectGenerator;
-import net.minestom.generators.ParticleGenerator;
-import net.minestom.generators.PotionGenerator;
-import net.minestom.generators.SoundGenerator;
-import net.minestom.generators.SoundSourceGenerator;
-import net.minestom.generators.VillagerProfessionGenerator;
-import net.minestom.generators.VillagerTypeGenerator;
+import net.minestom.generators.*;
 import net.minestom.generators.common.DataGeneratorCommon;
 import net.minestom.generators.loot_tables.BlockLootTableGenerator;
 import net.minestom.generators.loot_tables.ChestLootTableGenerator;
 import net.minestom.generators.loot_tables.EntityLootTableGenerator;
 import net.minestom.generators.loot_tables.GameplayLootTableGenerator;
-import net.minestom.generators.tags.BlockTagGenerator;
-import net.minestom.generators.tags.EntityTypeTagGenerator;
-import net.minestom.generators.tags.FluidTagGenerator;
-import net.minestom.generators.tags.GameEventTagGenerator;
-import net.minestom.generators.tags.ItemTagGenerator;
+import net.minestom.generators.tags.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +20,6 @@ public class DataGen {
     }
 
     public static void main(String[] args) {
-
         DataGeneratorCommon.prepare();
         DataGenHolder.addGenerator(DataGenType.ATTRIBUTES, new AttributeGenerator());
         DataGenHolder.addGenerator(DataGenType.BIOMES, new BiomeGenerator());

@@ -13,24 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-public final class BlockEntityGenerator extends DataGeneratorCommon<BlockEntityType<?>> {
+public final class BlockEntityGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(BlockEntityGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : BlockEntityType.class.getDeclaredFields()) {
-            if (!BlockEntityType.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                BlockEntityType<?> bet = (BlockEntityType<?>) declaredField.get(null);
-                names.put(bet, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map block entity naming system.", e);
-                return;
-            }
-        }
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -42,7 +26,6 @@ public final class BlockEntityGenerator extends DataGeneratorCommon<BlockEntityT
             BlockEntityType<?> bet = Registry.BLOCK_ENTITY_TYPE.get(blockEntityRL);
 
             JsonObject blockEntity = new JsonObject();
-            blockEntity.addProperty("mojangName", names.get(bet));
 
             // Use reflection to get valid blocks
             {

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minestom.generators.common.DataGeneratorCommon;
 import org.slf4j.Logger;
@@ -13,24 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-public final class AttributeGenerator extends DataGeneratorCommon<Attribute> {
+public final class AttributeGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(AttributeGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : Attributes.class.getDeclaredFields()) {
-            if (!Attribute.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                Attribute a = (Attribute) declaredField.get(null);
-                names.put(a, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map attribute naming system.", e);
-                return;
-            }
-        }
-    }
 
     @Override
     public JsonObject generate() {
@@ -44,7 +27,6 @@ public final class AttributeGenerator extends DataGeneratorCommon<Attribute> {
             if (a == null) {
                 continue;
             }
-            attribute.addProperty("mojangName", names.get(a));
             attribute.addProperty("translationKey", a.getDescriptionId());
             attribute.addProperty("defaultValue", a.getDefaultValue());
             attribute.addProperty("clientSync", a.isClientSyncable());

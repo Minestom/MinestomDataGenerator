@@ -14,13 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class BlockTagGenerator extends DataGeneratorCommon<Void> {
+public final class BlockTagGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(BlockTagGenerator.class);
-
-    @Override
-    public void generateNames() {
-        // Not required for block tags
-    }
 
     @Override
     public JsonObject generate() {

@@ -20,31 +20,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public final class EntityGenerator extends DataGeneratorCommon<EntityType<?>> {
+public final class EntityGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityGenerator.class);
     private static final Map<EntityType<?>, Class<?>> entityClasses = new HashMap<>();
 
     @Override
-    public void generateNames() {
+    @SuppressWarnings("unchecked")
+    public JsonObject generate() {
         for (Field declaredField : EntityType.class.getDeclaredFields()) {
             if (!EntityType.class.isAssignableFrom(declaredField.getType())) {
                 continue;
             }
             try {
                 EntityType<?> et = (EntityType<?>) declaredField.get(null);
-                // FIeld name
-                names.put(et, declaredField.getName());
+                // Field name
                 entityClasses.put(et, (Class<?>) ((ParameterizedType) declaredField.getGenericType()).getActualTypeArguments()[0]);
             } catch (IllegalAccessException e) {
                 LOGGER.error("Failed to map entity naming system.", e);
-                return;
             }
         }
-    }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public JsonObject generate() {
         Set<ResourceLocation> entityRLs = Registry.ENTITY_TYPE.keySet();
         JsonObject entities = new JsonObject();
 
@@ -71,7 +66,6 @@ public final class EntityGenerator extends DataGeneratorCommon<EntityType<?>> {
             JsonObject entity = new JsonObject();
 
             entity.addProperty("id", Registry.ENTITY_TYPE.getId(et));
-            entity.addProperty("mojangName", names.get(et));
             entity.addProperty("translationKey", et.getDescriptionId());
             // entity.addProperty("category", et.getCategory().toString()); basically useless
             entity.addProperty("packetType", packetType);

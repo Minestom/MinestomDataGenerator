@@ -4,33 +4,11 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minestom.generators.common.DataGeneratorCommon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 
-public final class EnchantmentGenerator extends DataGeneratorCommon<Enchantment> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnchantmentGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : Enchantments.class.getDeclaredFields()) {
-            if (!Enchantment.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                Enchantment e = (Enchantment) declaredField.get(null);
-                names.put(e, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map enchantment naming system", e);
-                return;
-            }
-        }
-    }
-
+public final class EnchantmentGenerator extends DataGeneratorCommon {
     @Override
     public JsonObject generate() {
         Set<ResourceLocation> enchantmentRLs = Registry.ENCHANTMENT.keySet();
@@ -44,7 +22,6 @@ public final class EnchantmentGenerator extends DataGeneratorCommon<Enchantment>
             JsonObject enchantment = new JsonObject();
 
             enchantment.addProperty("id", Registry.ENCHANTMENT.getId(e));
-            enchantment.addProperty("mojangName", names.get(e));
             enchantment.addProperty("translationKey", e.getDescriptionId());
             enchantment.addProperty("maxLevel", e.getMaxLevel());
             enchantment.addProperty("minLevel", e.getMinLevel());

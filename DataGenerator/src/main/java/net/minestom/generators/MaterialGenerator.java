@@ -9,35 +9,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minestom.generators.common.DataGeneratorCommon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 
-public final class MaterialGenerator extends DataGeneratorCommon<Item> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MaterialGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : Items.class.getDeclaredFields()) {
-            if (!Item.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                Item i = (Item) declaredField.get(null);
-                names.put(i, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map item naming system.", e);
-                return;
-            }
-        }
-    }
-
+public final class MaterialGenerator extends DataGeneratorCommon {
     @Override
     public JsonObject generate() {
         Set<ResourceLocation> itemRLs = Registry.ITEM.keySet();
@@ -48,7 +26,6 @@ public final class MaterialGenerator extends DataGeneratorCommon<Item> {
 
             JsonObject item = new JsonObject();
             item.addProperty("id", Registry.ITEM.getId(i));
-            item.addProperty("mojangName", names.get(i));
             item.addProperty("translationKey", i.getDescriptionId());
             item.addProperty("depletes", i.canBeDepleted());
             item.addProperty("maxStackSize", i.getMaxStackSize());

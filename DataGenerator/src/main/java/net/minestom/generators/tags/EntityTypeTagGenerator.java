@@ -14,13 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class EntityTypeTagGenerator extends DataGeneratorCommon<Void> {
+public final class EntityTypeTagGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityTypeTagGenerator.class);
-
-    @Override
-    public void generateNames() {
-        // Not required for entity type tags.
-    }
 
     @Override
     public JsonObject generate() {

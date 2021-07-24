@@ -14,13 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ChestLootTableGenerator extends DataGeneratorCommon<Void> {
+public final class ChestLootTableGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChestLootTableGenerator.class);
-
-    @Override
-    public void generateNames() {
-        // Not required for block loot tables
-    }
 
     @Override
     public JsonObject generate() {

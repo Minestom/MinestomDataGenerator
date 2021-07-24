@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public abstract class DataGeneratorCommon<T> extends DataGenerator<T> {
+public abstract class DataGeneratorCommon implements DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGeneratorCommon.class);
     protected static File dataFolder;
 

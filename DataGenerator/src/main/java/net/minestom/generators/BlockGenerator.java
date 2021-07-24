@@ -20,25 +20,7 @@ import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Set;
 
-public final class BlockGenerator extends DataGeneratorCommon<Block> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BlockGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : Blocks.class.getDeclaredFields()) {
-            if (!Block.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                Block b = (Block) declaredField.get(null);
-                names.put(b, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map block naming system.", e);
-                return;
-            }
-        }
-    }
-
+public final class BlockGenerator extends DataGeneratorCommon {
     @Override
     public JsonObject generate() {
         Set<ResourceLocation> blockRLs = Registry.BLOCK.keySet();

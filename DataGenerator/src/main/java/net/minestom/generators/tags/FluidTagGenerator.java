@@ -14,13 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class FluidTagGenerator extends DataGeneratorCommon<Void> {
+public final class FluidTagGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(FluidTagGenerator.class);
-
-    @Override
-    public void generateNames() {
-        // Not required for fluid tags
-    }
 
     @Override
     public JsonObject generate() {

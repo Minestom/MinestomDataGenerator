@@ -4,32 +4,11 @@ import com.google.gson.JsonObject;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minestom.generators.common.DataGeneratorCommon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 
-public final class BiomeGenerator extends DataGeneratorCommon<Biome> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BiomeGenerator.class);
-
-    @Override
-    public void generateNames() {
-        for (Field declaredField : Biomes.class.getDeclaredFields()) {
-            if (!Biome.class.isAssignableFrom(declaredField.getType())) {
-                continue;
-            }
-            try {
-                Biome b = (Biome) declaredField.get(null);
-                names.put(b, declaredField.getName());
-            } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to map fluid naming system.", e);
-                return;
-            }
-        }
-    }
+public final class BiomeGenerator extends DataGeneratorCommon {
 
     @Override
     public JsonObject generate() {
@@ -42,8 +21,6 @@ public final class BiomeGenerator extends DataGeneratorCommon<Biome> {
                 continue;
             }
             JsonObject biome = new JsonObject();
-
-            biome.addProperty("mojangName", names.get(b));
             biome.addProperty("humid", b.isHumid());
             biome.addProperty("scale", b.getScale());
             biome.addProperty("depth", b.getDepth());
