@@ -3,14 +3,13 @@ package net.minestom.datagen;
 public enum DataGenType {
     ATTRIBUTES("attributes"),
     BIOMES("biomes"),
-    BLOCK_ENTITIES("block_entities"),
     BLOCKS("blocks"),
     CUSTOM_STATISTICS("custom_statistics"),
     DIMENSION_TYPES("dimension_types"),
     ENCHANTMENTS("enchantments"),
     ENTITIES("entities"),
     FLUIDS("fluids"),
-    GAME_EVENTS("game_events"), // Added in 1.17
+    GAME_EVENTS("game_events"),
     MATERIALS("items"),
     MAP_COLORS("map_colors"),
     PARTICLES("particles"),
@@ -24,7 +23,7 @@ public enum DataGenType {
     BLOCK_TAGS("tags/block_tags"),
     ENTITY_TYPE_TAGS("tags/entity_type_tags"),
     FLUID_TAGS("tags/fluid_tags"),
-    GAMEEVENT_TAGS("tags/gameplay_tags"), // Added in 1.17
+    GAMEEVENT_TAGS("tags/gameplay_tags"),
     ITEM_TAGS("tags/item_tags"),
 
     BLOCK_LOOT_TABLES("loot_tables/block_loot_tables"),

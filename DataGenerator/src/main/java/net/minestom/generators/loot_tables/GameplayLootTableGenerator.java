@@ -2,7 +2,7 @@ package net.minestom.generators.loot_tables;
 
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import net.minestom.datagen.JsonOutputter;
+import net.minestom.datagen.DataGen;
 import net.minestom.generators.common.DataGeneratorCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public final class GameplayLootTableGenerator extends DataGeneratorCommon {
                 }
                 JsonObject gameplayLootTable;
                 try {
-                    gameplayLootTable = JsonOutputter.GSON.fromJson(new JsonReader(new FileReader(file)), JsonObject.class);
+                    gameplayLootTable = DataGen.GSON.fromJson(new JsonReader(new FileReader(file)), JsonObject.class);
                 } catch (FileNotFoundException e) {
                     LOGGER.error("Failed to read gameplay loot table located at '" + file + "'.", e);
                     continue;

@@ -2,7 +2,7 @@ package net.minestom.generators.tags;
 
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import net.minestom.datagen.JsonOutputter;
+import net.minestom.datagen.DataGen;
 import net.minestom.generators.common.DataGeneratorCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public final class FluidTagGenerator extends DataGeneratorCommon {
                 }
                 JsonObject fluidTag;
                 try {
-                    fluidTag = JsonOutputter.GSON.fromJson(new JsonReader(new FileReader(file)), JsonObject.class);
+                    fluidTag = DataGen.GSON.fromJson(new JsonReader(new FileReader(file)), JsonObject.class);
                 } catch (FileNotFoundException e) {
                     LOGGER.error("Failed to read fluid tag located at '" + file + "'.", e);
                     continue;

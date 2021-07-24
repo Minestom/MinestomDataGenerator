@@ -1,5 +1,7 @@
 package net.minestom.datagen;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import net.minestom.generators.*;
 import net.minestom.generators.common.DataGeneratorCommon;
@@ -11,13 +13,18 @@ import net.minestom.generators.tags.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataGen {
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGen.class);
-    private static final Map<DataGenType, DataGenerator> generators = new HashMap<>();
+    private static final Map<DataGenType, DataGenerator> GENERATORS = new HashMap<>();
 
     private DataGen() {
     }
@@ -56,23 +63,33 @@ public class DataGen {
 
         // Folder for the output.
         // Remove a character at the end since the prefix includes an _ at the end
-        File outputFolder = new File("../MinestomData/");
-        if (args.length >= 1) {
-            outputFolder = new File(args[0]);
-        }
+        final var outputPath = Path.of("../MinestomData/");
         // Run generators
-        var output = new JsonOutputter(outputFolder);
-        for (var entry : generators.entrySet()) {
+        for (var entry : GENERATORS.entrySet()) {
             DataGenType type = entry.getKey();
             DataGenerator generator = entry.getValue();
 
             JsonElement data = generator.generate();
-            output.output(data, type.getFileName());
+            write(outputPath.resolve(type.getFileName() + ".json"), data);
         }
-        LOGGER.info("Output data in: " + outputFolder.getAbsolutePath());
+        LOGGER.info("Output data in: " + outputPath.getFileName());
     }
 
     public static void addGenerator(DataGenType type, DataGenerator dg) {
-        generators.put(type, dg);
+        GENERATORS.put(type, dg);
+    }
+
+    private static void write(Path path, JsonElement output) {
+        try {
+            // Ensure that the directory exists
+            if (!Files.exists(path)) {
+                Files.createDirectories(path.getParent());
+            }
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+                GSON.toJson(output, writer);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
