@@ -13,7 +13,6 @@ public final class SoundSourceGenerator extends DataGeneratorCommon {
             JsonObject soundSource = new JsonObject();
             soundSource.addProperty("id", ss.ordinal());
             soundSource.addProperty("type", ss.getName());
-
             sounds.add(soundSource);
         }
         return sounds;
