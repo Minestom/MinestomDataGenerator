@@ -1,10 +1,7 @@
 package net.minestom.generators;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public final class EntityGenerator extends DataGeneratorCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityGenerator.class);
@@ -39,17 +35,14 @@ public final class EntityGenerator extends DataGeneratorCommon {
                 LOGGER.error("Failed to map entity naming system.", e);
             }
         }
-
-        Set<ResourceLocation> entityRLs = Registry.ENTITY_TYPE.keySet();
         JsonObject entities = new JsonObject();
-
-        for (ResourceLocation entityRL : entityRLs) {
-            EntityType<?> et = Registry.ENTITY_TYPE.get(entityRL);
+        for (var entry : Registry.ENTITY_TYPE.entrySet()) {
+            final var location = entry.getKey().location();
+            final var entityType = entry.getValue();
 
             // Complicated but we need to get the Entity class of EntityType.
             // E.g. EntityType<T> we need to get T and check what classes T implements.
-
-            Class<?> entityClass = entityClasses.get(et);
+            final Class<?> entityClass = entityClasses.get(entityType);
             String packetType;
             if (Player.class.isAssignableFrom(entityClass)) {
                 packetType = "PLAYER";
@@ -64,41 +57,14 @@ public final class EntityGenerator extends DataGeneratorCommon {
             }
 
             JsonObject entity = new JsonObject();
-
-            entity.addProperty("id", Registry.ENTITY_TYPE.getId(et));
-            entity.addProperty("translationKey", et.getDescriptionId());
-            // entity.addProperty("category", et.getCategory().toString()); basically useless
+            entity.addProperty("id", Registry.ENTITY_TYPE.getId(entityType));
+            entity.addProperty("translationKey", entityType.getDescriptionId());
             entity.addProperty("packetType", packetType);
-            entity.addProperty("fireImmune", et.fireImmune());
-            entity.addProperty("height", et.getHeight());
-            entity.addProperty("width", et.getWidth());
-            entity.addProperty("clientTrackingRange", et.clientTrackingRange());
-            // entity.addProperty("fixed", et.getDimensions().fixed); also basically useless
-
-            // Use some reflection to find some metadata properties we need
-            JsonArray metadata = new JsonArray();
-            for (Field declaredField : entityClass.getDeclaredFields()) {
-                JsonObject entityMetadata = new JsonObject();
-                if (!EntityDataAccessor.class.isAssignableFrom(declaredField.getType())) {
-                    continue;
-                }
-                try {
-                    declaredField.setAccessible(true);
-                    EntityDataAccessor<?> eda = (EntityDataAccessor<?>) declaredField.get(null);
-                    eda.getSerializer();
-
-                    entityMetadata.addProperty("mojangName", declaredField.getName().toLowerCase());
-                    entityMetadata.addProperty("id", eda.getId());
-
-                    metadata.add(entityMetadata);
-                } catch (IllegalAccessException e) {
-                    LOGGER.error("Failed to access entity metadata for '" + entityRL.toString() + "'.", e);
-                }
-
-            }
-            entity.add("metadata", metadata);
-
-            entities.add(entityRL.toString(), entity);
+            entity.addProperty("fireImmune", entityType.fireImmune());
+            entity.addProperty("height", entityType.getHeight());
+            entity.addProperty("width", entityType.getWidth());
+            entity.addProperty("clientTrackingRange", entityType.clientTrackingRange());
+            entities.add(location.toString(), entity);
         }
         return entities;
     }
