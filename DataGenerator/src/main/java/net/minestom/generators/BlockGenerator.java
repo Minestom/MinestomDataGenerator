@@ -29,7 +29,6 @@ public final class BlockGenerator extends DataGeneratorCommon {
 
             JsonObject blockJson = new JsonObject();
             blockJson.addProperty("id", Registry.BLOCK.getId(block));
-            blockJson.addProperty("namespaceId", location.toString());
             blockJson.addProperty("translationKey", block.getDescriptionId());
             blockJson.addProperty("explosionResistance", block.getExplosionResistance());
             blockJson.addProperty("friction", block.getFriction());
