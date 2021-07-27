@@ -36,7 +36,7 @@ public final class MaterialGenerator extends DataGeneratorCommon {
             // Corresponding block
             Block block = Block.byItem(item);
             if (block != Blocks.AIR) { // Default = no block
-                itemJson.addProperty("blockId", Registry.BLOCK.getKey(block).toString());
+                itemJson.addProperty("correspondingBlock", Registry.BLOCK.getKey(block).toString());
             }
             // Food properties
             if (item.isEdible()) { // Default = false (not edible)
