@@ -33,67 +33,35 @@ public final class BlockGenerator extends DataGeneratorCommon {
             blockJson.addProperty("translationKey", block.getDescriptionId());
             blockJson.addProperty("explosionResistance", block.getExplosionResistance());
             blockJson.addProperty("friction", block.getFriction());
-            blockJson.addProperty("speedFactor", block.getSpeedFactor());
-            blockJson.addProperty("jumpFactor", block.getJumpFactor());
+            if (Float.compare(block.getSpeedFactor(), 1f) != 0) { // Default = 1f
+                blockJson.addProperty("speedFactor", block.getSpeedFactor());
+            }
+            if (Float.compare(block.getJumpFactor(), 1f) != 0) { // Default = 1f
+                blockJson.addProperty("jumpFactor", block.getJumpFactor());
+            }
             blockJson.addProperty("defaultStateId", Block.BLOCK_STATE_REGISTRY.getId(defaultBlockState));
-            blockJson.addProperty("gravity", block instanceof FallingBlock);
+            if (block instanceof FallingBlock) { // Default = false
+                blockJson.addProperty("gravity", true);
+            }
             blockJson.addProperty("canRespawnIn", block.isPossibleToRespawnInThis());
             // Corresponding item
             Item correspondingItem = Item.BY_BLOCK.get(block);
-            if (correspondingItem != null) {
+            if (correspondingItem != null) { // Default = no item
                 blockJson.addProperty("correspondingItem", Registry.ITEM.getKey(correspondingItem).toString());
             }
             // Default values
-            blockJson.addProperty("hardness", defaultBlockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO));
-            blockJson.addProperty("lightEmission", defaultBlockState.getLightEmission());
-            blockJson.addProperty("pushReaction", defaultBlockState.getPistonPushReaction().name());
-            blockJson.addProperty("mapColorId", defaultBlockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id);
-            blockJson.addProperty("occludes", defaultBlockState.canOcclude());
-            blockJson.addProperty("blocksMotion", defaultBlockState.getMaterial().blocksMotion());
-            blockJson.addProperty("flammable", defaultBlockState.getMaterial().isFlammable());
-            blockJson.addProperty("air", defaultBlockState.isAir());
-            blockJson.addProperty("liquid", defaultBlockState.getMaterial().isLiquid());
-            blockJson.addProperty("replaceable", defaultBlockState.getMaterial().isReplaceable());
-            blockJson.addProperty("solid", defaultBlockState.getMaterial().isSolid());
-            blockJson.addProperty("solidBlocking", defaultBlockState.getMaterial().isSolidBlocking());
-            // Shapes (Hit-boxes)
-            blockJson.addProperty("shape", defaultBlockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-            blockJson.addProperty("collisionShape", defaultBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-            blockJson.addProperty("interactionShape", defaultBlockState.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-            blockJson.addProperty("occlusionShape", defaultBlockState.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString());
-            blockJson.addProperty("visualShape", defaultBlockState.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString());
+            writeState(defaultBlockState, null, blockJson);
             // Block states
             JsonObject blockStates = new JsonObject();
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
                 JsonObject state = new JsonObject();
                 state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
-                // Default values
-                addDifferent(blockJson, state, "hardness", bs.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
-                addDifferent(blockJson, state, "lightEmission", bs.getLightEmission(), int.class);
-                addDifferent(blockJson, state, "pushReaction", bs.getPistonPushReaction().name(), String.class);
-                addDifferent(blockJson, state, "mapColorId", bs.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
-                addDifferent(blockJson, state, "occludes", bs.canOcclude(), boolean.class);
-                addDifferent(blockJson, state, "blocksMotion", bs.getMaterial().blocksMotion(), boolean.class);
-                addDifferent(blockJson, state, "flammable", bs.getMaterial().isFlammable(), boolean.class);
-                addDifferent(blockJson, state, "air", bs.isAir(), boolean.class);
-                addDifferent(blockJson, state, "liquid", bs.getMaterial().isLiquid(), boolean.class);
-                addDifferent(blockJson, state, "replaceable", bs.getMaterial().isReplaceable(), boolean.class);
-                addDifferent(blockJson, state, "solid", bs.getMaterial().isSolid(), boolean.class);
-                addDifferent(blockJson, state, "solidBlocking", bs.getMaterial().isSolidBlocking(), boolean.class);
-                // Shapes (Hit-boxes)
-                addDifferent(blockJson, state, "shape", bs.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
-                addDifferent(blockJson, state, "collisionShape", bs.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
-                addDifferent(blockJson, state, "interactionShape", bs.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
-                addDifferent(blockJson, state, "occlusionShape", bs.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
-                addDifferent(blockJson, state, "visualShape", bs.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString(), String.class);
+                writeState(bs, blockJson, state);
 
                 StringBuilder stateName = new StringBuilder("[");
-                boolean first = true;
                 for (var propertyEntry : bs.getValues().entrySet()) {
-                    if (!first) {
+                    if (stateName.length() > 1) {
                         stateName.append(",");
-                    } else {
-                        first = false;
                     }
                     stateName.append(propertyEntry.getKey().getName().toLowerCase(Locale.ROOT))
                             .append("=")
@@ -125,9 +93,33 @@ public final class BlockGenerator extends DataGeneratorCommon {
         return blocks;
     }
 
-    private <T> void addDifferent(JsonObject main, JsonObject state, String key, T value, Class<T> valueType) {
+    private void writeState(BlockState blockState, JsonObject blockJson, JsonObject state) {
+        // Data
+        appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
+        appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
+        appendState(blockJson, state, "pushReaction", blockState.getPistonPushReaction().name(), String.class);
+        appendState(blockJson, state, "mapColorId", blockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
+        appendState(blockJson, state, "occludes", blockState.canOcclude(), boolean.class);
+        appendState(blockJson, state, "blocksMotion", blockState.getMaterial().blocksMotion(), boolean.class);
+        appendState(blockJson, state, "flammable", blockState.getMaterial().isFlammable(), boolean.class);
+        appendState(blockJson, state, "air", blockState.isAir(), false, boolean.class);
+        appendState(blockJson, state, "liquid", blockState.getMaterial().isLiquid(), false, boolean.class);
+        appendState(blockJson, state, "replaceable", blockState.getMaterial().isReplaceable(), false, boolean.class);
+        appendState(blockJson, state, "solid", blockState.getMaterial().isSolid(), boolean.class);
+        appendState(blockJson, state, "solidBlocking", blockState.getMaterial().isSolidBlocking(), boolean.class);
+        // Shapes (Hit-boxes)
+        appendState(blockJson, state, "shape", blockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+        appendState(blockJson, state, "collisionShape", blockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+        appendState(blockJson, state, "interactionShape", blockState.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+        appendState(blockJson, state, "occlusionShape", blockState.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+        appendState(blockJson, state, "visualShape", blockState.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString(), String.class);
+    }
+
+    private <T> void appendState(JsonObject main, JsonObject state, String key, T value, T defaultValue, Class<T> valueType) {
+        if (Objects.equals(value, defaultValue))
+            return;
         Gson gson = new Gson();
-        if (!Objects.equals(value, gson.fromJson(main.get(key), valueType))) {
+        if (main == null || !Objects.equals(value, gson.fromJson(main.get(key), valueType))) {
             if (value instanceof String s) {
                 state.addProperty(key, s);
             } else if (value instanceof Integer i) {
@@ -142,5 +134,9 @@ public final class BlockGenerator extends DataGeneratorCommon {
                 throw new IllegalStateException("Type " + valueType + " cannot be added to the json");
             }
         }
+    }
+
+    private <T> void appendState(JsonObject main, JsonObject state, String key, T value, Class<T> valueType) {
+        appendState(main, state, key, value, null, valueType);
     }
 }
