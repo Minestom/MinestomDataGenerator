@@ -12,6 +12,7 @@ public final class PotionGenerator extends DataGeneratorCommon {
             final var location = entry.getKey().location();
             final var potion = entry.getValue();
             JsonObject effect = new JsonObject();
+            effect.addProperty("id", Registry.POTION.getId(potion));
             // TODO add effects
             potions.add(location.toString(), effect);
         }
