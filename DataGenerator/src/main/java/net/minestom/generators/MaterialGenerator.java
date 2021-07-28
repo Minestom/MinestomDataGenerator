@@ -42,8 +42,10 @@ public final class MaterialGenerator extends DataGeneratorCommon {
             if (item.isEdible()) { // Default = false (not edible)
                 itemJson.addProperty("edible", true);
                 ResourceLocation eatingSound = Registry.SOUND_EVENT.getKey(item.getEatingSound());
+                assert eatingSound != null;
                 itemJson.addProperty("eatingSound", eatingSound.toString());
                 ResourceLocation drinkingSound = Registry.SOUND_EVENT.getKey(item.getDrinkingSound());
+                assert drinkingSound != null;
                 itemJson.addProperty("drinkingSound", drinkingSound.toString());
 
                 FoodProperties foodProperties = item.getFoodProperties();
