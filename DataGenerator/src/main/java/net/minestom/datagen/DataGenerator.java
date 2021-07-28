@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public abstract class DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
@@ -56,27 +55,20 @@ public abstract class DataGenerator {
     }
 
     protected JsonObject mergePath(Path directory) {
-        return mergePath(null, directory);
-    }
-
-    private JsonObject mergePath(JsonObject object, Path directory) {
-        final JsonObject result = Objects.requireNonNullElseGet(object, JsonObject::new);
+        final JsonObject result = new JsonObject();
         try {
-            Files.list(directory).forEach(path -> {
-                if (Files.isDirectory(path)) {
-                    mergePath(result, path);
-                } else {
-                    JsonObject blockLootTable;
-                    try {
-                        blockLootTable = DataGen.GSON.fromJson(new JsonReader(Files.newBufferedReader(path)), JsonObject.class);
-                    } catch (IOException e) {
-                        LOGGER.error("Failed to read block loot table located at '" + path + "'.", e);
-                        return;
-                    }
-                    String tableName = path.getFileName().toString().replace(".json", "");
-                    result.add("minecraft:" + tableName, blockLootTable);
-                }
-            });
+            Files.walk(directory).filter(Files::isRegularFile)
+                    .forEach(path -> {
+                        try {
+                            JsonObject blockLootTable = DataGen.GSON.fromJson(new JsonReader(Files.newBufferedReader(path)), JsonObject.class);
+                            final String tableName = path.getFileName().toString()
+                                    .replace(".json", "");
+                            result.add("minecraft:" + tableName, blockLootTable);
+                        } catch (IOException e) {
+                            LOGGER.error("Failed to read block loot table located at '" + path + "'.", e);
+                            e.printStackTrace();
+                        }
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         }
