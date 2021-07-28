@@ -1,5 +1,6 @@
 package net.minestom.generators.common;
 
+import com.google.gson.JsonObject;
 import net.minecraft.SharedConstants;
 import net.minecraft.data.Main;
 import net.minecraft.server.Bootstrap;
@@ -35,5 +36,11 @@ public abstract class DataGeneratorCommon implements DataGenerator {
         }
         // Points to data/minecraft
         dataFolder = new File(tempDirFile, "data" + File.separator + "minecraft");
+    }
+
+    protected void addDefaultable(JsonObject jsonObject, String key, boolean value, boolean defaultValue) {
+        if (value != defaultValue) {
+            jsonObject.addProperty(key, value);
+        }
     }
 }
