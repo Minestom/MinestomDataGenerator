@@ -44,4 +44,10 @@ public abstract class DataGenerator {
             jsonObject.addProperty(key, value);
         }
     }
+
+    protected void addDefaultable(JsonObject jsonObject, String key, float value, float defaultValue) {
+        if (Float.compare(value, defaultValue) != 0) {
+            jsonObject.addProperty(key, value);
+        }
+    }
 }

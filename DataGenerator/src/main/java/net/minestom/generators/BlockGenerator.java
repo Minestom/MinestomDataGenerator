@@ -32,16 +32,10 @@ public final class BlockGenerator extends DataGenerator {
             blockJson.addProperty("translationKey", block.getDescriptionId());
             blockJson.addProperty("explosionResistance", block.getExplosionResistance());
             blockJson.addProperty("friction", block.getFriction());
-            if (Float.compare(block.getSpeedFactor(), 1f) != 0) { // Default = 1f
-                blockJson.addProperty("speedFactor", block.getSpeedFactor());
-            }
-            if (Float.compare(block.getJumpFactor(), 1f) != 0) { // Default = 1f
-                blockJson.addProperty("jumpFactor", block.getJumpFactor());
-            }
+            addDefaultable(blockJson, "speedFactor", block.getSpeedFactor(), 1f);
+            addDefaultable(blockJson, "jumpFactor", block.getJumpFactor(), 1f);
             blockJson.addProperty("defaultStateId", Block.BLOCK_STATE_REGISTRY.getId(defaultBlockState));
-            if (block instanceof FallingBlock) { // Default = false
-                blockJson.addProperty("gravity", true);
-            }
+            addDefaultable(blockJson, "gravity", block instanceof FallingBlock, false);
             blockJson.addProperty("canRespawnIn", block.isPossibleToRespawnInThis());
             // Corresponding item
             Item correspondingItem = Item.BY_BLOCK.get(block);
