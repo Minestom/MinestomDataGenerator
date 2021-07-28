@@ -19,9 +19,7 @@ public final class FluidTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(DATA_FOLDER, "tags");
-        File fluidTagsFolder = new File(tagFolder, "fluids");
-
+        File fluidTagsFolder = TAGS_FOLDER.resolve("fluids").toFile();
         File[] listedFiles = fluidTagsFolder.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

@@ -19,9 +19,7 @@ public final class BlockTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(DATA_FOLDER, "tags");
-        File blockTagsFolder = new File(tagFolder, "blocks");
-
+        File blockTagsFolder = TAGS_FOLDER.resolve("blocks").toFile();
         File[] listedFiles = blockTagsFolder.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

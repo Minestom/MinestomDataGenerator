@@ -19,9 +19,7 @@ public final class GameEventTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(DATA_FOLDER, "tags");
-        File itemTagsFolder = new File(tagFolder, "game_events");
-
+        File itemTagsFolder = TAGS_FOLDER.resolve("game_events").toFile();
         File[] listedFiles = itemTagsFolder.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

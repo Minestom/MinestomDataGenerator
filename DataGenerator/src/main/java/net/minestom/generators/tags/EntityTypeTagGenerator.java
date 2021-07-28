@@ -19,9 +19,7 @@ public final class EntityTypeTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(DATA_FOLDER, "tags");
-        File entityTypeTagsFolder = new File(tagFolder, "entity_types");
-
+        File entityTypeTagsFolder = TAGS_FOLDER.resolve("entity_types").toFile();
         File[] listedFiles = entityTypeTagsFolder.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

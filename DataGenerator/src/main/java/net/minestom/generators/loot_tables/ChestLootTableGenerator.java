@@ -19,9 +19,7 @@ public final class ChestLootTableGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File lootTablesFolder = new File(DATA_FOLDER, "loot_tables");
-        File chestTables = new File(lootTablesFolder, "chests");
-
+        File chestTables = LOOT_TABLES_FOLDER.resolve("chests").toFile();
         File[] listedFiles = chestTables.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

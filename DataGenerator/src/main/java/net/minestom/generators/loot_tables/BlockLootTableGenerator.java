@@ -19,9 +19,7 @@ public final class BlockLootTableGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File lootTablesFolder = new File(DATA_FOLDER, "loot_tables");
-        File blockTables = new File(lootTablesFolder, "blocks");
-
+        File blockTables = LOOT_TABLES_FOLDER.resolve("blocks").toFile();
         File[] listedFiles = blockTables.listFiles();
         if (listedFiles != null) {
             List<File> children = new ArrayList<>(Arrays.asList(listedFiles));

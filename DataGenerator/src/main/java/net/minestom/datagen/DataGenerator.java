@@ -8,33 +8,35 @@ import net.minecraft.server.Bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 public abstract class DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
-    protected static final File DATA_FOLDER;
+    protected static final Path DATA_FOLDER;
+    protected static final Path LOOT_TABLES_FOLDER;
+    protected static final Path TAGS_FOLDER;
 
     static {
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
         // Create a temp file, run Mojang's data generator and "recompile" that data.
-        File tempDirFile;
+        Path tempDir;
         try {
-            tempDirFile = Files.createTempDirectory("mojang_gen_data").toFile();
+            tempDir = Files.createTempDirectory("mojang_gen_data");
             Main.main(new String[]{
                     "--all",
-                    "--output=" + tempDirFile
+                    "--output=" + tempDir
             });
-            // Delete tempFile when finished
-            tempDirFile.deleteOnExit();
         } catch (IOException e) {
             LOGGER.error("Something went wrong while running Mojang's data generator.", e);
             throw new RuntimeException("Couldn't run the generator");
         }
         // Points to data/minecraft
-        DATA_FOLDER = new File(tempDirFile, "data" + File.separator + "minecraft");
+        DATA_FOLDER = tempDir.resolve("data").resolve("minecraft");
+        LOOT_TABLES_FOLDER = DATA_FOLDER.resolve("loot_tables");
+        TAGS_FOLDER = DATA_FOLDER.resolve("tags");
     }
 
     public abstract JsonElement generate();
