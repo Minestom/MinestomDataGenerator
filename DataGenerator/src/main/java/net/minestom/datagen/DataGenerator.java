@@ -2,6 +2,7 @@ package net.minestom.datagen;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.data.Main;
 import net.minecraft.server.Bootstrap;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public abstract class DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
@@ -51,5 +53,33 @@ public abstract class DataGenerator {
         if (Float.compare(value, defaultValue) != 0) {
             jsonObject.addProperty(key, value);
         }
+    }
+
+    protected JsonObject mergePath(Path directory) {
+        return mergePath(null, directory);
+    }
+
+    private JsonObject mergePath(JsonObject object, Path directory) {
+        final JsonObject result = Objects.requireNonNullElseGet(object, JsonObject::new);
+        try {
+            Files.list(directory).forEach(path -> {
+                if (Files.isDirectory(path)) {
+                    mergePath(result, path);
+                } else {
+                    JsonObject blockLootTable;
+                    try {
+                        blockLootTable = DataGen.GSON.fromJson(new JsonReader(Files.newBufferedReader(path)), JsonObject.class);
+                    } catch (IOException e) {
+                        LOGGER.error("Failed to read block loot table located at '" + path + "'.", e);
+                        return;
+                    }
+                    String tableName = path.getFileName().toString().replace(".json", "");
+                    result.add("minecraft:" + tableName, blockLootTable);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
