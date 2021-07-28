@@ -19,7 +19,7 @@ public final class ItemTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(dataFolder, "tags");
+        File tagFolder = new File(DATA_FOLDER, "tags");
         File itemTagsFolder = new File(tagFolder, "items");
 
         File[] listedFiles = itemTagsFolder.listFiles();

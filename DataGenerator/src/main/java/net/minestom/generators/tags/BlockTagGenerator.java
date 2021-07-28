@@ -19,7 +19,7 @@ public final class BlockTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(dataFolder, "tags");
+        File tagFolder = new File(DATA_FOLDER, "tags");
         File blockTagsFolder = new File(tagFolder, "blocks");
 
         File[] listedFiles = blockTagsFolder.listFiles();

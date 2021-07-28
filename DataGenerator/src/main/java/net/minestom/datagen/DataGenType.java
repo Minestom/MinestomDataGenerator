@@ -1,43 +1,56 @@
 package net.minestom.datagen;
 
+import net.minestom.generators.*;
+import net.minestom.generators.loot_tables.BlockLootTableGenerator;
+import net.minestom.generators.loot_tables.ChestLootTableGenerator;
+import net.minestom.generators.loot_tables.EntityLootTableGenerator;
+import net.minestom.generators.loot_tables.GameplayLootTableGenerator;
+import net.minestom.generators.tags.*;
+
 public enum DataGenType {
-    ATTRIBUTES("attributes"),
-    BIOMES("biomes"),
-    BLOCKS("blocks"),
-    CUSTOM_STATISTICS("custom_statistics"),
-    DIMENSION_TYPES("dimension_types"),
-    ENCHANTMENTS("enchantments"),
-    ENTITIES("entities"),
-    FLUIDS("fluids"),
-    GAME_EVENTS("game_events"),
-    MATERIALS("items"),
-    MAP_COLORS("map_colors"),
-    PARTICLES("particles"),
-    MOB_EFFECTS("potion_effects"),
-    POTIONS("potions"),
-    SOUNDS("sounds"),
-    SOUND_SOURCES("sound_sources"),
-    VILLAGER_PROFESSIONS("villager_professions"),
-    VILLAGER_TYPES("villager_types"),
+    ATTRIBUTES("attributes", new AttributeGenerator()),
+    BIOMES("biomes", new BiomeGenerator()),
+    BLOCKS("blocks", new BlockGenerator()),
+    CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
+    DIMENSION_TYPES("dimension_types", new DimensionTypeGenerator()),
+    ENCHANTMENTS("enchantments", new EnchantmentGenerator()),
+    ENTITIES("entities", new EntityGenerator()),
+    FLUIDS("fluids", new FluidGenerator()),
+    GAME_EVENTS("game_events", new GameEventGenerator()),
+    MATERIALS("items", new MaterialGenerator()),
+    MAP_COLORS("map_colors", new MapColorGenerator()),
+    PARTICLES("particles", new ParticleGenerator()),
+    MOB_EFFECTS("potion_effects", new MobEffectGenerator()),
+    POTIONS("potions", new PotionGenerator()),
+    SOUNDS("sounds", new SoundGenerator()),
+    SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
+    VILLAGER_PROFESSIONS("villager_professions", new VillagerProfessionGenerator()),
+    VILLAGER_TYPES("villager_types", new VillagerTypeGenerator()),
 
-    BLOCK_TAGS("tags/block_tags"),
-    ENTITY_TYPE_TAGS("tags/entity_type_tags"),
-    FLUID_TAGS("tags/fluid_tags"),
-    GAMEEVENT_TAGS("tags/gameplay_tags"),
-    ITEM_TAGS("tags/item_tags"),
+    BLOCK_TAGS("tags/block_tags", new BlockTagGenerator()),
+    ENTITY_TYPE_TAGS("tags/entity_type_tags", new EntityTypeTagGenerator()),
+    FLUID_TAGS("tags/fluid_tags", new FluidTagGenerator()),
+    GAMEEVENT_TAGS("tags/gameplay_tags", new GameEventTagGenerator()),
+    ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
 
-    BLOCK_LOOT_TABLES("loot_tables/block_loot_tables"),
-    CHEST_LOOT_TABLES("loot_tables/chest_loot_tables"),
-    ENTITY_LOOT_TABLES("loot_tables/entity_loot_tables"),
-    GAMEPLAY_LOOT_TABLES("loot_tables/gameplay_loot_tables");
+    BLOCK_LOOT_TABLES("loot_tables/block_loot_tables", new BlockLootTableGenerator()),
+    CHEST_LOOT_TABLES("loot_tables/chest_loot_tables", new ChestLootTableGenerator()),
+    ENTITY_LOOT_TABLES("loot_tables/entity_loot_tables", new EntityLootTableGenerator()),
+    GAMEPLAY_LOOT_TABLES("loot_tables/gameplay_loot_tables", new GameplayLootTableGenerator());
 
     private final String fileName;
+    private final DataGenerator generator;
 
-    DataGenType(String fileName) {
+    DataGenType(String fileName,DataGenerator generator) {
         this.fileName = fileName;
+        this.generator = generator;
     }
 
     public String getFileName() {
         return fileName;
+    }
+
+    public DataGenerator getGenerator() {
+        return generator;
     }
 }

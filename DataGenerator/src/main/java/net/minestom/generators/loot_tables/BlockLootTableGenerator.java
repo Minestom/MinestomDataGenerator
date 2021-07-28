@@ -19,7 +19,7 @@ public final class BlockLootTableGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File lootTablesFolder = new File(dataFolder, "loot_tables");
+        File lootTablesFolder = new File(DATA_FOLDER, "loot_tables");
         File blockTables = new File(lootTablesFolder, "blocks");
 
         File[] listedFiles = blockTables.listFiles();

@@ -19,7 +19,7 @@ public final class GameplayLootTableGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File lootTablesFolder = new File(dataFolder, "loot_tables");
+        File lootTablesFolder = new File(DATA_FOLDER, "loot_tables");
         File gameplayTables = new File(lootTablesFolder, "gameplay");
         File[] listedFiles = gameplayTables.listFiles();
         if (listedFiles != null) {

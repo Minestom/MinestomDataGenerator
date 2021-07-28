@@ -19,7 +19,7 @@ public final class EntityTypeTagGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File tagFolder = new File(dataFolder, "tags");
+        File tagFolder = new File(DATA_FOLDER, "tags");
         File entityTypeTagsFolder = new File(tagFolder, "entity_types");
 
         File[] listedFiles = entityTypeTagsFolder.listFiles();

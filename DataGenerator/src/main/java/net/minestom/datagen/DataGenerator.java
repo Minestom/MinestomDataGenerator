@@ -14,9 +14,9 @@ import java.nio.file.Files;
 
 public abstract class DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
-    protected static File dataFolder;
+    protected static final File DATA_FOLDER;
 
-    public static void prepare() {
+    static {
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
         // Create a temp file, run Mojang's data generator and "recompile" that data.
@@ -31,10 +31,10 @@ public abstract class DataGenerator {
             tempDirFile.deleteOnExit();
         } catch (IOException e) {
             LOGGER.error("Something went wrong while running Mojang's data generator.", e);
-            return;
+            throw new RuntimeException("Couldn't run the generator");
         }
         // Points to data/minecraft
-        dataFolder = new File(tempDirFile, "data" + File.separator + "minecraft");
+        DATA_FOLDER = new File(tempDirFile, "data" + File.separator + "minecraft");
     }
 
     public abstract JsonElement generate();

@@ -19,7 +19,7 @@ public final class EntityLootTableGenerator extends DataGenerator {
 
     @Override
     public JsonObject generate() {
-        File lootTablesFolder = new File(dataFolder, "loot_tables");
+        File lootTablesFolder = new File(DATA_FOLDER, "loot_tables");
         File entityTables = new File(lootTablesFolder, "entities");
         File[] listedFiles = entityTables.listFiles();
         if (listedFiles != null) {
