@@ -18,11 +18,10 @@ import java.util.Map;
 
 public final class EntityGenerator extends DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityGenerator.class);
-    private static final Map<EntityType<?>, Class<?>> entityClasses = new HashMap<>();
 
     @Override
-    @SuppressWarnings("unchecked")
     public JsonObject generate() {
+        Map<EntityType<?>, Class<?>> entityClasses = new HashMap<>();
         for (Field declaredField : EntityType.class.getDeclaredFields()) {
             if (!EntityType.class.isAssignableFrom(declaredField.getType())) {
                 continue;
@@ -39,7 +38,6 @@ public final class EntityGenerator extends DataGenerator {
         for (var entry : Registry.ENTITY_TYPE.entrySet()) {
             final var location = entry.getKey().location();
             final var entityType = entry.getValue();
-
             // Complicated but we need to get the Entity class of EntityType.
             // E.g. EntityType<T> we need to get T and check what classes T implements.
             final Class<?> entityClass = entityClasses.get(entityType);
@@ -55,7 +53,6 @@ public final class EntityGenerator extends DataGenerator {
             } else {
                 packetType = "BASE";
             }
-
             JsonObject entity = new JsonObject();
             entity.addProperty("id", Registry.ENTITY_TYPE.getId(entityType));
             entity.addProperty("translationKey", entityType.getDescriptionId());
