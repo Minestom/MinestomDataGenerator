@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.player.Player;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class EntityGenerator extends DataGeneratorCommon {
+public final class EntityGenerator extends DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityGenerator.class);
     private static final Map<EntityType<?>, Class<?>> entityClasses = new HashMap<>();
 

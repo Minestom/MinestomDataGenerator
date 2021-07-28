@@ -2,9 +2,9 @@ package net.minestom.generators;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class CustomStatisticGenerator extends DataGeneratorCommon {
+public final class CustomStatisticGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject customStatistics = new JsonObject();

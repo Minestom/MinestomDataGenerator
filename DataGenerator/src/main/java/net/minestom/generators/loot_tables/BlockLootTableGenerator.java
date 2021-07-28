@@ -3,7 +3,7 @@ package net.minestom.generators.loot_tables;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import net.minestom.datagen.DataGen;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class BlockLootTableGenerator extends DataGeneratorCommon {
+public final class BlockLootTableGenerator extends DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(BlockLootTableGenerator.class);
 
     @Override

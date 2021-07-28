@@ -4,16 +4,15 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class VillagerProfessionGenerator extends DataGeneratorCommon {
+public final class VillagerProfessionGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject villagerProfessions = new JsonObject();
         for (var entry : Registry.VILLAGER_PROFESSION.entrySet()) {
             final var location = entry.getKey().location();
             final var villagerProfession = entry.getValue();
-
             JsonObject villagerProfessionJson = new JsonObject();
             villagerProfessionJson.addProperty("id", Registry.VILLAGER_PROFESSION.getId(villagerProfession));
             SoundEvent workSound = villagerProfession.getWorkSound();

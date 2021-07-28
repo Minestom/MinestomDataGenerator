@@ -2,9 +2,9 @@ package net.minestom.generators;
 
 import com.google.gson.JsonObject;
 import net.minecraft.data.BuiltinRegistries;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class BiomeGenerator extends DataGeneratorCommon {
+public final class BiomeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject biomes = new JsonObject();

@@ -2,9 +2,9 @@ package net.minestom.generators;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class SoundGenerator extends DataGeneratorCommon {
+public final class SoundGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject sounds = new JsonObject();

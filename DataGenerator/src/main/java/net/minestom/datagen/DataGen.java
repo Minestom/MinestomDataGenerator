@@ -3,7 +3,6 @@ package net.minestom.datagen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minestom.generators.*;
-import net.minestom.generators.common.DataGeneratorCommon;
 import net.minestom.generators.loot_tables.BlockLootTableGenerator;
 import net.minestom.generators.loot_tables.ChestLootTableGenerator;
 import net.minestom.generators.loot_tables.EntityLootTableGenerator;
@@ -27,7 +26,7 @@ public class DataGen {
     }
 
     public static void main(String[] args) {
-        DataGeneratorCommon.prepare();
+        DataGenerator.prepare();
         generate(DataGenType.ATTRIBUTES, new AttributeGenerator());
         generate(DataGenType.BIOMES, new BiomeGenerator());
         generate(DataGenType.BLOCKS, new BlockGenerator());

@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class DimensionTypeGenerator extends DataGeneratorCommon {
+public final class DimensionTypeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         Registry<DimensionType> dimensionTypeRegistry = RegistryAccess.RegistryHolder.builtin()

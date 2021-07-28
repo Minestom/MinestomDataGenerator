@@ -2,16 +2,15 @@ package net.minestom.generators;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class MobEffectGenerator extends DataGeneratorCommon {
+public final class MobEffectGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject effects = new JsonObject();
         for (var entry : Registry.MOB_EFFECT.entrySet()) {
             final var location = entry.getKey().location();
             final var mobEffect = entry.getValue();
-
             JsonObject effect = new JsonObject();
             effect.addProperty("id", Registry.MOB_EFFECT.getId(mobEffect));
             effect.addProperty("translationKey", mobEffect.getDescriptionId());

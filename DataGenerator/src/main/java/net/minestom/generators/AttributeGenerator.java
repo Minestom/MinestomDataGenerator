@@ -3,9 +3,9 @@ package net.minestom.generators;
 import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class AttributeGenerator extends DataGeneratorCommon {
+public final class AttributeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject attributes = new JsonObject();

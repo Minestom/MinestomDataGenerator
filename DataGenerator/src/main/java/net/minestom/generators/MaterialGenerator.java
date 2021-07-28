@@ -11,9 +11,9 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class MaterialGenerator extends DataGeneratorCommon {
+public final class MaterialGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject items = new JsonObject();

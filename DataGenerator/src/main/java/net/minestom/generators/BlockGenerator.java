@@ -11,14 +11,14 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
 import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-public final class BlockGenerator extends DataGeneratorCommon {
+public final class BlockGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject blocks = new JsonObject();

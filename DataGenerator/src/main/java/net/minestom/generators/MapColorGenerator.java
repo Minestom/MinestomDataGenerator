@@ -3,9 +3,9 @@ package net.minestom.generators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class MapColorGenerator extends DataGeneratorCommon {
+public final class MapColorGenerator extends DataGenerator {
     @Override
     public JsonArray generate() {
         JsonArray mapColors = new JsonArray();

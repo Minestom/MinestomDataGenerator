@@ -3,9 +3,9 @@ package net.minestom.generators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.sounds.SoundSource;
-import net.minestom.generators.common.DataGeneratorCommon;
+import net.minestom.datagen.DataGenerator;
 
-public final class SoundSourceGenerator extends DataGeneratorCommon {
+public final class SoundSourceGenerator extends DataGenerator {
     @Override
     public JsonArray generate() {
         JsonArray sounds = new JsonArray();
