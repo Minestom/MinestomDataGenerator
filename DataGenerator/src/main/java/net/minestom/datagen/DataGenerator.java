@@ -60,7 +60,7 @@ public abstract class DataGenerator {
                     .forEach(path -> {
                         try {
                             JsonObject blockLootTable = DataGen.GSON.fromJson(new JsonReader(Files.newBufferedReader(path)), JsonObject.class);
-                            final String tableName = path.getFileName().toString()
+                            final String tableName = directory.relativize(path).toString()
                                     .replace(".json", "");
                             result.add("minecraft:" + tableName, blockLootTable);
                         } catch (IOException e) {
