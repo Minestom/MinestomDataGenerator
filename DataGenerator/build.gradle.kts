@@ -3,7 +3,7 @@ group = "net.minestom"
 plugins {
     java
     application
-    id("org.spongepowered.gradle.vanilla") version "0.2"
+    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
 }
 
 repositories {
@@ -18,6 +18,10 @@ dependencies {
 
 application {
     mainClass.set("net.minestom.datagen.DataGen")
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
 
 minecraft {
