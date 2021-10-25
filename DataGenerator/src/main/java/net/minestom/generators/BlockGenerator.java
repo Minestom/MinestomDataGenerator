@@ -42,6 +42,10 @@ public final class BlockGenerator extends DataGenerator {
             if (correspondingItem != null) { // Default = no item
                 blockJson.addProperty("correspondingItem", Registry.ITEM.getKey(correspondingItem).toString());
             }
+            // Random offset
+            blockJson.addProperty("offsetType", block.getOffsetType().name());
+            blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
+            blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
             // Default values
             writeState(defaultBlockState, null, blockJson);
             // Block states
