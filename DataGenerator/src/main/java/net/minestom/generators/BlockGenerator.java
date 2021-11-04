@@ -85,7 +85,11 @@ public final class BlockGenerator extends DataGenerator {
                 for (Block validBlock : (Set<Block>) fcField.get(blockEntityType)) {
                     final String namespace = Registry.BLOCK.getKey(validBlock).toString();
                     final JsonObject blockJson = blocks.get(namespace).getAsJsonObject();
-                    blockJson.addProperty("blockEntity", location.toString());
+
+                    JsonObject blockEntityObject = new JsonObject();
+                    blockEntityObject.addProperty("namespace", location.toString());
+                    blockEntityObject.addProperty("id", Registry.BLOCK_ENTITY_TYPE.getId(blockEntityType));
+                    blockJson.add("blockEntity", blockEntityObject);
                 }
             } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();

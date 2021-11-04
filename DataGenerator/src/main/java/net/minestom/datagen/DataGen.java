@@ -31,7 +31,7 @@ public class DataGen {
             if (!Files.exists(path)) {
                 Files.createDirectories(path.getParent());
             }
-            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
                 GSON.toJson(generator.generate(), writer);
             }
         } catch (IOException e) {
