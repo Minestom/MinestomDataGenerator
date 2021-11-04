@@ -9,6 +9,7 @@ import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minestom.datagen.DataGenerator;
@@ -41,6 +42,13 @@ public final class BlockGenerator extends DataGenerator {
             Item correspondingItem = Item.BY_BLOCK.get(block);
             if (correspondingItem != null) { // Default = no item
                 blockJson.addProperty("correspondingItem", Registry.ITEM.getKey(correspondingItem).toString());
+            }
+            // Random offset
+            if (block.getOffsetType() != BlockBehaviour.OffsetType.NONE) {
+                blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
+                if (block.getOffsetType() == BlockBehaviour.OffsetType.XYZ) {
+                    blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
+                }
             }
             // Default values
             writeState(defaultBlockState, null, blockJson);
