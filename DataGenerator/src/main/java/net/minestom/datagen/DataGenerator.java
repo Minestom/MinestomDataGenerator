@@ -42,15 +42,15 @@ public abstract class DataGenerator {
     public abstract JsonElement generate();
 
     protected void addDefaultable(JsonObject jsonObject, String key, boolean value, boolean defaultValue) {
-        if (value != defaultValue) {
-            jsonObject.addProperty(key, value);
-        }
+        if (value != defaultValue) jsonObject.addProperty(key, value);
     }
 
     protected void addDefaultable(JsonObject jsonObject, String key, float value, float defaultValue) {
-        if (Float.compare(value, defaultValue) != 0) {
-            jsonObject.addProperty(key, value);
-        }
+        if (Float.compare(value, defaultValue) != 0) jsonObject.addProperty(key, value);
+    }
+
+    protected void addDefaultable(JsonObject jsonObject, String key, double value, double defaultValue) {
+        if (Double.compare(value, defaultValue) != 0) jsonObject.addProperty(key, value);
     }
 
     protected JsonObject mergePath(Path directory) {
