@@ -24,6 +24,7 @@ public final class MaterialGenerator extends DataGenerator {
             JsonObject itemJson = new JsonObject();
             itemJson.addProperty("id", Registry.ITEM.getId(item));
             itemJson.addProperty("translationKey", item.getDescriptionId());
+            itemJson.addProperty("rarity", item.getRarity(item.getDefaultInstance()).toString());
             if (item.getMaxStackSize() != 64) { // Default = 64
                 itemJson.addProperty("maxStackSize", item.getMaxStackSize());
             }
