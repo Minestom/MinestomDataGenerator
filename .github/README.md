@@ -136,8 +136,8 @@ WARNING: There is no guarantee that the format of the data will stay the same.
 | Namespace ID              | :heavy_check_mark: | 1.16+        |
 | Mojang Name               | :heavy_check_mark: | 1.16+        |
 | Translation Key           | :heavy_check_mark: | 1.16+        |
-| Rarity                    | :heavy_check_mark: | 1.16+        |
 | Max Level                 | :heavy_check_mark: | 1.16+        |
+| Rarity                    | :heavy_check_mark: | 1.16+        |
 | Curse                     | :heavy_check_mark: | 1.16+        |
 | Discoverable              | :heavy_check_mark: | 1.16+        |
 | Tradeable                 | :heavy_check_mark: | 1.16+        |
