@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,6 +25,7 @@ public final class MaterialGenerator extends DataGenerator {
             JsonObject itemJson = new JsonObject();
             itemJson.addProperty("id", Registry.ITEM.getId(item));
             itemJson.addProperty("translationKey", item.getDescriptionId());
+            itemJson.addProperty("rarity", item.getRarity(ItemStack.EMPTY).name());
             if (item.getMaxStackSize() != 64) { // Default = 64
                 itemJson.addProperty("maxStackSize", item.getMaxStackSize());
             }
