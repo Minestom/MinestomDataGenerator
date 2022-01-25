@@ -1,6 +1,7 @@
 package net.minestom.generators;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -52,6 +53,21 @@ public final class BlockGenerator extends DataGenerator {
             }
             // Default values
             writeState(defaultBlockState, null, blockJson);
+            {
+                // List of properties
+                JsonObject properties = new JsonObject();
+                for (var property : block.getStateDefinition().getProperties()) {
+                    JsonArray values = new JsonArray();
+                    final String key = property.getName();
+                    for (var value : property.getPossibleValues()) {
+                        values.add(value.toString());
+                    }
+                    properties.add(key, values);
+                }
+                if (properties.size() > 0) {
+                    blockJson.add("properties", properties);
+                }
+            }
             // Block states
             JsonObject blockStates = new JsonObject();
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
