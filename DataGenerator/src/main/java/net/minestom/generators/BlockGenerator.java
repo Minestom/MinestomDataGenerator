@@ -60,7 +60,7 @@ public final class BlockGenerator extends DataGenerator {
                     JsonArray values = new JsonArray();
                     final String key = property.getName();
                     for (var value : property.getPossibleValues()) {
-                        values.add(value.toString());
+                        values.add(value.toString().toLowerCase(Locale.ROOT));
                     }
                     properties.add(key, values);
                 }
