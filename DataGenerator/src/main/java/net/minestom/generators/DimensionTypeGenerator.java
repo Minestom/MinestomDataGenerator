@@ -9,7 +9,7 @@ import net.minestom.datagen.DataGenerator;
 public final class DimensionTypeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
-        Registry<DimensionType> dimensionTypeRegistry = RegistryAccess.RegistryHolder.builtin()
+        Registry<DimensionType> dimensionTypeRegistry = RegistryAccess.builtinCopy()
                 .ownedRegistry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
         JsonObject dimensionTypes = new JsonObject();
         for (var entry : dimensionTypeRegistry.entrySet()) {
