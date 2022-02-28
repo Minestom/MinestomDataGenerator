@@ -12,9 +12,8 @@ public final class DimensionTypeGenerator extends DataGenerator {
         Registry<DimensionType> dimensionTypeRegistry = RegistryAccess.builtinCopy()
                 .ownedRegistry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
         JsonObject dimensionTypes = new JsonObject();
-        for (var entry : dimensionTypeRegistry.entrySet()) {
-            final var location = entry.getKey().location();
-            final var dimensionType = entry.getValue();
+        for (var dimensionType : dimensionTypeRegistry) {
+            final var location = dimensionTypeRegistry.getKey(dimensionType);
             JsonObject dimensionTypeJson = new JsonObject();
             dimensionTypeJson.addProperty("bedWorks", dimensionType.bedWorks());
             dimensionTypeJson.addProperty("coordinateScale", dimensionType.coordinateScale());

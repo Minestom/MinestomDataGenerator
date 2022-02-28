@@ -17,9 +17,8 @@ public final class MaterialGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject items = new JsonObject();
-        for (var entry : Registry.ITEM.entrySet()) {
-            final var location = entry.getKey().location();
-            final var item = entry.getValue();
+        for (var item : Registry.ITEM) {
+            final var location = Registry.ITEM.getKey(item);
 
             JsonObject itemJson = new JsonObject();
             itemJson.addProperty("id", Registry.ITEM.getId(item));

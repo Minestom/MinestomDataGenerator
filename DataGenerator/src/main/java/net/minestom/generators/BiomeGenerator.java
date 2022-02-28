@@ -15,9 +15,8 @@ public final class BiomeGenerator extends DataGenerator {
         biomeCategory.setAccessible(true);
 
         JsonObject biomes = new JsonObject();
-        for (var entry : BuiltinRegistries.BIOME.entrySet()) {
-            final var location = entry.getKey().location();
-            final var biome = entry.getValue();
+        for (var biome : BuiltinRegistries.BIOME) {
+            final var location = BuiltinRegistries.BIOME.getKey(biome);
             JsonObject biomeJson = new JsonObject();
             biomeJson.addProperty("humid", biome.isHumid());
 //            biomeJson.addProperty("scale", biome.dep);

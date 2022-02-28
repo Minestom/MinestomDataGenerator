@@ -9,10 +9,8 @@ public final class AttributeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject attributes = new JsonObject();
-        for (var entry : Registry.ATTRIBUTE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var attribute = entry.getValue();
-
+        for (var attribute : Registry.ATTRIBUTE) {
+            final var location = Registry.ATTRIBUTE.getKey(attribute);
             JsonObject attributeJson = new JsonObject();
             attributeJson.addProperty("translationKey", attribute.getDescriptionId());
             attributeJson.addProperty("defaultValue", attribute.getDefaultValue());

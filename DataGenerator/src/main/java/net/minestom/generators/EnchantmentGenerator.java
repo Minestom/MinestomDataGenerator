@@ -8,9 +8,8 @@ public final class EnchantmentGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject enchantments = new JsonObject();
-        for (var entry : Registry.ENCHANTMENT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var enchantment = entry.getValue();
+        for (var enchantment : Registry.ENCHANTMENT) {
+            final var location = Registry.ENCHANTMENT.getKey(enchantment);
             JsonObject enchantmentJson = new JsonObject();
             enchantmentJson.addProperty("id", Registry.ENCHANTMENT.getId(enchantment));
             enchantmentJson.addProperty("translationKey", enchantment.getDescriptionId());

@@ -8,9 +8,8 @@ public final class VillagerTypeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject villagerTypes = new JsonObject();
-        for (var entry : Registry.VILLAGER_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var villagerType = entry.getValue();
+        for (var villagerType : Registry.VILLAGER_TYPE) {
+            final var location = Registry.VILLAGER_TYPE.getKey(villagerType);
             JsonObject villagerTypeJson = new JsonObject();
             villagerTypeJson.addProperty("id", Registry.VILLAGER_TYPE.getId(villagerType));
             villagerTypes.add(location.toString(), villagerTypeJson);

@@ -8,9 +8,8 @@ public final class SoundGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject sounds = new JsonObject();
-        for (var entry : Registry.SOUND_EVENT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var soundEvent = entry.getValue();
+        for (var soundEvent : Registry.SOUND_EVENT) {
+            final var location = Registry.SOUND_EVENT.getKey(soundEvent);
             JsonObject sound = new JsonObject();
             sound.addProperty("id", Registry.SOUND_EVENT.getId(soundEvent));
             sounds.add(location.toString(), sound);

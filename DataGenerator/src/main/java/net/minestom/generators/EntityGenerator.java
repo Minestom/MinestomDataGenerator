@@ -38,9 +38,8 @@ public final class EntityGenerator extends DataGenerator {
             }
         }
         JsonObject entities = new JsonObject();
-        for (var entry : Registry.ENTITY_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var entityType = entry.getValue();
+        for (var entityType : Registry.ENTITY_TYPE) {
+            final var location = Registry.ENTITY_TYPE.getKey(entityType);
             // Complicated but we need to get the Entity class of EntityType.
             // E.g. EntityType<T> we need to get T and check what classes T implements.
             final Class<?> entityClass = entityClasses.get(entityType);

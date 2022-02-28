@@ -24,9 +24,8 @@ public final class BlockGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject blocks = new JsonObject();
-        for (var entry : Registry.BLOCK.entrySet()) {
-            final var location = entry.getKey().location();
-            final var block = entry.getValue();
+        for (var block : Registry.BLOCK) {
+            final var location = Registry.BLOCK.getKey(block);
             final var defaultBlockState = block.defaultBlockState();
 
             JsonObject blockJson = new JsonObject();
@@ -92,9 +91,8 @@ public final class BlockGenerator extends DataGenerator {
             blocks.add(location.toString(), blockJson);
         }
         // Add block entity
-        for (var entry : Registry.BLOCK_ENTITY_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var blockEntityType = entry.getValue();
+        for (var blockEntityType : Registry.BLOCK_ENTITY_TYPE) {
+            final var location = Registry.BLOCK_ENTITY_TYPE.getKey(blockEntityType);
             try {
                 Field fcField = BlockEntityType.class.getDeclaredField("validBlocks");
                 fcField.setAccessible(true);
