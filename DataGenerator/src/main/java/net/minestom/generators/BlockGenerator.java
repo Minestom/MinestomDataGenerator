@@ -116,6 +116,9 @@ public final class BlockGenerator extends DataGenerator {
         // Data
         appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
         appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
+        final boolean conditionallyFullOpaque = blockState.canOcclude() && blockState.useShapeForLightOcclusion();
+        appendState(blockJson, state, "conditionallyFullOpaque", conditionallyFullOpaque, false, boolean.class);
+        appendState(blockJson, state, "lightBlock", conditionallyFullOpaque ? -1 : blockState.getLightBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), 15, int.class);
         appendState(blockJson, state, "pushReaction", blockState.getPistonPushReaction().name(), String.class);
         appendState(blockJson, state, "mapColorId", blockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
         appendState(blockJson, state, "occludes", blockState.canOcclude(), boolean.class);
