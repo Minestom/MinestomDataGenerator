@@ -3,6 +3,10 @@ package net.minestom.generators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minestom.datagen.DataGenerator;
 
@@ -10,22 +14,25 @@ public final class MapColorGenerator extends DataGenerator {
     @Override
     public JsonArray generate() {
         JsonArray mapColors = new JsonArray();
-        MaterialColor[] colors;
+        Map<MaterialColor, String> colors = new HashMap<>();
         try {
-            Field f = MaterialColor.class.getDeclaredField("MATERIAL_COLORS");
-            f.setAccessible(true);
-            colors = (MaterialColor[]) f.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException e ) {
+            List<Field> fields = Arrays.stream(MaterialColor.class.getDeclaredFields()).filter(field -> field.getType().equals(MaterialColor.class)).toList();
+            for (Field f : fields) {
+                f.setAccessible(true);
+                MaterialColor c = (MaterialColor) f.get(null);
+                colors.put(c, f.getName());
+            }
+        } catch (IllegalAccessException e) {
             return mapColors;
         }
-
-        for (MaterialColor mc : colors) {
-            if (mc == null) {
+        for (Map.Entry<MaterialColor, String> entry : colors.entrySet()) {
+            if (entry.getKey() == null) {
                 continue;
             }
             JsonObject mapColor = new JsonObject();
-            mapColor.addProperty("id", mc.id);
-            mapColor.addProperty("color", mc.col);
+            mapColor.addProperty("id", entry.getKey().id);
+            mapColor.addProperty("color", entry.getKey().col);
+            mapColor.addProperty("name", entry.getValue());
             mapColors.add(mapColor);
         }
         return mapColors;

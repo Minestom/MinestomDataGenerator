@@ -8,9 +8,8 @@ public final class FluidGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject fluids = new JsonObject();
-        for (var entry : Registry.FLUID.entrySet()) {
-            final var location = entry.getKey().location();
-            final var fluid = entry.getValue();
+        for (var fluid : Registry.FLUID) {
+            final var location = Registry.FLUID.getKey(fluid);
             JsonObject fluidJson = new JsonObject();
             fluidJson.addProperty("bucketId", Registry.ITEM.getKey(fluid.getBucket()).toString());
             fluids.add(location.toString(), fluidJson);

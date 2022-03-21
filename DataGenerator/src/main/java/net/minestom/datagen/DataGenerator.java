@@ -39,7 +39,7 @@ public abstract class DataGenerator {
         }
     }
 
-    public abstract JsonElement generate();
+    public abstract JsonElement generate() throws Exception;
 
     protected void addDefaultable(JsonObject jsonObject, String key, boolean value, boolean defaultValue) {
         if (value != defaultValue) jsonObject.addProperty(key, value);

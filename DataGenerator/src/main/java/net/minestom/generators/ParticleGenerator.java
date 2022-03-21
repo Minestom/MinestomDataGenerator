@@ -8,9 +8,8 @@ public final class ParticleGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject particles = new JsonObject();
-        for (var entry : Registry.PARTICLE_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var particleType = entry.getValue();
+        for (var particleType : Registry.PARTICLE_TYPE) {
+            final var location = Registry.PARTICLE_TYPE.getKey(particleType);
             JsonObject particle = new JsonObject();
             particle.addProperty("id", Registry.PARTICLE_TYPE.getId(particleType));
             particles.add(location.toString(), particle);

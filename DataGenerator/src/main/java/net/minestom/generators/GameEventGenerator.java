@@ -8,9 +8,8 @@ public final class GameEventGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject gameEvents = new JsonObject();
-        for (var entry : Registry.GAME_EVENT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var gameEvent = entry.getValue();
+        for (var gameEvent : Registry.GAME_EVENT) {
+            final var location = Registry.GAME_EVENT.getKey(gameEvent);
             JsonObject gameEventJson = new JsonObject();
             gameEventJson.addProperty("id", Registry.GAME_EVENT.getId(gameEvent));
             gameEventJson.addProperty("notificationRadius", gameEvent.getNotificationRadius());

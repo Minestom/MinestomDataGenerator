@@ -10,9 +10,8 @@ public final class VillagerProfessionGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject villagerProfessions = new JsonObject();
-        for (var entry : Registry.VILLAGER_PROFESSION.entrySet()) {
-            final var location = entry.getKey().location();
-            final var villagerProfession = entry.getValue();
+        for (var villagerProfession : Registry.VILLAGER_PROFESSION) {
+            final var location = Registry.VILLAGER_PROFESSION.getKey(villagerProfession);
             JsonObject villagerProfessionJson = new JsonObject();
             villagerProfessionJson.addProperty("id", Registry.VILLAGER_PROFESSION.getId(villagerProfession));
             SoundEvent workSound = villagerProfession.getWorkSound();

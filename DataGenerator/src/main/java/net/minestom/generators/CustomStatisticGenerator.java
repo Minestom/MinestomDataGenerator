@@ -8,9 +8,8 @@ public final class CustomStatisticGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject customStatistics = new JsonObject();
-        for (var entry : Registry.CUSTOM_STAT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var stat = entry.getValue();
+        for (var stat : Registry.CUSTOM_STAT) {
+            final var location = Registry.CUSTOM_STAT.getKey(stat);
             JsonObject customStatistic = new JsonObject();
             customStatistic.addProperty("id", Registry.CUSTOM_STAT.getId(stat));
             customStatistics.add(location.toString(), customStatistic);

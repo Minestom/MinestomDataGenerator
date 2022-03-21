@@ -8,9 +8,8 @@ public final class MobEffectGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject effects = new JsonObject();
-        for (var entry : Registry.MOB_EFFECT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var mobEffect = entry.getValue();
+        for (var mobEffect : Registry.MOB_EFFECT) {
+            final var location = Registry.MOB_EFFECT.getKey(mobEffect);
             JsonObject effect = new JsonObject();
             effect.addProperty("id", Registry.MOB_EFFECT.getId(mobEffect));
             effect.addProperty("translationKey", mobEffect.getDescriptionId());

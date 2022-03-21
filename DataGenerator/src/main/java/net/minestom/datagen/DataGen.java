@@ -32,7 +32,11 @@ public class DataGen {
                 Files.createDirectories(path.getParent());
             }
             try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                GSON.toJson(generator.generate(), writer);
+                try {
+                    GSON.toJson(generator.generate(), writer);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
