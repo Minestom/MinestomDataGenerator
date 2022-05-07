@@ -13,6 +13,7 @@ public enum DataGenType {
     BLOCKS("blocks", new BlockGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DIMENSION_TYPES("dimension_types", new DimensionTypeGenerator()),
+    DYE_COLORS("dye_colors", new DyeColorGenerator()),
     ENCHANTMENTS("enchantments", new EnchantmentGenerator()),
     ENTITIES("entities", new EntityGenerator()),
     FLUIDS("fluids", new FluidGenerator()),
