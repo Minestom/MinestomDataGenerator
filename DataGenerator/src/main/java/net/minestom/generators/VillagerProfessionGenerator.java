@@ -14,7 +14,7 @@ public final class VillagerProfessionGenerator extends DataGenerator {
             final var location = Registry.VILLAGER_PROFESSION.getKey(villagerProfession);
             JsonObject villagerProfessionJson = new JsonObject();
             villagerProfessionJson.addProperty("id", Registry.VILLAGER_PROFESSION.getId(villagerProfession));
-            SoundEvent workSound = villagerProfession.getWorkSound();
+            SoundEvent workSound = villagerProfession.workSound();
             if (workSound != null) {
                 ResourceLocation workSoundRL = Registry.SOUND_EVENT.getKey(workSound);
                 if (workSoundRL != null) {
