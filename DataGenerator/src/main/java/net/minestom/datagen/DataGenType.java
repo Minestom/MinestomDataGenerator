@@ -11,6 +11,7 @@ public enum DataGenType {
     ATTRIBUTES("attributes", new AttributeGenerator()),
     BIOMES("biomes", new BiomeGenerator()),
     BLOCKS("blocks", new BlockGenerator()),
+    COMMAND_ARGUMENTS("command_arguments", new CommandArgumentGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DIMENSION_TYPES("dimension_types", new DimensionTypeGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
@@ -42,7 +43,7 @@ public enum DataGenType {
     private final String fileName;
     private final DataGenerator generator;
 
-    DataGenType(String fileName,DataGenerator generator) {
+    DataGenType(String fileName, DataGenerator generator) {
         this.fileName = fileName;
         this.generator = generator;
     }
