@@ -13,7 +13,8 @@ public class BannerPatternGenerator extends DataGenerator {
         JsonObject patternTypes = new JsonObject();
         for (BannerPattern bannerPattern : Registry.BANNER_PATTERN) {
             JsonObject pattern = new JsonObject();
-            pattern.addProperty("id", bannerPattern.getHashname());
+            pattern.addProperty("id", Registry.BANNER_PATTERN.getId(bannerPattern));
+            pattern.addProperty("identifier", bannerPattern.getHashname());
             patternTypes.add(Registry.BANNER_PATTERN.getKey(bannerPattern).toString(), pattern);
         }
         return patternTypes;
