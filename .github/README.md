@@ -262,6 +262,15 @@ WARNING: There is no guarantee that the format of the data will stay the same.
 | Namespace ID              | :heavy_check_mark: | 1.16+        |
 | Mojang Name               | :heavy_check_mark: | 1.16+        |
 
+### Banner Patterns
+
+| Data Type                 | Supported?         | Versions     |
+| :-----------------------: | ------------------ | :----------: |
+| Protocol ID               | :heavy_check_mark: | 1.16+        |
+| Namespace ID              | :heavy_check_mark: | 1.16+        |
+| Mojang Name               | :heavy_check_mark: | 1.16+        |
+| Identifier                | :heavy_check_mark: | 1.16+        |
+
 ## Maintainers
 
 [@Articdive](https://www.github.com/Articdive/)
