@@ -28,6 +28,7 @@ public enum DataGenType {
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_PROFESSIONS("villager_professions", new VillagerProfessionGenerator()),
     VILLAGER_TYPES("villager_types", new VillagerTypeGenerator()),
+    BANNER_PATTERNS("banner_patterns", new BannerPatternGenerator()),
 
     BLOCK_TAGS("tags/block_tags", new BlockTagGenerator()),
     ENTITY_TYPE_TAGS("tags/entity_type_tags", new EntityTypeTagGenerator()),
