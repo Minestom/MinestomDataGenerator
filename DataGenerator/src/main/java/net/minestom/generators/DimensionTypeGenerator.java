@@ -1,19 +1,15 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.data.BuiltinRegistries;
 import net.minestom.datagen.DataGenerator;
 
 public final class DimensionTypeGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
-        Registry<DimensionType> dimensionTypeRegistry = RegistryAccess.builtinCopy()
-                .ownedRegistry(Registry.DIMENSION_TYPE_REGISTRY).orElseThrow();
         JsonObject dimensionTypes = new JsonObject();
-        for (var dimensionType : dimensionTypeRegistry) {
-            final var location = dimensionTypeRegistry.getKey(dimensionType);
+        for (var dimensionType : BuiltinRegistries.DIMENSION_TYPE) {
+            final var location = BuiltinRegistries.DIMENSION_TYPE.getKey(dimensionType);
             JsonObject dimensionTypeJson = new JsonObject();
             dimensionTypeJson.addProperty("bedWorks", dimensionType.bedWorks());
             dimensionTypeJson.addProperty("coordinateScale", dimensionType.coordinateScale());
