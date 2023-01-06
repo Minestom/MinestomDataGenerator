@@ -1,17 +1,18 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minestom.datagen.DataGenerator;
 
 public final class SoundGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject sounds = new JsonObject();
-        for (var soundEvent : Registry.SOUND_EVENT) {
-            final var location = Registry.SOUND_EVENT.getKey(soundEvent);
+        var registry = BuiltInRegistries.SOUND_EVENT;
+        for (var soundEvent : registry) {
+            final var location = registry.getKey(soundEvent);
             JsonObject sound = new JsonObject();
-            sound.addProperty("id", Registry.SOUND_EVENT.getId(soundEvent));
+            sound.addProperty("id", registry.getId(soundEvent));
             sounds.add(location.toString(), sound);
         }
         return sounds;
