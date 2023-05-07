@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.minestom"
-version = System.getenv("GIT_TAG_VERSION") ?: "dev+${libs.versions.minecraft.get()}"
+version = "${System.getenv("SHORT_COMMIT_HASH") ?: "dev"}+${libs.versions.minecraft.get()}"
 description = "Generator for Minecraft game data values"
 
 java {
