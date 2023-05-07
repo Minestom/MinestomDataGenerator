@@ -20,6 +20,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
       - name: Set outputs
         id: vars
         run: |
@@ -28,7 +30,7 @@ jobs:
         env:
           SHORT_COMMIT_HASH: ${{ steps.vars.outputs.short_commit_hash }}
         run: |
-          ./gradlew publishToSonatype
+          ./gradlew publishToSonatype -Peula=true
           echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
 
       #  closeAndReleaseSonatypeStagingRepository
