@@ -16,9 +16,12 @@ public class DataGen {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGen.class);
     private static Path OUTPUT = Path.of("../MinestomData/");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length > 0) {
             OUTPUT = Path.of(args[0]);
+        }
+        if (!Files.exists(OUTPUT)) {
+            Files.createDirectories(OUTPUT);
         }
 
         LOGGER.info("Generation starting...");

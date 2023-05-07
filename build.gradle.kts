@@ -52,11 +52,11 @@ tasks.register("generateData") {
 
     // Simplified by Sponge's VanillaGradle
     dependsOn(project(":DataGenerator").tasks.getByName<JavaExec>("run") {
-        args = arrayListOf(rootDir.resolve("/src/main/resources").absolutePath)
+        args = arrayListOf(rootDir.resolve("src/main/resources").absolutePath)
     })
 }
 
-tasks.compileJava.get().dependsOn("generateData")
+tasks.processResources.get().dependsOn("generateData")
 
 nexusPublishing {
     this.packageGroup.set("dev.hollowcube")
