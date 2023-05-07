@@ -2,7 +2,8 @@ name: Gradle Publish to Maven Central
 
 on:
   push:
-    branches: [ main ]
+    tags:
+      - [0-9]+.[0-9]+.[0-9]+\+1.[0-9]+.[0-9]+
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSWORD }}
-      GIT_TAG_VERSION: testing
+      GIT_TAG_VERSION: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -30,7 +31,5 @@ jobs:
         env:
           SHORT_COMMIT_HASH: ${{ steps.vars.outputs.short_commit_hash }}
         run: |
-          ./gradlew publishToSonatype -Peula=true
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Peula=true
           echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
-
-      #  closeAndReleaseSonatypeStagingRepository
