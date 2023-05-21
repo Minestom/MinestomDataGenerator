@@ -17,4 +17,4 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Build modules
-        run: ./gradlew build
+        run: ./gradlew build -Peula=true
