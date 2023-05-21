@@ -3,7 +3,7 @@ package net.minestom.generators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
@@ -17,11 +17,16 @@ public final class MaterialGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject items = new JsonObject();
-        for (var item : Registry.ITEM) {
-            final var location = Registry.ITEM.getKey(item);
+        var registry = BuiltInRegistries.ITEM;
+        var blockRegistry = BuiltInRegistries.BLOCK;
+        var soundEventRegistry = BuiltInRegistries.SOUND_EVENT;
+        var mobEffectRegistry = BuiltInRegistries.MOB_EFFECT;
+        var entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
+        for (var item : registry) {
+            final var location = registry.getKey(item);
 
             JsonObject itemJson = new JsonObject();
-            itemJson.addProperty("id", Registry.ITEM.getId(item));
+            itemJson.addProperty("id", registry.getId(item));
             itemJson.addProperty("translationKey", item.getDescriptionId());
             if (item.getMaxStackSize() != 64) { // Default = 64
                 itemJson.addProperty("maxStackSize", item.getMaxStackSize());
@@ -35,15 +40,15 @@ public final class MaterialGenerator extends DataGenerator {
             // Corresponding block
             Block block = Block.byItem(item);
             if (block != Blocks.AIR) { // Default = no block
-                itemJson.addProperty("correspondingBlock", Registry.BLOCK.getKey(block).toString());
+                itemJson.addProperty("correspondingBlock", blockRegistry.getKey(block).toString());
             }
             // Food properties
             if (item.isEdible()) { // Default = false (not edible)
                 itemJson.addProperty("edible", true);
-                ResourceLocation eatingSound = Registry.SOUND_EVENT.getKey(item.getEatingSound());
+                ResourceLocation eatingSound = soundEventRegistry.getKey(item.getEatingSound());
                 assert eatingSound != null;
                 itemJson.addProperty("eatingSound", eatingSound.toString());
-                ResourceLocation drinkingSound = Registry.SOUND_EVENT.getKey(item.getDrinkingSound());
+                ResourceLocation drinkingSound = soundEventRegistry.getKey(item.getDrinkingSound());
                 assert drinkingSound != null;
                 itemJson.addProperty("drinkingSound", drinkingSound.toString());
 
@@ -60,7 +65,7 @@ public final class MaterialGenerator extends DataGenerator {
                         for (Pair<MobEffectInstance, Float> effectEntry : foodProperties.getEffects()) {
                             final var effect = effectEntry.getFirst();
                             final var chance = effectEntry.getSecond();
-                            ResourceLocation rl = Registry.MOB_EFFECT.getKey(effect.getEffect());
+                            ResourceLocation rl = mobEffectRegistry.getKey(effect.getEffect());
                             if (rl == null) {
                                 continue;
                             }
@@ -87,7 +92,7 @@ public final class MaterialGenerator extends DataGenerator {
             // SpawnEgg properties
             if (item instanceof SpawnEggItem spawnEggItem) {
                 JsonObject spawnEggProperties = new JsonObject();
-                spawnEggProperties.addProperty("entityType", Registry.ENTITY_TYPE.getKey(spawnEggItem.getType(null)).toString());
+                spawnEggProperties.addProperty("entityType", entityTypeRegistry.getKey(spawnEggItem.getType(null)).toString());
                 itemJson.add("spawnEggProperties", spawnEggProperties);
             }
             items.add(location.toString(), itemJson);

@@ -12,7 +12,7 @@ Java.
 
 ## Install
 
-The data cannot be "installed" you can find it [here](https://github.com/Minestom/MinestomData)
+The data is published on Jitpack, you can find it [here](https://jitpack.io/#Minestom/MinestomDataGenerator).
 
 ## Usage
 If you require any data, open a GitHub Issue and specify the data you need.
