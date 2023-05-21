@@ -1,4 +1,4 @@
-rootProject.name = "MinestomDataGenerator"
+rootProject.name = "minestom-ce-data"
 // DataGenerator
 include("DataGenerator")
 

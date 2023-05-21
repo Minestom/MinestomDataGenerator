@@ -36,6 +36,8 @@ public enum DataGenType {
     GAMEEVENT_TAGS("tags/gameplay_tags", new GameEventTagGenerator()),
     ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
 
+    DAMAGE_TYPES("damage_types", new DamageTypeGenerator()),
+
     BLOCK_LOOT_TABLES("loot_tables/block_loot_tables", new BlockLootTableGenerator()),
     CHEST_LOOT_TABLES("loot_tables/chest_loot_tables", new ChestLootTableGenerator()),
     ENTITY_LOOT_TABLES("loot_tables/entity_loot_tables", new EntityLootTableGenerator()),

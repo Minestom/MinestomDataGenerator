@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.world.level.biome.*;
 import net.minestom.datagen.DataGenerator;
 import net.minestom.utils.ResourceUtils;
+import oshi.util.tuples.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,36 +22,33 @@ public final class BiomeGenerator extends DataGenerator {
         var biomes = readBiomes();
 
         for (var entry : biomes.entrySet()) {
-            var biome = entry.getValue();
+            var json = entry.getValue().getA();
             JsonObject biomeJson = new JsonObject();
 
-            biomeJson.addProperty("humid", biome.isHumid());
-//            biomeJson.addProperty("scale", biome.dep);
-//            biomeJson.addProperty("depth", biome.getDepth());
-            biomeJson.addProperty("temperature", biome.getBaseTemperature());
-            biomeJson.addProperty("downfall", biome.getDownfall());
-            biomeJson.addProperty("precipitation", biome.getPrecipitation().getSerializedName());
+            biomeJson.add("temperature", json.get("temperature"));
+            biomeJson.add("downfall", json.get("downfall"));
+            biomeJson.add("has_precipitation", json.get("has_precipitation"));
+
             // Colors
-            biomeJson.addProperty("fogColor", biome.getFogColor());
-            biomeJson.addProperty("waterColor", biome.getWaterColor());
-            biomeJson.addProperty("waterFogColor", biome.getWaterFogColor());
-            biomeJson.addProperty("skyColor", biome.getSkyColor());
-            biomeJson.addProperty("foliageColor", biome.getFoliageColor());
-            biomeJson.addProperty("foliageColorOverride", biome.getSpecialEffects().getFoliageColorOverride().orElse(null));
-            biomeJson.addProperty("grassColorOverride", biome.getSpecialEffects().getGrassColorOverride().orElse(null));
-            biomeJson.addProperty("grassColorModifier", biome.getSpecialEffects().getGrassColorModifier().getSerializedName());
+            var effects = json.getAsJsonObject("effects");
+            biomeJson.add("fogColor", effects.get("fog_color"));
+            biomeJson.add("waterColor", effects.get("water_color"));
+            biomeJson.add("waterFogColor", effects.get("water_fog_color"));
+            biomeJson.add("skyColor", effects.get("sky_color"));
+            biomeJson.add("foliageColor", effects.get("foliage_color"));
+            biomeJson.add("grassColor", effects.get("grass_color"));
             biomesJson.add("minecraft:" + entry.getKey(), biomeJson);
         }
 
         return biomesJson;
     }
 
-    private Map<String, Biome> readBiomes() throws URISyntaxException, IOException {
+    private Map<String, Pair<JsonObject, Biome>> readBiomes() throws URISyntaxException, IOException {
         // get all files from the biomes directory
         var files = ResourceUtils.getResourceListing(
                 net.minecraft.server.MinecraftServer.class, BIOMES_DIR);
 
-        Map<String, Biome> biomesJson = new HashMap<>();
+        Map<String, Pair<JsonObject, Biome>> biomesJson = new HashMap<>();
         for (String fileName : files) {
             var file = net.minecraft.server.MinecraftServer.class
                     .getClassLoader()
@@ -66,7 +64,7 @@ public final class BiomeGenerator extends DataGenerator {
             if (content.length() > 0 && fileName.endsWith(".json")) {
                 var biomeKey = "minecraft:" + fileName.substring(0, fileName.length() - 5);
                 var jsonObject = gson.fromJson(content.toString(), JsonObject.class);
-                biomesJson.put(biomeKey, jsonToBiome(jsonObject));
+                biomesJson.put(biomeKey, new Pair<>(jsonObject, jsonToBiome(jsonObject)));
             }
         }
 
@@ -100,7 +98,6 @@ public final class BiomeGenerator extends DataGenerator {
         return new Biome.BiomeBuilder()
                 .temperature(json.get("temperature").getAsFloat())
                 .downfall(json.get("downfall").getAsFloat())
-                .precipitation(Biome.Precipitation.valueOf(json.get("precipitation").getAsString().toUpperCase()))
                 .specialEffects(effects.build())
                 .mobSpawnSettings(MobSpawnSettings.EMPTY)
                 .generationSettings(BiomeGenerationSettings.EMPTY)

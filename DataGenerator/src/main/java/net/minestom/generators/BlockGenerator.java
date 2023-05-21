@@ -49,9 +49,13 @@ public final class BlockGenerator extends DataGenerator {
                 blockJson.addProperty("correspondingItem", itemRegistry.getKey(correspondingItem).toString());
             }
             // Random offset
-            if (defaultBlockState.getOffsetType() != BlockBehaviour.OffsetType.NONE) {
+            if (defaultBlockState.hasOffsetFunction()) {
                 blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
-                if (defaultBlockState.getOffsetType() == BlockBehaviour.OffsetType.XYZ) {
+
+                // There are only XY and XYZ offset functions, so we simply execute the offset func
+                // and check if the Y value is 0. It is seeded to the coordinates, so it should be reliable.
+                var result = defaultBlockState.getOffset(EmptyBlockGetter.INSTANCE, new BlockPos(42, 42, 42));
+                if (result.y != 0) {
                     blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
                 }
             }

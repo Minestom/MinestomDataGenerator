@@ -35,8 +35,9 @@ tasks.register("generateData") {
     logger.warn("In order to agree to the EULA you must create a file called eula.txt with the text 'eula=true'.")
     val eulaTxt = File("${rootProject.projectDir}/eula.txt")
     logger.warn("The file must be located at '${eulaTxt.absolutePath}'.")
-    if ((eulaTxt.exists() && eulaTxt.readText(Charsets.UTF_8)
-                    .equals("eula=true", true)) || project.properties["eula"].toString().toBoolean()
+    if ((eulaTxt.exists() && eulaTxt.readText(Charsets.UTF_8).equals("eula=true", true))
+            || project.properties["eula"].toString().toBoolean()
+            || System.getenv("EULA")?.toBoolean() == true
     ) {
         logger.warn("")
         logger.warn("The EULA has been accepted and signed.")

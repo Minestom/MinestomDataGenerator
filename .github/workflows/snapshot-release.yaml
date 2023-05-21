@@ -1,6 +1,5 @@
 name: Gradle Publish to Maven Central
 
-# run on tag of main branch
 on:
   push:
     tags:
@@ -23,10 +22,6 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      - name: Set outputs
-        id: vars
-        run: |
-          echo "short_commit_hash=${GITHUB_SHA::10}" >> $GITHUB_OUTPUT
       - name: Publish to Sonatype
         env:
           TAG_VERSION: ${{ github.ref_name }}
