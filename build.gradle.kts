@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.minestom"
-version = "${System.getenv("SHORT_COMMIT_HASH") ?: "dev"}+${libs.versions.minecraft.get()}"
+version = "${System.getenv("TAG_VERSION") ?: "dev"}+${libs.versions.minecraft.get()}"
 description = "Generator for Minecraft game data values"
 
 java {
@@ -93,12 +93,12 @@ publishing.publications.create<MavenPublication>("maven") {
 
         developers {
             developer {
-                id.set("TheMode")
-            }
-            developer {
                 id.set("mworzala")
                 name.set("Matt Worzala")
                 email.set("matt@hollowcube.dev")
+            }
+            developer {
+                id.set("TheMode")
             }
         }
 
