@@ -1,18 +1,18 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minestom.datagen.DataGenerator;
 
 public final class PotionGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject potions = new JsonObject();
-        for (var entry : Registry.POTION.entrySet()) {
-            final var location = entry.getKey().location();
-            final var potion = entry.getValue();
+        var registry = BuiltInRegistries.POTION;
+        for (var potion : registry) {
+            final var location = registry.getKey(potion);
             JsonObject effect = new JsonObject();
-            effect.addProperty("id", Registry.POTION.getId(potion));
+            effect.addProperty("id", registry.getId(potion));
             // TODO add effects
             potions.add(location.toString(), effect);
         }

@@ -1,9 +1,12 @@
 package net.minestom.generators;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.RegistryLayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -23,13 +26,15 @@ public final class BlockGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject blocks = new JsonObject();
-        for (var entry : Registry.BLOCK.entrySet()) {
-            final var location = entry.getKey().location();
-            final var block = entry.getValue();
+        var registry = BuiltInRegistries.BLOCK;
+        var itemRegistry = BuiltInRegistries.ITEM;
+        var blockEntityTypeRegistry = BuiltInRegistries.BLOCK_ENTITY_TYPE;
+        for (var block : registry) {
+            final var location = registry.getKey(block);
             final var defaultBlockState = block.defaultBlockState();
 
             JsonObject blockJson = new JsonObject();
-            blockJson.addProperty("id", Registry.BLOCK.getId(block));
+            blockJson.addProperty("id", registry.getId(block));
             blockJson.addProperty("translationKey", block.getDescriptionId());
             blockJson.addProperty("explosionResistance", block.getExplosionResistance());
             blockJson.addProperty("friction", block.getFriction());
@@ -41,17 +46,32 @@ public final class BlockGenerator extends DataGenerator {
             // Corresponding item
             Item correspondingItem = Item.BY_BLOCK.get(block);
             if (correspondingItem != null) { // Default = no item
-                blockJson.addProperty("correspondingItem", Registry.ITEM.getKey(correspondingItem).toString());
+                blockJson.addProperty("correspondingItem", itemRegistry.getKey(correspondingItem).toString());
             }
             // Random offset
-            if (block.getOffsetType() != BlockBehaviour.OffsetType.NONE) {
+            if (defaultBlockState.getOffsetType() != BlockBehaviour.OffsetType.NONE) {
                 blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
-                if (block.getOffsetType() == BlockBehaviour.OffsetType.XYZ) {
+                if (defaultBlockState.getOffsetType() == BlockBehaviour.OffsetType.XYZ) {
                     blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
                 }
             }
             // Default values
             writeState(defaultBlockState, null, blockJson);
+            {
+                // List of properties
+                JsonObject properties = new JsonObject();
+                for (var property : block.getStateDefinition().getProperties()) {
+                    JsonArray values = new JsonArray();
+                    final String key = property.getName();
+                    for (var value : property.getPossibleValues()) {
+                        values.add(value.toString().toLowerCase(Locale.ROOT));
+                    }
+                    properties.add(key, values);
+                }
+                if (properties.size() > 0) {
+                    blockJson.add("properties", properties);
+                }
+            }
             // Block states
             JsonObject blockStates = new JsonObject();
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
@@ -76,19 +96,18 @@ public final class BlockGenerator extends DataGenerator {
             blocks.add(location.toString(), blockJson);
         }
         // Add block entity
-        for (var entry : Registry.BLOCK_ENTITY_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var blockEntityType = entry.getValue();
+        for (var blockEntityType : blockEntityTypeRegistry) {
+            final var location = blockEntityTypeRegistry.getKey(blockEntityType);
             try {
                 Field fcField = BlockEntityType.class.getDeclaredField("validBlocks");
                 fcField.setAccessible(true);
                 for (Block validBlock : (Set<Block>) fcField.get(blockEntityType)) {
-                    final String namespace = Registry.BLOCK.getKey(validBlock).toString();
+                    final String namespace = registry.getKey(validBlock).toString();
                     final JsonObject blockJson = blocks.get(namespace).getAsJsonObject();
 
                     JsonObject blockEntityObject = new JsonObject();
                     blockEntityObject.addProperty("namespace", location.toString());
-                    blockEntityObject.addProperty("id", Registry.BLOCK_ENTITY_TYPE.getId(blockEntityType));
+                    blockEntityObject.addProperty("id", blockEntityTypeRegistry.getId(blockEntityType));
                     blockJson.add("blockEntity", blockEntityObject);
                 }
             } catch (IllegalAccessException | NoSuchFieldException e) {

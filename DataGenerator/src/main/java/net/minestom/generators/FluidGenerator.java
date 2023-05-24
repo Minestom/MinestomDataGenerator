@@ -1,18 +1,19 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minestom.datagen.DataGenerator;
 
 public final class FluidGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject fluids = new JsonObject();
-        for (var entry : Registry.FLUID.entrySet()) {
-            final var location = entry.getKey().location();
-            final var fluid = entry.getValue();
+        var registry = BuiltInRegistries.FLUID;
+        var itemRegistry = BuiltInRegistries.ITEM;
+        for (var fluid : registry) {
+            final var location = registry.getKey(fluid);
             JsonObject fluidJson = new JsonObject();
-            fluidJson.addProperty("bucketId", Registry.ITEM.getKey(fluid.getBucket()).toString());
+            fluidJson.addProperty("bucketId", itemRegistry.getKey(fluid.getBucket()).toString());
             fluids.add(location.toString(), fluidJson);
         }
         return fluids;

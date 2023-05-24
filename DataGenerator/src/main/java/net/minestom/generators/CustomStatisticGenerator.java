@@ -1,18 +1,18 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minestom.datagen.DataGenerator;
 
 public final class CustomStatisticGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         JsonObject customStatistics = new JsonObject();
-        for (var entry : Registry.CUSTOM_STAT.entrySet()) {
-            final var location = entry.getKey().location();
-            final var stat = entry.getValue();
+        var registry = BuiltInRegistries.CUSTOM_STAT;
+        for (var stat : registry) {
+            final var location = registry.getKey(stat);
             JsonObject customStatistic = new JsonObject();
-            customStatistic.addProperty("id", Registry.CUSTOM_STAT.getId(stat));
+            customStatistic.addProperty("id", registry.getId(stat));
             customStatistics.add(location.toString(), customStatistic);
         }
         return customStatistics;

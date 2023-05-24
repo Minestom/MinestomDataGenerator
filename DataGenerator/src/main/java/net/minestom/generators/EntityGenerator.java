@@ -1,7 +1,7 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,9 +38,9 @@ public final class EntityGenerator extends DataGenerator {
             }
         }
         JsonObject entities = new JsonObject();
-        for (var entry : Registry.ENTITY_TYPE.entrySet()) {
-            final var location = entry.getKey().location();
-            final var entityType = entry.getValue();
+        var registry = BuiltInRegistries.ENTITY_TYPE;
+        for (var entityType : registry) {
+            final var location = registry.getKey(entityType);
             // Complicated but we need to get the Entity class of EntityType.
             // E.g. EntityType<T> we need to get T and check what classes T implements.
             final Class<?> entityClass = entityClasses.get(entityType);
@@ -57,7 +57,7 @@ public final class EntityGenerator extends DataGenerator {
                 packetType = "BASE";
             }
             JsonObject entity = new JsonObject();
-            entity.addProperty("id", Registry.ENTITY_TYPE.getId(entityType));
+            entity.addProperty("id", registry.getId(entityType));
             entity.addProperty("translationKey", entityType.getDescriptionId());
             entity.addProperty("packetType", packetType);
             addDefaultable(entity, "fireImmune", entityType.fireImmune(), false);
