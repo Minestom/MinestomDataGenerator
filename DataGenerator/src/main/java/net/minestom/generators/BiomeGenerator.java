@@ -39,7 +39,7 @@ public final class BiomeGenerator extends DataGenerator {
             biomeJson.addProperty("foliageColorOverride", biome.getSpecialEffects().getFoliageColorOverride().orElse(null));
             biomeJson.addProperty("grassColorOverride", biome.getSpecialEffects().getGrassColorOverride().orElse(null));
             biomeJson.addProperty("grassColorModifier", biome.getSpecialEffects().getGrassColorModifier().getSerializedName());
-            biomesJson.add("minecraft:" + entry.getKey(), biomeJson);
+            biomesJson.add(entry.getKey(), biomeJson);
         }
 
         return biomesJson;
