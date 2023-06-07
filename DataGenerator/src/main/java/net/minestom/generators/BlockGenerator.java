@@ -5,19 +5,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.RegistryLayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minestom.datagen.DataGenerator;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
@@ -42,7 +44,6 @@ public final class BlockGenerator extends DataGenerator {
             addDefaultable(blockJson, "jumpFactor", block.getJumpFactor(), 1f);
             blockJson.addProperty("defaultStateId", Block.BLOCK_STATE_REGISTRY.getId(defaultBlockState));
             addDefaultable(blockJson, "gravity", block instanceof FallingBlock, false);
-            blockJson.addProperty("canRespawnIn", block.isPossibleToRespawnInThis());
             // Corresponding item
             Item correspondingItem = Item.BY_BLOCK.get(block);
             if (correspondingItem != null) { // Default = no item
@@ -60,7 +61,7 @@ public final class BlockGenerator extends DataGenerator {
                 }
             }
             // Default values
-            writeState(defaultBlockState, null, blockJson);
+            writeState(block, defaultBlockState, null, blockJson);
             {
                 // List of properties
                 JsonObject properties = new JsonObject();
@@ -81,7 +82,7 @@ public final class BlockGenerator extends DataGenerator {
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
                 JsonObject state = new JsonObject();
                 state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
-                writeState(bs, blockJson, state);
+                writeState(block, bs, blockJson, state);
 
                 StringBuilder stateName = new StringBuilder("[");
                 for (var propertyEntry : bs.getValues().entrySet()) {
@@ -121,20 +122,22 @@ public final class BlockGenerator extends DataGenerator {
         return blocks;
     }
 
-    private void writeState(BlockState blockState, JsonObject blockJson, JsonObject state) {
+    private void writeState(Block block, BlockState blockState, JsonObject blockJson, JsonObject state) {
         // Data
+        appendState(blockJson, state, "canRespawnIn", block.isPossibleToRespawnInThis(blockState), boolean.class);
         appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
         appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
         appendState(blockJson, state, "pushReaction", blockState.getPistonPushReaction().name(), String.class);
         appendState(blockJson, state, "mapColorId", blockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
         appendState(blockJson, state, "occludes", blockState.canOcclude(), boolean.class);
-        appendState(blockJson, state, "blocksMotion", blockState.getMaterial().blocksMotion(), boolean.class);
-        appendState(blockJson, state, "flammable", blockState.getMaterial().isFlammable(), boolean.class);
+
+        appendState(blockJson, state, "blocksMotion", blockState.blocksMotion(), boolean.class);
+        appendState(blockJson, state, "flammable", isFlammable(blockState), boolean.class);
         appendState(blockJson, state, "air", blockState.isAir(), false, boolean.class);
-        appendState(blockJson, state, "liquid", blockState.getMaterial().isLiquid(), false, boolean.class);
-        appendState(blockJson, state, "replaceable", blockState.getMaterial().isReplaceable(), false, boolean.class);
-        appendState(blockJson, state, "solid", blockState.getMaterial().isSolid(), boolean.class);
-        appendState(blockJson, state, "solidBlocking", blockState.getMaterial().isSolidBlocking(), boolean.class);
+        appendState(blockJson, state, "liquid", blockState.liquid(), false, boolean.class);
+        appendState(blockJson, state, "replaceable", blockState.canBeReplaced(), false, boolean.class);
+        appendState(blockJson, state, "solid", blockState.isSolid(), boolean.class);
+        appendState(blockJson, state, "solidBlocking", blockState.blocksMotion(), boolean.class);
         // Shapes (Hit-boxes)
         appendState(blockJson, state, "shape", blockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "collisionShape", blockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
@@ -166,5 +169,25 @@ public final class BlockGenerator extends DataGenerator {
 
     private <T> void appendState(JsonObject main, JsonObject state, String key, T value, Class<T> valueType) {
         appendState(main, state, key, value, null, valueType);
+    }
+
+    private static final FireBlock fireBlock = (FireBlock) Blocks.FIRE;
+    private static final Method canBurn;
+
+    private static boolean isFlammable(@NotNull BlockState blockState) {
+        try {
+            return (boolean) canBurn.invoke(fireBlock, blockState);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static {
+        try {
+            canBurn = FireBlock.class.getDeclaredMethod("canBurn", BlockState.class);
+            canBurn.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

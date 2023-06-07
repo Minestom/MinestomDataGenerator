@@ -17,7 +17,7 @@ public final class DyeColorGenerator extends DataGenerator {
             dyeColor.addProperty("textureDiffuseColor", convertTextureDiffuseColors(dC.getTextureDiffuseColors()));
             dyeColor.addProperty("textColor", dC.getTextColor());
             dyeColor.addProperty("fireworkColor", dC.getFireworkColor());
-            dyeColor.addProperty("mapColorId", dC.getMaterialColor().id);
+            dyeColor.addProperty("mapColorId", dC.getMapColor().id);
             dyeColors.add(dyeColor);
         }
         return dyeColors;
