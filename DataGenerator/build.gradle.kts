@@ -11,14 +11,14 @@ repositories {
 }
 
 dependencies {
-    // SLF4J is the base logger for most libraries.
-    implementation("org.slf4j:slf4j-api:1.8.0-beta4")
-    implementation("com.google.code.gson:gson:2.8.8")
+    implementation(libs.gson)
+    implementation(libs.bundles.logging)
 }
 
 application {
     mainClass.set("net.minestom.datagen.DataGen")
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
