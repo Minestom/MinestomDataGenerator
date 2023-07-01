@@ -35,11 +35,11 @@ public enum DataGenType {
     FLUID_TAGS("tags/fluid_tags", new FluidTagGenerator()),
     GAMEEVENT_TAGS("tags/gameplay_tags", new GameEventTagGenerator()),
     ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
-
     BLOCK_LOOT_TABLES("loot_tables/block_loot_tables", new BlockLootTableGenerator()),
     CHEST_LOOT_TABLES("loot_tables/chest_loot_tables", new ChestLootTableGenerator()),
     ENTITY_LOOT_TABLES("loot_tables/entity_loot_tables", new EntityLootTableGenerator()),
-    GAMEPLAY_LOOT_TABLES("loot_tables/gameplay_loot_tables", new GameplayLootTableGenerator());
+    GAMEPLAY_LOOT_TABLES("loot_tables/gameplay_loot_tables", new GameplayLootTableGenerator()),
+    DAMAGE_TYPES("damage_types", new DamageTypeGenerator());
 
     private final String fileName;
     private final DataGenerator generator;
