@@ -12,7 +12,7 @@ import java.util.*;
 
 public final class BiomeGenerator extends DataGenerator {
 
-    private static final String TEMPERATUR_KEY = "temperatur";
+    private static final String TEMPERATUR_KEY = "temperature";
     private static final String DOWNFALL_KEY = "downfall";
 
     private static final String BIOMES_DIR = "data/minecraft/worldgen/biome/";
@@ -96,7 +96,6 @@ public final class BiomeGenerator extends DataGenerator {
                     BiomeSpecialEffects.GrassColorModifier.valueOf(effectsJson.get("grass_color_modifier").getAsString().toUpperCase())
             );
         }
-
         return new Biome.BiomeBuilder()
                 .temperature(json.get(TEMPERATUR_KEY).getAsFloat())
                 .downfall(json.get(DOWNFALL_KEY).getAsFloat())
