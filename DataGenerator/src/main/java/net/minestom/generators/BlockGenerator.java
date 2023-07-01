@@ -5,14 +5,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.RegistryLayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minestom.datagen.DataGenerator;
@@ -48,10 +45,15 @@ public final class BlockGenerator extends DataGenerator {
             if (correspondingItem != null) { // Default = no item
                 blockJson.addProperty("correspondingItem", itemRegistry.getKey(correspondingItem).toString());
             }
+
             // Random offset
-            if (defaultBlockState.getOffsetType() != BlockBehaviour.OffsetType.NONE) {
+            if (defaultBlockState.hasOffsetFunction()) {
                 blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
-                if (defaultBlockState.getOffsetType() == BlockBehaviour.OffsetType.XYZ) {
+
+                // There are only XY and XYZ offset functions, so we simply execute the offset func
+                // and check if the Y value is 0. It is seeded to the coordinates, so it should be reliable.
+                var result = defaultBlockState.getOffset(EmptyBlockGetter.INSTANCE, new BlockPos(42, 42, 42));
+                if (result.y != 0) {
                     blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
                 }
             }
