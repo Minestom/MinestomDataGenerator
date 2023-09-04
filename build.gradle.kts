@@ -60,7 +60,7 @@ tasks.register("generateData") {
 tasks.processResources.get().dependsOn("generateData")
 
 nexusPublishing {
-    this.packageGroup.set("dev.hollowcube")
+    this.packageGroup.set("net.minestom")
 
     repositories.sonatype {
         nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
@@ -74,21 +74,21 @@ nexusPublishing {
 }
 
 publishing.publications.create<MavenPublication>("maven") {
-    groupId = "dev.hollowcube"
-    artifactId = "minestom-ce-data"
+    groupId = "net.minestom"
+    artifactId = "data"
     version = project.version.toString()
 
     from(project.components["java"])
 
     pom {
-        name.set("minestom-ce-data")
+        name.set("data")
         description.set("Minecraft game data values")
-        url.set("https://github.com/hollow-cube/minestom-ce-data")
+        url.set("https://github.com/minestom/MinestomDataGenerator")
 
         licenses {
             license {
                 name.set("Apache 2.0")
-                url.set("https://github.com/hollow-cube/minestom-ce-data/blob/main/LICENSE")
+                url.set("https://github.com/minestom/MinestomDataGenerator/blob/main/LICENSE")
             }
         }
 
@@ -105,19 +105,19 @@ publishing.publications.create<MavenPublication>("maven") {
 
         issueManagement {
             system.set("GitHub")
-            url.set("https://github.com/hollow-cube/minestom-ce-data/issues")
+            url.set("https://github.com/minestom/MinestomDataGenerator/issues")
         }
 
         scm {
-            connection.set("scm:git:git://github.com/hollow-cube/minestom-ce-data.git")
-            developerConnection.set("scm:git:git@github.com:hollow-cube/minestom-ce-data.git")
-            url.set("https://github.com/hollow-cube/minestom-ce-data")
+            connection.set("scm:git:git://github.com/minestom/MinestomDataGenerator.git")
+            developerConnection.set("scm:git:git@github.com:minestom/MinestomDataGenerator.git")
+            url.set("https://github.com/minestom/MinestomDataGenerator")
             tag.set("HEAD")
         }
 
         ciManagement {
             system.set("Github Actions")
-            url.set("https://github.com/hollow-cube/minestom-ce-data/actions")
+            url.set("https://github.com/minestom/MinestomDataGenerator/actions")
         }
     }
 }
