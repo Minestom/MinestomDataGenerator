@@ -1,7 +1,12 @@
+import org.spongepowered.gradle.vanilla.MinecraftExtension
+
 plugins {
     java
     application
-    alias(libs.plugins.vanilla.gradle)
+}
+
+apply {
+    plugin("org.spongepowered.gradle.vanilla")
 }
 
 group = "net.minestom"
@@ -25,7 +30,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-minecraft {
+extensions.configure<MinecraftExtension> {
     version(libs.versions.minecraft.get())
     platform(org.spongepowered.gradle.vanilla.repository.MinecraftPlatform.SERVER)
 }
