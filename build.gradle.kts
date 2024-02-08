@@ -53,14 +53,14 @@ tasks.register("generateData") {
 tasks.processResources.get().dependsOn("generateData")
 
 publishData {
-    addMainRepo("https://s01.oss.sonatype.org/service/local/")
-    addSnapshotRepo("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    addMainRepo("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+    addSnapshotRepo("https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
 
 indra {
     javaVersions {
-        target(21)
-        testWith(21)
+        target(17)
+        testWith(17)
     }
 
     github("OneLiteFeatherNET", "MinestomDataGenerator") {
