@@ -23,6 +23,11 @@ jobs:
       - name: Publish to Sonatype
         env:
           TAG_VERSION: ${{ github.ref_name }}
+          ORG_GRADLE_PROJECT_sonatypeUsername: "${{ secrets.SONATYPE_USERNAME }}"
+          ORG_GRADLE_PROJECT_sonatypePassword: "${{ secrets.SONATYPE_PASSWORD }}"
+          ORG_GRADLE_PROJECT_onelitefeatherSigningKey: "${{ secrets.ONELITEFEATHER_GPG_KEY }}"
+          ORG_GRADLE_PROJECT_onelitefeatherSigningPassword: "${{ secrets.ONELITEFEATHER_GPG_PASSWORD }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Peula=true
           echo "Version: ${TAG_VERSION}" >> $GITHUB_STEP_SUMMARY
