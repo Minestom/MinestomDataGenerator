@@ -1,15 +1,12 @@
 plugins {
     `java-library`
-//    id("net.kyori.blossom") version "2.0.0"
-//    alias(libs.plugins.blossom)
     alias(libs.plugins.vanilla.gradle) apply false
-
     `maven-publish`
     signing
     alias(libs.plugins.nexuspublish)
 }
 
-group = "net.minestom"
+group = "net.onelitefeather.microtus"
 version = System.getenv("TAG_VERSION") ?: "${libs.versions.minecraft.get()}-dev"
 description = "Generator for Minecraft game data values"
 
@@ -20,16 +17,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
-
-//blossom {
-//    val gitFile = "src/main/java/net/minestom/data/MinestomData.java"
-//
-//    val gitCommit = System.getenv("GIT_COMMIT")
-//    val gitBranch = System.getenv("GIT_BRANCH")
-//
-//    replaceToken("\"&COMMIT\"", if (gitCommit == null) "null" else "\"${gitCommit}\"", gitFile)
-//    replaceToken("\"&BRANCH\"", if (gitBranch == null) "null" else "\"${gitBranch}\"", gitFile)
-//}
 
 tasks.register("generateData") {
     logger.warn("Mojang requires all source-code and mappings used to be governed by the Minecraft EULA.")
@@ -62,7 +49,7 @@ tasks.register("generateData") {
 tasks.processResources.get().dependsOn("generateData")
 
 nexusPublishing {
-    this.packageGroup.set("net.minestom")
+    this.packageGroup.set("net.onelitefeather.microtus")
 
     repositories.sonatype {
         nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
@@ -76,7 +63,7 @@ nexusPublishing {
 }
 
 publishing.publications.create<MavenPublication>("maven") {
-    groupId = "net.minestom"
+    groupId = "net.onelitefeather.microtus"
     artifactId = "data"
     version = project.version.toString()
 
@@ -85,12 +72,12 @@ publishing.publications.create<MavenPublication>("maven") {
     pom {
         name.set("data")
         description.set("Minecraft game data values")
-        url.set("https://github.com/minestom/MinestomDataGenerator")
+        url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator")
 
         licenses {
             license {
                 name.set("Apache 2.0")
-                url.set("https://github.com/minestom/MinestomDataGenerator/blob/main/LICENSE")
+                url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator/blob/main/LICENSE")
             }
         }
 
@@ -103,23 +90,33 @@ publishing.publications.create<MavenPublication>("maven") {
             developer {
                 id.set("TheMode")
             }
+            developer {
+                id.set("themeinerlp")
+                name.set("Phillipp Glanz")
+                email.set("p.glanz@madfix.me")
+            }
+            developer {
+                id.set("theEvilReaper")
+                name.set("Steffen Wonning")
+                email.set("steffenwx@gmail.com")
+            }
         }
 
         issueManagement {
             system.set("GitHub")
-            url.set("https://github.com/minestom/MinestomDataGenerator/issues")
+            url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator/issues")
         }
 
         scm {
-            connection.set("scm:git:git://github.com/minestom/MinestomDataGenerator.git")
-            developerConnection.set("scm:git:git@github.com:minestom/MinestomDataGenerator.git")
-            url.set("https://github.com/minestom/MinestomDataGenerator")
+            connection.set("scm:git:git://github.com/OneLiteFeatherNET/MinestomDataGenerator.git")
+            developerConnection.set("scm:git:git@github.com:OneLiteFeatherNET/MinestomDataGenerator.git")
+            url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator")
             tag.set("HEAD")
         }
 
         ciManagement {
             system.set("Github Actions")
-            url.set("https://github.com/minestom/MinestomDataGenerator/actions")
+            url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator/actions")
         }
     }
 }
