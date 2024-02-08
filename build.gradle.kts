@@ -101,6 +101,7 @@ publishing {
     repositories {
         maven {
             url = uri(publishData.getRepository())
+            credentials(PasswordCredentials::class)
         }
     }
 }
