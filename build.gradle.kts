@@ -102,6 +102,7 @@ publishing {
         maven {
             url = uri(publishData.getRepository())
             credentials(PasswordCredentials::class)
+            name = "sonatype"
         }
     }
 }
