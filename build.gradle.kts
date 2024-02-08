@@ -97,3 +97,6 @@ indra {
         }
     }
 }
+indraSonatype {
+    useAlternateSonatypeOSSHost("s01")
+}
