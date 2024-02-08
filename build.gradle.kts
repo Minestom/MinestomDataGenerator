@@ -5,9 +5,6 @@ plugins {
     signing
     alias(libs.plugins.nexuspublish)
     alias(libs.plugins.publisdata)
-    id("net.kyori.indra") version "3.1.3"
-    id("net.kyori.indra.publishing") version "3.1.3"
-    id("net.kyori.indra.publishing.sonatype") version "3.1.3"
 }
 
 group = "net.onelitefeather.microtus"
@@ -29,8 +26,8 @@ tasks.register("generateData") {
     val eulaTxt = File("${rootProject.projectDir}/eula.txt")
     logger.warn("The file must be located at '${eulaTxt.absolutePath}'.")
     if ((eulaTxt.exists() && eulaTxt.readText(Charsets.UTF_8).equals("eula=true", true))
-            || project.properties["eula"].toString().toBoolean()
-            || System.getenv("EULA")?.toBoolean() == true
+        || project.properties["eula"].toString().toBoolean()
+        || System.getenv("EULA")?.toBoolean() == true
     ) {
         logger.warn("")
         logger.warn("The EULA has been accepted and signed.")
@@ -56,48 +53,60 @@ publishData {
     addMainRepo("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
     addSnapshotRepo("https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
-indra {
-    javaVersions {
-        target(17)
-        testWith(17)
-    }
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            publishData.configurePublication(this)
+            groupId = "net.onelitefeather.microtus"
+            artifactId = "data"
+            version = publishData.getVersion()
+            from(project.components["java"])
 
-    github("OneLiteFeatherNET", "MinestomDataGenerator") {
-        ci(true)
-        publishing(false)
-    }
-    apache2License()
-    signWithKeyFromPrefixedProperties("onelitefeather")
-    configurePublications {
-        publishData.configurePublication(this)
-        groupId = "net.onelitefeather.microtus"
-        artifactId = "data"
-        version = publishData.getVersion()
-        pom {
-            developers {
-                developer {
-                    id.set("mworzala")
-                    name.set("Matt Worzala")
-                    email.set("matt@hollowcube.dev")
+            pom {
+                issueManagement {
+                    system.set("GitHub")
+                    url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator/issues")
                 }
-                developer {
-                    id.set("TheMode")
+                scm {
+                    connection.set("scm:git:git://github.com/OneLiteFeatherNET/MinestomDataGenerator.git")
+                    developerConnection.set("scm:git:git@github.com:OneLiteFeatherNET/MinestomDataGenerator.git")
+                    url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator")
+                    tag.set("HEAD")
                 }
-                developer {
-                    id.set("themeinerlp")
-                    name.set("Phillipp Glanz")
-                    email.set("p.glanz@madfix.me")
+
+                ciManagement {
+                    system.set("Github Actions")
+                    url.set("https://github.com/OneLiteFeatherNET/MinestomDataGenerator/actions")
                 }
-                developer {
-                    id.set("theEvilReaper")
-                    name.set("Steffen Wonning")
-                    email.set("steffenwx@gmail.com")
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("mworzala")
+                        name.set("Matt Worzala")
+                        email.set("matt@hollowcube.dev")
+                    }
+                    developer {
+                        id.set("TheMode")
+                    }
+                    developer {
+                        id.set("themeinerlp")
+                        name.set("Phillipp Glanz")
+                        email.set("p.glanz@madfix.me")
+                    }
+                    developer {
+                        id.set("theEvilReaper")
+                        name.set("Steffen Wonning")
+                        email.set("steffenwx@gmail.com")
+                    }
                 }
             }
         }
     }
-}
-publishing {
     repositories {
         maven {
             url = uri(publishData.getRepository())
@@ -106,6 +115,12 @@ publishing {
         }
     }
 }
-indraSonatype {
-    useAlternateSonatypeOSSHost("s01")
+signing {
+    isRequired = System.getenv("CI") != null
+
+    val privateKey = System.getenv("GPG_PRIVATE_KEY")
+    val keyPassphrase = System.getenv()["GPG_PASSPHRASE"]
+    useInMemoryPgpKeys(privateKey, keyPassphrase)
+
+    sign(publishing.publications)
 }
