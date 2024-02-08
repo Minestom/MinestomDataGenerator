@@ -11,7 +11,7 @@ public final class AttributeGenerator extends DataGenerator {
         JsonObject attributes = new JsonObject();
         var registry = BuiltInRegistries.ATTRIBUTE;
         for (var attribute : registry) {
-            final var location = registry.key().location();
+            final var location = registry.getKey(attribute);
             JsonObject attributeJson = new JsonObject();
             attributeJson.addProperty("translationKey", attribute.getDescriptionId());
             attributeJson.addProperty("defaultValue", attribute.getDefaultValue());
