@@ -56,7 +56,6 @@ publishData {
     addMainRepo("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
     addSnapshotRepo("https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
-
 indra {
     javaVersions {
         target(17)
@@ -95,6 +94,13 @@ indra {
                     email.set("steffenwx@gmail.com")
                 }
             }
+        }
+    }
+}
+publishing {
+    repositories {
+        maven {
+            url = uri(publishData.getRepository())
         }
     }
 }
