@@ -2,8 +2,6 @@ name: Gradle Publish to Maven Central
 
 on:
   push:
-    tags:
-      - '*'
 
 jobs:
   build:

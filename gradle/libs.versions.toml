@@ -10,6 +10,7 @@ logback = "1.4.5"
 vanilla-gradle = "0.2.1-SNAPSHOT"
 blossom = "2.1.0"
 nexuspublish = "1.3.0"
+publishdata = "1.4.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
@@ -25,3 +26,4 @@ logging = ["slf4j-api", "logback-core", "logback-classic"]
 vanilla-gradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "vanilla-gradle" }
 blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
 nexuspublish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexuspublish" }
+publisdata = { id = "de.chojo.publishdata", version.ref = "publishdata"}

@@ -4,10 +4,11 @@ plugins {
     `maven-publish`
     signing
     alias(libs.plugins.nexuspublish)
+    alias(libs.plugins.publisdata)
 }
 
 group = "net.onelitefeather.microtus"
-version = System.getenv("TAG_VERSION") ?: "${libs.versions.minecraft.get()}-dev"
+version = libs.versions.minecraft.get()
 description = "Generator for Minecraft game data values"
 
 java {
@@ -48,6 +49,12 @@ tasks.register("generateData") {
 
 tasks.processResources.get().dependsOn("generateData")
 
+publishData {
+    addMainRepo("https://s01.oss.sonatype.org/service/local/")
+    addSnapshotRepo("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+}
+
+
 nexusPublishing {
     this.packageGroup.set("net.onelitefeather.microtus")
 
@@ -63,9 +70,9 @@ nexusPublishing {
 }
 
 publishing.publications.create<MavenPublication>("maven") {
+    publishData.configurePublication(this)
     groupId = "net.onelitefeather.microtus"
     artifactId = "data"
-    version = project.version.toString()
 
     from(project.components["java"])
 
