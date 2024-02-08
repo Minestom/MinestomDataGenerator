@@ -9,7 +9,7 @@ logback = "1.4.5"
 
 vanilla-gradle = "0.2.1-SNAPSHOT"
 blossom = "2.1.0"
-nexuspublish = "1.3.0"
+nexuspublish = "2.0.0-rc-1"
 publishdata = "1.4.0"
 
 [libraries]
