@@ -73,6 +73,7 @@ indra {
         publishData.configurePublication(this)
         groupId = "net.onelitefeather.microtus"
         artifactId = "data"
+        version = publishData.getVersion()
         pom {
             developers {
                 developer {
