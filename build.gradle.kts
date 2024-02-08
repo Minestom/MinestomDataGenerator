@@ -59,7 +59,7 @@ nexusPublishing {
     this.packageGroup.set("net.onelitefeather.microtus")
 
     repositories.sonatype {
-        nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+        nexusUrl.set(uri("https://s01.oss.sonatype.org/"))
         snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
 
         if (System.getenv("SONATYPE_USERNAME") != null) {
