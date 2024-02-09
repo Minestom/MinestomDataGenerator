@@ -7,25 +7,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minestom.datagen.DataGenerator;
 
 public final class MapColorGenerator extends DataGenerator {
     @Override
     public JsonArray generate() {
         JsonArray mapColors = new JsonArray();
-        Map<MaterialColor, String> colors = new HashMap<>();
+
+        Map<MapColor, String> colors = new HashMap<>();
         try {
-            List<Field> fields = Arrays.stream(MaterialColor.class.getDeclaredFields()).filter(field -> field.getType().equals(MaterialColor.class)).toList();
+            List<Field> fields = Arrays.stream(MapColor.class.getDeclaredFields()).filter(field -> field.getType().equals(MapColor.class)).toList();
             for (Field f : fields) {
                 f.setAccessible(true);
-                MaterialColor c = (MaterialColor) f.get(null);
+                MapColor c = (MapColor) f.get(null);
                 colors.put(c, f.getName());
             }
         } catch (IllegalAccessException e) {
             return mapColors;
         }
-        for (Map.Entry<MaterialColor, String> entry : colors.entrySet()) {
+        for (Map.Entry<MapColor, String> entry : colors.entrySet()) {
             if (entry.getKey() == null) {
                 continue;
             }

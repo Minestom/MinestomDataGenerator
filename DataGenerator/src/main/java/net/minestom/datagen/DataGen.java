@@ -14,9 +14,16 @@ import java.nio.file.StandardOpenOption;
 public class DataGen {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGen.class);
-    private static final Path OUTPUT = Path.of("../MinestomData/");
+    private static Path OUTPUT = Path.of("../MinestomData/");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        if (args.length > 0) {
+            OUTPUT = Path.of(args[0]);
+        }
+        if (!Files.exists(OUTPUT)) {
+            Files.createDirectories(OUTPUT);
+        }
+
         LOGGER.info("Generation starting...");
         for (var type : DataGenType.values()) {
             generate(type, type.getGenerator());

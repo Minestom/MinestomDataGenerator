@@ -86,7 +86,7 @@ public final class MaterialGenerator extends DataGenerator {
                 JsonObject armorProperties = new JsonObject();
                 armorProperties.addProperty("defense", armorItem.getDefense());
                 armorProperties.addProperty("toughness", armorItem.getToughness());
-                armorProperties.addProperty("slot", armorItem.getSlot().getName());
+                armorProperties.addProperty("slot", armorItem.getEquipmentSlot().getName());
                 itemJson.add("armorProperties", armorProperties);
             }
             // SpawnEgg properties

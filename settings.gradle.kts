@@ -1,4 +1,6 @@
-rootProject.name = "MinestomDataGenerator"
+//enableFeaturePreview("VERSION_CATALOGS")
+
+rootProject.name = "minestom-ce-data"
 // DataGenerator
 include("DataGenerator")
 
