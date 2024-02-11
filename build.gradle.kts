@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.onelitefeather.microtus"
-version = libs.versions.minecraft.get()
+version = System.getenv("TAG_VERSION") ?: "${libs.versions.minecraft.get()}-dev"
 description = "Generator for Minecraft game data values"
 
 java {
