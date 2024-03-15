@@ -144,6 +144,10 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "interactionShape", blockState.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "occlusionShape", blockState.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "visualShape", blockState.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString(), String.class);
+
+        // Redstone bits
+        appendState(blockJson, state, "redstoneConductor", blockState.isRedstoneConductor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), boolean.class);
+        appendState(blockJson, state, "signalSource", blockState.isSignalSource(), false, boolean.class);
     }
 
     private <T> void appendState(JsonObject main, JsonObject state, String key, T value, T defaultValue, Class<T> valueType) {
