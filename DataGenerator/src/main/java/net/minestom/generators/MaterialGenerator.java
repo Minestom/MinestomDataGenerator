@@ -65,7 +65,7 @@ public final class MaterialGenerator extends DataGenerator {
                         for (Pair<MobEffectInstance, Float> effectEntry : foodProperties.getEffects()) {
                             final var effect = effectEntry.getFirst();
                             final var chance = effectEntry.getSecond();
-                            ResourceLocation rl = mobEffectRegistry.getKey(effect.getEffect());
+                            ResourceLocation rl = mobEffectRegistry.getKey(effect.getEffect().value());
                             if (rl == null) {
                                 continue;
                             }
@@ -92,7 +92,8 @@ public final class MaterialGenerator extends DataGenerator {
             // SpawnEgg properties
             if (item instanceof SpawnEggItem spawnEggItem) {
                 JsonObject spawnEggProperties = new JsonObject();
-                spawnEggProperties.addProperty("entityType", entityTypeRegistry.getKey(spawnEggItem.getType(null)).toString());
+                var entityType = spawnEggItem.getType(spawnEggItem.getDefaultInstance());
+                spawnEggProperties.addProperty("entityType", entityTypeRegistry.getKey(entityType).toString());
                 itemJson.add("spawnEggProperties", spawnEggProperties);
             }
             items.add(location.toString(), itemJson);

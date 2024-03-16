@@ -13,7 +13,7 @@ public final class GameEventGenerator extends DataGenerator {
             final var location = registry.getKey(gameEvent);
             JsonObject gameEventJson = new JsonObject();
             gameEventJson.addProperty("id", registry.getId(gameEvent));
-            gameEventJson.addProperty("notificationRadius", gameEvent.getNotificationRadius());
+            gameEventJson.addProperty("notificationRadius", gameEvent.notificationRadius());
             gameEvents.add(location.toString(), gameEventJson);
         }
         return gameEvents;
