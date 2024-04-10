@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviourHack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minestom.datagen.DataGenerator;
@@ -51,13 +52,13 @@ public final class BlockGenerator extends DataGenerator {
             }
             // Random offset
             if (defaultBlockState.hasOffsetFunction()) {
-                blockJson.addProperty("maxHorizontalOffset", block.getMaxHorizontalOffset());
+                blockJson.addProperty("maxHorizontalOffset", BlockBehaviourHack.getMaxHorizontalOffset(block));
 
                 // There are only XY and XYZ offset functions, so we simply execute the offset func
                 // and check if the Y value is 0. It is seeded to the coordinates, so it should be reliable.
                 var result = defaultBlockState.getOffset(EmptyBlockGetter.INSTANCE, new BlockPos(42, 42, 42));
                 if (result.y != 0) {
-                    blockJson.addProperty("maxVerticalOffset", block.getMaxVerticalOffset());
+                    blockJson.addProperty("maxVerticalOffset", BlockBehaviourHack.getMaxVerticalOffset(block));
                 }
             }
             // Default values

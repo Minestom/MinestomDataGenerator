@@ -13,14 +13,13 @@ public final class AttributeGenerator extends DataGenerator {
         for (var attribute : registry) {
             final var location = registry.getKey(attribute);
             JsonObject attributeJson = new JsonObject();
+            attributeJson.addProperty("id", registry.getId(attribute));
             attributeJson.addProperty("translationKey", attribute.getDescriptionId());
             attributeJson.addProperty("defaultValue", attribute.getDefaultValue());
             attributeJson.addProperty("clientSync", attribute.isClientSyncable());
             if (attribute instanceof RangedAttribute rangedAttribute) {
-                JsonObject range = new JsonObject();
-                range.addProperty("maxValue", rangedAttribute.getMaxValue());
-                range.addProperty("minValue", rangedAttribute.getMinValue());
-                attributeJson.add("range", range);
+                attributeJson.addProperty("maxValue", rangedAttribute.getMaxValue());
+                attributeJson.addProperty("minValue", rangedAttribute.getMinValue());
             }
             attributes.add(location.toString(), attributeJson);
         }

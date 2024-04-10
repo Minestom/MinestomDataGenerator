@@ -12,9 +12,9 @@ apply {
 group = "net.minestom"
 version = rootProject.version
 
-repositories {
-    mavenCentral()
-}
+//repositories {
+//    mavenCentral()
+//}
 
 dependencies {
     implementation(libs.gson)
