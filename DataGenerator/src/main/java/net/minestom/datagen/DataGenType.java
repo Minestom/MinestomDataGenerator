@@ -7,6 +7,8 @@ import net.minestom.generators.loot_tables.EntityLootTableGenerator;
 import net.minestom.generators.loot_tables.GameplayLootTableGenerator;
 import net.minestom.generators.tags.*;
 
+import java.util.List;
+
 public enum DataGenType {
     ATTRIBUTES("attributes", new AttributeGenerator()),
     BIOMES("biomes", new BiomeGenerator()),
@@ -28,8 +30,8 @@ public enum DataGenType {
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_PROFESSIONS("villager_professions", new VillagerProfessionGenerator()),
     VILLAGER_TYPES("villager_types", new VillagerTypeGenerator()),
-    BANNER_PATTERNS("banner_patterns", new BannerPatternGenerator()),
     COMPONENTS("components", new ComponentGenerator()),
+    INSTRUMENTS("instruments", new InstrumentGenerator()),
 
     BLOCK_TAGS("tags/block_tags", new BlockTagGenerator()),
     ENTITY_TYPE_TAGS("tags/entity_type_tags", new EntityTypeTagGenerator()),
@@ -38,7 +40,8 @@ public enum DataGenType {
     ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
 
     DAMAGE_TYPES("damage_types", new GenericResourceGenerator("damage_type")),
-
+    BANNER_PATTERNS("banner_patterns", new GenericResourceGenerator("banner_pattern", List.of("asset_id"))),
+    WOLF_VARIANTS("wolf_variants", new GenericResourceGenerator("wolf_variant", List.of("angry_texture", "tame_texture", "wild_texture"))),
     TRIM_MATERIALS("trim_materials", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_patterns", new GenericResourceGenerator("trim_pattern")),
 
