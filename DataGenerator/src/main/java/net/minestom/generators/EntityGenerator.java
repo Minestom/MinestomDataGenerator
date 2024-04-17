@@ -66,10 +66,9 @@ public final class EntityGenerator extends DataGenerator {
 
             {   // Dimensions
                 EntityDimensions dimensions = entityType.getDimensions();
-                JsonObject dims = new JsonObject();
-                dims.addProperty("width", dimensions.width());
-                dims.addProperty("height", dimensions.height());
-                dims.addProperty("eyeHeight", dimensions.eyeHeight());
+                entity.addProperty("width", dimensions.width());
+                entity.addProperty("height", dimensions.height());
+                entity.addProperty("eyeHeight", dimensions.eyeHeight());
 
                 // Get the defined attachment points for entities
                 Map<EntityAttachment, List<Vec3>> attachments = getAttachmentMap(dimensions.attachments());
@@ -95,10 +94,8 @@ public final class EntityGenerator extends DataGenerator {
                     attachs.add(entry.getKey().name(), points);
                 }
                 if (!attachs.isEmpty()) {
-                    dims.add("attachments", attachs);
+                    entity.add("attachments", attachs);
                 }
-
-                entity.add("dimensions", dims);
             }
 
             addDefaultable(entity, "drag", findDrag(entityType), DEFAULT_DRAG);
