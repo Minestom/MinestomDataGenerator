@@ -9,6 +9,7 @@ import net.minecraft.server.Bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,7 +61,8 @@ public abstract class DataGenerator {
                     .forEach(path -> {
                         try {
                             JsonObject blockLootTable = DataGen.GSON.fromJson(new JsonReader(Files.newBufferedReader(path)), JsonObject.class);
-                            final String tableName = directory.relativize(path).toString()
+                            final String fileName = directory.relativize(path).toString();
+                            final String tableName = (File.separatorChar == '\\' ? fileName.replace('\\', '/') : fileName)
                                     .replace(".json", "");
                             result.add("minecraft:" + tableName, blockLootTable);
                         } catch (IOException e) {
