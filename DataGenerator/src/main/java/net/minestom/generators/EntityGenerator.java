@@ -1,19 +1,21 @@
 package net.minestom.generators;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minestom.datagen.DataGenerator;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class EntityGenerator extends DataGenerator {
@@ -61,8 +63,41 @@ public final class EntityGenerator extends DataGenerator {
             entity.addProperty("translationKey", entityType.getDescriptionId());
             entity.addProperty("packetType", packetType);
             addDefaultable(entity, "fireImmune", entityType.fireImmune(), false);
-            entity.addProperty("height", entityType.getHeight());
-            entity.addProperty("width", entityType.getWidth());
+
+            {   // Dimensions
+                EntityDimensions dimensions = entityType.getDimensions();
+                entity.addProperty("width", dimensions.width());
+                entity.addProperty("height", dimensions.height());
+                entity.addProperty("eyeHeight", dimensions.eyeHeight());
+
+                // Get the defined attachment points for entities
+                Map<EntityAttachment, List<Vec3>> attachments = getAttachmentMap(dimensions.attachments());
+                JsonObject attachs = new JsonObject();
+                for (var entry : attachments.entrySet()) {
+                    List<Vec3> vecs = entry.getValue();
+
+                    // Create the default fallback points for this attachement and exclude this entry if they are
+                    // the same. No point in including this we can just recompute it.
+                    var fallbacks = entry.getKey().createFallbackPoints(dimensions.width(), dimensions.height());
+                    if (vecs.equals(fallbacks)) {
+                        continue;
+                    }
+
+                    JsonArray points = new JsonArray();
+                    for (Vec3 vec : vecs) {
+                        JsonArray vecJson = new JsonArray();
+                        vecJson.add(vec.x());
+                        vecJson.add(vec.y());
+                        vecJson.add(vec.z());
+                        points.add(vecJson);
+                    }
+                    attachs.add(entry.getKey().name(), points);
+                }
+                if (!attachs.isEmpty()) {
+                    entity.add("attachments", attachs);
+                }
+            }
+
             addDefaultable(entity, "drag", findDrag(entityType), DEFAULT_DRAG);
             addDefaultable(entity, "acceleration", findAcceleration(entityType), DEFAULT_ACCELERATION);
             entity.addProperty("clientTrackingRange", entityType.clientTrackingRange());
@@ -117,5 +152,15 @@ public final class EntityGenerator extends DataGenerator {
         if (entityType == EntityType.DRAGON_FIREBALL) return 0.1;
 
         return DEFAULT_ACCELERATION;
+    }
+
+    private @NotNull Map<EntityAttachment, List<Vec3>> getAttachmentMap(@NotNull EntityAttachments attachments) {
+        try {
+            var field = EntityAttachments.class.getDeclaredField("attachments");
+            field.setAccessible(true);
+            return (Map<EntityAttachment, List<Vec3>>) field.get(attachments);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

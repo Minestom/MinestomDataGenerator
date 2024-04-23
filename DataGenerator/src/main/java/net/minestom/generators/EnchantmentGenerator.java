@@ -15,12 +15,10 @@ public final class EnchantmentGenerator extends DataGenerator {
             enchantmentJson.addProperty("id", registry.getId(enchantment));
             enchantmentJson.addProperty("translationKey", enchantment.getDescriptionId());
             enchantmentJson.addProperty("maxLevel", enchantment.getMaxLevel());
-            enchantmentJson.addProperty("rarity", enchantment.getRarity().toString());
             addDefaultable(enchantmentJson, "curse", enchantment.isCurse(), false);
             addDefaultable(enchantmentJson, "discoverable", enchantment.isDiscoverable(), true);
             addDefaultable(enchantmentJson, "tradeable", enchantment.isTradeable(), true);
             addDefaultable(enchantmentJson, "treasureOnly", enchantment.isTreasureOnly(), false);
-            enchantmentJson.addProperty("category", enchantment.category.name());
             enchantments.add(location.toString(), enchantmentJson);
         }
         return enchantments;

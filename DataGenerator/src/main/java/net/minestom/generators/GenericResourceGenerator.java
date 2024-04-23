@@ -7,6 +7,7 @@ import net.minestom.datagen.DataGenerator;
 import net.minestom.utils.ResourceUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class GenericResourceGenerator extends DataGenerator {
@@ -14,9 +15,15 @@ public class GenericResourceGenerator extends DataGenerator {
     private static final Gson gson = new Gson();
 
     private final String name;
+    private final List<String> exclusions;
 
     public GenericResourceGenerator(@NotNull String name) {
+        this(name, List.of());
+    }
+
+    public GenericResourceGenerator(@NotNull String name, @NotNull List<String> exclusions) {
         this.name = "data/minecraft/" + name + "/";
+        this.exclusions = exclusions;
     }
 
     @Override
@@ -41,6 +48,7 @@ public class GenericResourceGenerator extends DataGenerator {
             if (content.length() > 0 && fileName.endsWith(".json")) {
                 var key = "minecraft:" + fileName.substring(0, fileName.length() - 5);
                 var jsonObject = gson.fromJson(content.toString(), JsonObject.class);
+                exclusions.forEach(jsonObject::remove);
                 result.add(key, jsonObject);
             }
         }
