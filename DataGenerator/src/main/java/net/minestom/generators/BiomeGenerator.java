@@ -2,6 +2,10 @@ package net.minestom.generators;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.Main;
 import net.minecraft.world.level.biome.*;
 import net.minestom.datagen.DataGenerator;
 import net.minestom.utils.ResourceUtils;

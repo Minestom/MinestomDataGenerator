@@ -15,7 +15,6 @@ public enum DataGenType {
     BLOCKS("blocks", new BlockGenerator()),
     COMMAND_ARGUMENTS("command_arguments", new CommandArgumentGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
-    DIMENSION_TYPES("dimension_types", new DimensionTypeGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     ENCHANTMENTS("enchantments", new EnchantmentGenerator()),
     ENTITIES("entities", new EntityGenerator()),
@@ -39,9 +38,11 @@ public enum DataGenType {
     GAMEEVENT_TAGS("tags/gameplay_tags", new GameEventTagGenerator()),
     ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
 
+    DIMENSION_TYPES("dimension_types", new GenericResourceGenerator("dimension_type")),
+    CHAT_TYPES("chat_types", new GenericResourceGenerator("chat_type")),
     DAMAGE_TYPES("damage_types", new GenericResourceGenerator("damage_type")),
-    BANNER_PATTERNS("banner_patterns", new GenericResourceGenerator("banner_pattern", List.of("asset_id"))),
-    WOLF_VARIANTS("wolf_variants", new GenericResourceGenerator("wolf_variant", List.of("angry_texture", "tame_texture", "wild_texture"))),
+    BANNER_PATTERNS("banner_patterns", new GenericResourceGenerator("banner_pattern")),
+    WOLF_VARIANTS("wolf_variants", new GenericResourceGenerator("wolf_variant")),
     TRIM_MATERIALS("trim_materials", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_patterns", new GenericResourceGenerator("trim_pattern")),
 
