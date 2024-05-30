@@ -130,9 +130,7 @@ public final class EntityGenerator extends DataGenerator {
 
         if (entityType == EntityType.EGG) return 0.03;
         if (entityType == EntityType.FISHING_BOBBER) return 0.03;
-        if (entityType == EntityType.EXPERIENCE_BOTTLE) return 0.03;
         if (entityType == EntityType.ENDER_PEARL) return 0.03;
-        if (entityType == EntityType.POTION) return 0.03;
         if (entityType == EntityType.SNOWBALL) return 0.03;
 
         if (entityType == EntityType.BOAT) return 0.04;
@@ -144,8 +142,11 @@ public final class EntityGenerator extends DataGenerator {
         if (entityType == EntityType.ARROW) return 0.05;
         if (entityType == EntityType.SPECTRAL_ARROW) return 0.05;
         if (entityType == EntityType.TRIDENT) return 0.05;
+        if (entityType == EntityType.POTION) return 0.05;
 
         if (entityType == EntityType.LLAMA_SPIT) return 0.06;
+        
+        if (entityType == EntityType.EXPERIENCE_BOTTLE) return 0.07;
 
         if (entityType == EntityType.FIREBALL) return 0.1;
         if (entityType == EntityType.WITHER_SKULL) return 0.1;
