@@ -6,6 +6,6 @@ import net.minestom.datagen.DataGenerator;
 public final class EntityTypeTagGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
-        return mergePath(TAGS_FOLDER.resolve("entity_types"));
+        return mergePath(TAGS_FOLDER.resolve("entity_type"));
     }
 }

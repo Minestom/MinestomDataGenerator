@@ -9,6 +9,6 @@ import net.minestom.datagen.DataGenerator;
 public final class BlockTagGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
-        return mergePath(TAGS_FOLDER.resolve("blocks"));
+        return mergePath(TAGS_FOLDER.resolve("block"));
     }
 }
