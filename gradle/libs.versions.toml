@@ -2,7 +2,7 @@ metadata.format.version = "1.1"
 
 [versions]
 gson = "2.10.1"
-minecraft = "1.21-rc1"
+minecraft = "1.21"
 
 slf4j-api = "2.0.7"
 logback = "1.4.5"
