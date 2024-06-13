@@ -12,7 +12,8 @@ public class MinecraftConstantGenerator extends DataGenerator {
     public JsonElement generate() throws Exception {
         var version = SharedConstants.getCurrentVersion();
         JsonObject obj = new JsonObject();
-        obj.addProperty("name", version.getName());
+        obj.addProperty("name", version.getId());
+        obj.addProperty("friendly_name", version.getName());
         obj.addProperty("protocol", version.getProtocolVersion());
         obj.addProperty("world", version.getDataVersion().getVersion());
         obj.addProperty("resourcepack", version.getPackVersion(PackType.CLIENT_RESOURCES));
