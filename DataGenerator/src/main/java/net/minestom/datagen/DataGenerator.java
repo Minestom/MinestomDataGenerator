@@ -1,6 +1,5 @@
 package net.minestom.datagen;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import net.minecraft.SharedConstants;
@@ -40,7 +39,7 @@ public abstract class DataGenerator {
         }
     }
 
-    public abstract JsonElement generate() throws Exception;
+    public abstract Object/*JsonElement, String*/ generate() throws Exception;
 
     protected void addDefaultable(JsonObject jsonObject, String key, boolean value, boolean defaultValue) {
         if (value != defaultValue) jsonObject.addProperty(key, value);

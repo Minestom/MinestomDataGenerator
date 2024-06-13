@@ -10,13 +10,14 @@ import net.minestom.generators.tags.*;
 import java.util.List;
 
 public enum DataGenType {
+    CONSTANTS("constants", new MinecraftConstantGenerator()),
+
     ATTRIBUTES("attributes", new AttributeGenerator()),
     BIOMES("biomes", new BiomeGenerator()),
     BLOCKS("blocks", new BlockGenerator()),
     COMMAND_ARGUMENTS("command_arguments", new CommandArgumentGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
-    ENCHANTMENTS("enchantments", new EnchantmentGenerator()),
     ENTITIES("entities", new EntityGenerator()),
     FLUIDS("fluids", new FluidGenerator()),
     GAME_EVENTS("game_events", new GameEventGenerator()),
@@ -31,11 +32,7 @@ public enum DataGenType {
     VILLAGER_TYPES("villager_types", new VillagerTypeGenerator()),
     RECIPE_TYPE("recipe_types", new RecipeTypeGenerator()),
 
-    BLOCK_TAGS("tags/block_tags", new BlockTagGenerator()),
-    ENTITY_TYPE_TAGS("tags/entity_type_tags", new EntityTypeTagGenerator()),
-    FLUID_TAGS("tags/fluid_tags", new FluidTagGenerator()),
-    GAMEEVENT_TAGS("tags/gameplay_tags", new GameEventTagGenerator()),
-    ITEM_TAGS("tags/item_tags", new ItemTagGenerator()),
+    // Tags are specified as a special case in datagen
 
     DIMENSION_TYPES("dimension_types", new GenericResourceGenerator("dimension_type")),
     CHAT_TYPES("chat_types", new GenericResourceGenerator("chat_type")),
@@ -44,6 +41,9 @@ public enum DataGenType {
     WOLF_VARIANTS("wolf_variants", new GenericResourceGenerator("wolf_variant")),
     TRIM_MATERIALS("trim_materials", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_patterns", new GenericResourceGenerator("trim_pattern")),
+    ENCHANTMENTS("enchantments", new GenericResourceGenerator("enchantment", List.of(), true)),
+    PAINTING_VARIANTS("painting_variants", new GenericResourceGenerator("painting_variant")),
+    JUKEBOX_SONGS("jukebox_songs", new GenericResourceGenerator("jukebox_song")),
 
     BLOCK_LOOT_TABLES("loot_tables/block_loot_tables", new BlockLootTableGenerator()),
     CHEST_LOOT_TABLES("loot_tables/chest_loot_tables", new ChestLootTableGenerator()),

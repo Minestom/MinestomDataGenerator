@@ -1,7 +1,5 @@
 plugins {
     `java-library`
-//    id("net.kyori.blossom") version "2.0.0"
-//    alias(libs.plugins.blossom)
     alias(libs.plugins.vanilla.gradle) apply false
 
     `maven-publish`
@@ -20,16 +18,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
-
-//blossom {
-//    val gitFile = "src/main/java/net/minestom/data/MinestomData.java"
-//
-//    val gitCommit = System.getenv("GIT_COMMIT")
-//    val gitBranch = System.getenv("GIT_BRANCH")
-//
-//    replaceToken("\"&COMMIT\"", if (gitCommit == null) "null" else "\"${gitCommit}\"", gitFile)
-//    replaceToken("\"&BRANCH\"", if (gitBranch == null) "null" else "\"${gitBranch}\"", gitFile)
-//}
 
 tasks.register("generateData") {
     logger.warn("Mojang requires all source-code and mappings used to be governed by the Minecraft EULA.")

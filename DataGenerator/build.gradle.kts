@@ -12,10 +12,6 @@ apply {
 group = "net.minestom"
 version = rootProject.version
 
-//repositories {
-//    mavenCentral()
-//}
-
 dependencies {
     implementation(libs.gson)
     implementation(libs.bundles.logging)
