@@ -31,7 +31,7 @@ public abstract class DataGenerator {
                     "--output=" + tempDir
             });
             DATA_FOLDER = tempDir.resolve("data").resolve("minecraft");
-            LOOT_TABLES_FOLDER = DATA_FOLDER.resolve("loot_tables");
+            LOOT_TABLES_FOLDER = DATA_FOLDER.resolve("loot_table");
             TAGS_FOLDER = DATA_FOLDER.resolve("tags");
         } catch (IOException e) {
             LOGGER.error("Something went wrong while running Mojang's data generator.", e);

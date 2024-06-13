@@ -34,10 +34,11 @@ public class DataGen {
             generate(type.getFileName(), type.getGenerator());
         }
         for (var tag : TAG_TYPES) {
-            if (tag.contains("/")) { // Slice off worldgen from worldgen/biome
-                tag = tag.substring(tag.lastIndexOf("/") + 1);
+            String filename = tag;
+            if (filename.contains("/")) { // Slice off worldgen from worldgen/biome
+                filename = filename.substring(filename.lastIndexOf("/") + 1);
             }
-            generate("tags/" + tag, new GenericTagGenerator(tag));
+            generate("tags/" + filename, new GenericTagGenerator(tag));
         }
         LOGGER.info("Generation done!");
     }
