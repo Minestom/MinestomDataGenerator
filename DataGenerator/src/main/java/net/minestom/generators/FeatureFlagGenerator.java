@@ -1,6 +1,7 @@
 package net.minestom.generators;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minestom.datagen.DataGenerator;
@@ -9,12 +10,15 @@ import java.util.Set;
 
 public final class FeatureFlagGenerator extends DataGenerator {
     @Override
-    public JsonArray generate() throws Exception {
-        JsonArray flags = new JsonArray();
+    public JsonObject generate() throws Exception {
+        JsonObject flags = new JsonObject();
 
         Set<ResourceLocation> featureFlags = FeatureFlags.REGISTRY.toNames(FeatureFlags.REGISTRY.allFlags());
+        int idCounter = 0;
         for (ResourceLocation namespace : featureFlags) {
-            flags.add(namespace.toString());
+            JsonObject flag = new JsonObject();
+            flag.addProperty("id", idCounter++);
+            flags.add(namespace.toString(), flag);
         }
 
         return flags;
