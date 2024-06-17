@@ -19,6 +19,7 @@ public enum DataGenType {
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     ENTITIES("entities", new EntityGenerator()),
+    FEATURE_FLAGS("feature_flags", new FeatureFlagGenerator()),
     FLUIDS("fluids", new FluidGenerator()),
     GAME_EVENTS("game_events", new GameEventGenerator()),
     MATERIALS("items", new MaterialGenerator()),
