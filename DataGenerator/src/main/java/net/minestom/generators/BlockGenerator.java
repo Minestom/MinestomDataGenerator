@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -62,7 +63,7 @@ public final class BlockGenerator extends DataGenerator {
                 }
             }
             // Default values
-            writeState(block, defaultBlockState, null, blockJson);
+            writeState(location, block, defaultBlockState, null, blockJson);
             {
                 // List of properties
                 JsonObject properties = new JsonObject();
@@ -83,7 +84,7 @@ public final class BlockGenerator extends DataGenerator {
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
                 JsonObject state = new JsonObject();
                 state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
-                writeState(block, bs, blockJson, state);
+                writeState(location, block, bs, blockJson, state);
 
                 StringBuilder stateName = new StringBuilder("[");
                 for (var propertyEntry : bs.getValues().entrySet()) {
@@ -123,11 +124,17 @@ public final class BlockGenerator extends DataGenerator {
         return blocks;
     }
 
-    private void writeState(Block block, BlockState blockState, JsonObject blockJson, JsonObject state) {
+    private void writeState(ResourceLocation location, Block block, BlockState blockState, JsonObject blockJson, JsonObject state) {
         // Data
         appendState(blockJson, state, "canRespawnIn", block.isPossibleToRespawnInThis(blockState), boolean.class);
         appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
-        appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
+        if (location.toString().equals("minecraft:light")) {
+            // This is a bad special case for light blocks. minecraft:light[level=0] has an emission value of 0, but the default
+            // state has an emission value of 15 meaning if this is omitted light 0 will have an emission of 15.
+            appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 15, int.class);
+        } else {
+            appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
+        }
         appendState(blockJson, state, "pushReaction", blockState.getPistonPushReaction().name(), String.class);
         appendState(blockJson, state, "mapColorId", blockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
         appendState(blockJson, state, "occludes", blockState.canOcclude(), boolean.class);
