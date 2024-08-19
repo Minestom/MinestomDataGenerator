@@ -138,6 +138,7 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "pushReaction", blockState.getPistonPushReaction().name(), String.class);
         appendState(blockJson, state, "mapColorId", blockState.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).id, int.class);
         appendState(blockJson, state, "occludes", blockState.canOcclude(), boolean.class);
+        appendState(blockJson, state, "requiresTool", blockState.requiresCorrectToolForDrops(), boolean.class);
 
         appendState(blockJson, state, "blocksMotion", blockState.blocksMotion(), boolean.class);
         appendState(blockJson, state, "flammable", isFlammable(blockState), boolean.class);
