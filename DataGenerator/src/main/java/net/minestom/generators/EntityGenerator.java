@@ -107,7 +107,7 @@ public final class EntityGenerator extends DataGenerator {
     }
 
     private double findDrag(EntityType<?> entityType) {
-        if (entityType == EntityType.BOAT) return 0;
+        if (isBoat(entityType)) return 0;
 
         if (entityType == EntityType.LLAMA_SPIT) return 0.01;
         if (entityType == EntityType.ENDER_PEARL) return 0.01;
@@ -133,7 +133,7 @@ public final class EntityGenerator extends DataGenerator {
         if (entityType == EntityType.ENDER_PEARL) return 0.03;
         if (entityType == EntityType.SNOWBALL) return 0.03;
 
-        if (entityType == EntityType.BOAT) return 0.04;
+        if (isBoat(entityType)) return 0.04;
         if (entityType == EntityType.TNT) return 0.04;
         if (entityType == EntityType.FALLING_BLOCK) return 0.04;
         if (entityType == EntityType.ITEM) return 0.04;
@@ -163,5 +163,9 @@ public final class EntityGenerator extends DataGenerator {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static boolean isBoat(@NotNull EntityType<?> entityType) {
+        return BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString().contains("boat");
     }
 }

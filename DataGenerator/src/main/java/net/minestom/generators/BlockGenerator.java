@@ -57,7 +57,7 @@ public final class BlockGenerator extends DataGenerator {
 
                 // There are only XY and XYZ offset functions, so we simply execute the offset func
                 // and check if the Y value is 0. It is seeded to the coordinates, so it should be reliable.
-                var result = defaultBlockState.getOffset(EmptyBlockGetter.INSTANCE, new BlockPos(42, 42, 42));
+                var result = defaultBlockState.getOffset(new BlockPos(42, 42, 42));
                 if (result.y != 0) {
                     blockJson.addProperty("maxVerticalOffset", BlockBehaviourHack.getMaxVerticalOffset(block));
                 }
@@ -151,7 +151,7 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "shape", blockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "collisionShape", blockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "interactionShape", blockState.getInteractionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
-        appendState(blockJson, state, "occlusionShape", blockState.getOcclusionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
+        appendState(blockJson, state, "occlusionShape", blockState.getOcclusionShape().toAabbs().toString(), String.class);
         appendState(blockJson, state, "visualShape", blockState.getVisualShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()).toAabbs().toString(), String.class);
 
         // Redstone bits
