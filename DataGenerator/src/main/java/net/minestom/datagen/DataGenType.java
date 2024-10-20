@@ -37,6 +37,7 @@ public enum DataGenType {
     RECIPE_DISPLAY_TYPE("recipe_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_DISPLAY)),
     SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
     RECIPE_BOOK_CATEGORY("recipe_book_categories", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_BOOK_CATEGORY)),
+    CONSUME_EFFECT("consume_effects", new GenericRegistryGenerator<>(BuiltInRegistries.CONSUME_EFFECT_TYPE)),
 
     // Tags are specified as a special case in datagen
 
