@@ -59,15 +59,6 @@ public final class MaterialGenerator extends DataGenerator {
                 itemJson.addProperty("correspondingBlock", blockRegistry.getKey(block).toString());
             }
 
-            // Armor properties (which aren't components still??)
-            if (item instanceof ArmorItem armorItem) {
-                JsonObject armorProperties = new JsonObject();
-                armorProperties.addProperty("defense", armorItem.getDefense());
-                armorProperties.addProperty("toughness", armorItem.getToughness());
-                armorProperties.addProperty("slot", armorItem.getEquipmentSlot().getName());
-                itemJson.add("armorProperties", armorProperties);
-            }
-
             // Spawn egg properties
             if (item instanceof SpawnEggItem spawnEggItem) {
                 JsonObject spawnEggProperties = new JsonObject();
