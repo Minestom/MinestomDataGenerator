@@ -17,7 +17,6 @@ public enum DataGenType {
     ATTRIBUTES("attributes", new AttributeGenerator()),
     BIOMES("biomes", new BiomeGenerator()),
     BLOCKS("blocks", new BlockGenerator()),
-    COMMAND_ARGUMENTS("command_arguments", new CommandArgumentGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     ENTITIES("entities", new EntityGenerator()),
@@ -38,6 +37,7 @@ public enum DataGenType {
     SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
     RECIPE_BOOK_CATEGORY("recipe_book_categories", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_BOOK_CATEGORY)),
     CONSUME_EFFECT("consume_effects", new GenericRegistryGenerator<>(BuiltInRegistries.CONSUME_EFFECT_TYPE)),
+    COMMAND_ARGUMENTS("command_arguments", new GenericRegistryGenerator<>(BuiltInRegistries.COMMAND_ARGUMENT_TYPE)),
 
     // Tags are specified as a special case in datagen
 
