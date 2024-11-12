@@ -31,7 +31,7 @@ public enum DataGenType {
     SOUNDS("sounds", new SoundGenerator()),
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_PROFESSIONS("villager_professions", new VillagerProfessionGenerator()),
-    VILLAGER_TYPES("villager_types", new VillagerTypeGenerator()),
+    VILLAGER_TYPES("villager_types", new GenericRegistryGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
     RECIPE_TYPE("recipe_types", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_TYPE)),
     RECIPE_DISPLAY_TYPE("recipe_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_DISPLAY)),
     SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
