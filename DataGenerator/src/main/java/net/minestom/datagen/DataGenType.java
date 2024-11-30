@@ -23,6 +23,7 @@ public enum DataGenType {
     FEATURE_FLAGS("feature_flags", new FeatureFlagGenerator()),
     FLUIDS("fluids", new FluidGenerator()),
     GAME_EVENTS("game_events", new GameEventGenerator()),
+    WORLD_EVENTS("world_events", new WorldEventGenerator()),
     MATERIALS("items", new MaterialGenerator()),
     MAP_COLORS("map_colors", new MapColorGenerator()),
     PARTICLES("particles", new ParticleGenerator()),
