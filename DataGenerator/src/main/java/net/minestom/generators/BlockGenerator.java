@@ -131,7 +131,8 @@ public final class BlockGenerator extends DataGenerator {
         if (location.toString().equals("minecraft:light")) {
             // This is a bad special case for light blocks. minecraft:light[level=0] has an emission value of 0, but the default
             // state has an emission value of 15 meaning if this is omitted light 0 will have an emission of 15.
-            appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 15, int.class);
+            // Switch to include it no matter what in this case.
+            appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), int.class);
         } else {
             appendState(blockJson, state, "lightEmission", blockState.getLightEmission(), 0, int.class);
         }
