@@ -79,6 +79,19 @@ public final class BlockGenerator extends DataGenerator {
                     blockJson.add("properties", properties);
                 }
             }
+            {
+                // SPimds
+                // Sounds
+                JsonObject soundObject = new JsonObject();
+                soundObject.addProperty("volume", defaultBlockState.getSoundType().volume);
+                soundObject.addProperty("pitch", defaultBlockState.getSoundType().pitch);
+                soundObject.addProperty("breakSound", defaultBlockState.getSoundType().getBreakSound().location().toString());
+                soundObject.addProperty("hitSound", defaultBlockState.getSoundType().getHitSound().location().toString());
+                soundObject.addProperty("fallSound", defaultBlockState.getSoundType().getFallSound().location().toString());
+                soundObject.addProperty("placeSound", defaultBlockState.getSoundType().getPlaceSound().location().toString());
+                soundObject.addProperty("stepSound", defaultBlockState.getSoundType().getStepSound().location().toString());
+                blockJson.add("soundType", soundObject);
+            }
             // Block states
             JsonObject blockStates = new JsonObject();
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
