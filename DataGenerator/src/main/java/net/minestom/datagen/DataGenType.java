@@ -17,6 +17,7 @@ public enum DataGenType {
     ATTRIBUTES("attributes", new AttributeGenerator()),
     BIOMES("biomes", new BiomeGenerator()),
     BLOCKS("blocks", new BlockGenerator()),
+    BLOCK_SOUND_TYPES("block_sound_types", new BlockSoundTypeGenerator()),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     ENTITIES("entities", new EntityGenerator()),
