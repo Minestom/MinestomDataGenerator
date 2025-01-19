@@ -8,10 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviourHack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,9 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
 public final class BlockGenerator extends DataGenerator {
     @Override
@@ -33,6 +29,7 @@ public final class BlockGenerator extends DataGenerator {
         var registry = BuiltInRegistries.BLOCK;
         var itemRegistry = BuiltInRegistries.ITEM;
         var blockEntityTypeRegistry = BuiltInRegistries.BLOCK_ENTITY_TYPE;
+        var blockSoundTypes = getBlockSoundTypeList();
         for (var block : registry) {
             final var location = registry.getKey(block);
             final var defaultBlockState = block.defaultBlockState();
@@ -63,7 +60,7 @@ public final class BlockGenerator extends DataGenerator {
                 }
             }
             // Default values
-            writeState(location, block, defaultBlockState, null, blockJson);
+            writeState(location, block, blockSoundTypes, defaultBlockState, null, blockJson);
             {
                 // List of properties
                 JsonObject properties = new JsonObject();
@@ -84,7 +81,7 @@ public final class BlockGenerator extends DataGenerator {
             for (BlockState bs : block.getStateDefinition().getPossibleStates()) {
                 JsonObject state = new JsonObject();
                 state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
-                writeState(location, block, bs, blockJson, state);
+                writeState(location, block, blockSoundTypes, bs, blockJson, state);
 
                 StringBuilder stateName = new StringBuilder("[");
                 for (var propertyEntry : bs.getValues().entrySet()) {
@@ -124,7 +121,23 @@ public final class BlockGenerator extends DataGenerator {
         return blocks;
     }
 
-    private void writeState(ResourceLocation location, Block block, BlockState blockState, JsonObject blockJson, JsonObject state) {
+    private Map<String, SoundType> getBlockSoundTypeList() {
+        Map<String, SoundType> soundTypes = new HashMap<>();
+        try {
+            for (var field : SoundType.class.getDeclaredFields()) {
+                if ((field.getModifiers() & Modifier.STATIC) == 0) continue;
+
+                SoundType soundType = (SoundType) field.get(null);
+                String name = field.getName().toLowerCase();
+                soundTypes.put(name, soundType);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return soundTypes;
+    }
+
+    private void writeState(ResourceLocation location, Block block, Map<String, SoundType> soundTypes, BlockState blockState, JsonObject blockJson, JsonObject state) {
         // Data
         appendState(blockJson, state, "canRespawnIn", block.isPossibleToRespawnInThis(blockState), boolean.class);
         appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);
@@ -148,6 +161,14 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "replaceable", blockState.canBeReplaced(), false, boolean.class);
         appendState(blockJson, state, "solid", blockState.isSolid(), boolean.class);
         appendState(blockJson, state, "solidBlocking", blockState.blocksMotion(), boolean.class);
+        // Sounds
+        SoundType soundType = blockState.getSoundType();
+        for (var entry : soundTypes.entrySet()) {
+            if (soundType.equals(entry.getValue())) {
+                appendState(blockJson, state, "soundType", entry.getKey(), String.class);
+                break;
+            }
+        }
         // Shapes (Hit-boxes)
         appendState(blockJson, state, "shape", blockState.getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
         appendState(blockJson, state, "collisionShape", blockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString(), String.class);
