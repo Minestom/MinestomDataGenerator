@@ -1,15 +1,15 @@
 metadata.format.version = "1.1"
 
 [versions]
-gson = "2.10.1"
+gson = "2.11.0"
 minecraft = "1.21.4"
 
-slf4j-api = "2.0.7"
-logback = "1.4.5"
+slf4j-api = "2.0.16"
+logback = "1.5.16"
 
 vanilla-gradle = "0.2.1-SNAPSHOT"
 blossom = "2.1.0"
-nexuspublish = "1.3.0"
+nexuspublish = "2.0.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
