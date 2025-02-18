@@ -1,6 +1,6 @@
 package net.minestom.generators;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.world.level.block.SoundType;
 import net.minestom.datagen.DataGenerator;
@@ -10,8 +10,8 @@ import java.lang.reflect.Modifier;
 public class BlockSoundTypeGenerator extends DataGenerator {
 
     @Override
-    public JsonArray generate() {
-        JsonArray blockSoundTypes = new JsonArray();
+    public JsonElement generate() {
+        JsonObject blockSoundTypes = new JsonObject();
 
         try {
             for (var field : SoundType.class.getDeclaredFields()) {
@@ -20,7 +20,6 @@ public class BlockSoundTypeGenerator extends DataGenerator {
                 SoundType soundType = (SoundType) field.get(null);
                 String name = field.getName().toLowerCase();
                 JsonObject soundTypeJson = new JsonObject();
-                soundTypeJson.addProperty("name", name);
                 soundTypeJson.addProperty("volume", soundType.volume);
                 soundTypeJson.addProperty("pitch", soundType.pitch);
                 soundTypeJson.addProperty("breakSound", soundType.getBreakSound().location().toString());
@@ -28,7 +27,7 @@ public class BlockSoundTypeGenerator extends DataGenerator {
                 soundTypeJson.addProperty("fallSound", soundType.getFallSound().location().toString());
                 soundTypeJson.addProperty("placeSound", soundType.getPlaceSound().location().toString());
                 soundTypeJson.addProperty("stepSound", soundType.getStepSound().location().toString());
-                blockSoundTypes.add(soundTypeJson);
+                blockSoundTypes.add("minecraft:" + name, soundTypeJson);
             }
         } catch (Throwable e) {
             throw new RuntimeException(e);
