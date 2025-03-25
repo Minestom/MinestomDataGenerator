@@ -50,7 +50,7 @@ public enum DataGenType {
     WOLF_VARIANTS("wolf_variants", new GenericResourceGenerator("wolf_variant")),
     TRIM_MATERIALS("trim_materials", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_patterns", new GenericResourceGenerator("trim_pattern")),
-    ENCHANTMENTS("enchantments", new GenericResourceGenerator("enchantment", List.of(), true)),
+    ENCHANTMENTS("enchantments", new GenericResourceGenerator("enchantment")),
     PAINTING_VARIANTS("painting_variants", new GenericResourceGenerator("painting_variant")),
     JUKEBOX_SONGS("jukebox_songs", new GenericResourceGenerator("jukebox_song")),
     INSTRUMENTS("instruments", new GenericResourceGenerator("instrument")),
