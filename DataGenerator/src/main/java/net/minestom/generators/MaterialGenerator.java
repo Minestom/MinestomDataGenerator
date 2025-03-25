@@ -2,28 +2,17 @@ package net.minestom.generators;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.structures.NbtToSnbt;
-import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.SnbtPrinterTagVisitor;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minestom.datagen.DataGenerator;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.util.ArrayList;
-import java.util.Base64;
 
 public final class MaterialGenerator extends DataGenerator {
     @Override
@@ -34,7 +23,7 @@ public final class MaterialGenerator extends DataGenerator {
         var entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
 
         var registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
-        var registryNbtOps = RegistryOps.create(NbtOps.INSTANCE, registryAccess);
+        var registryJsonOps = RegistryOps.create(JsonOps.INSTANCE, registryAccess);
 
         for (var item : registry) {
             final var location = registry.getKey(item);
@@ -47,9 +36,7 @@ public final class MaterialGenerator extends DataGenerator {
             var components = new JsonObject();
             for (var component : item.components()) {
                 var key = Util.getRegisteredName(BuiltInRegistries.DATA_COMPONENT_TYPE, component.type());
-                Tag t = unwrap(component.encodeValue(registryNbtOps));
-                var result = new SnbtPrinterTagVisitor("", 0, new ArrayList<>()).visit(t);
-                components.addProperty(key, result);
+                components.add(key, unwrap(component.encodeValue(registryJsonOps)));
             }
             itemJson.add("components", components);
 

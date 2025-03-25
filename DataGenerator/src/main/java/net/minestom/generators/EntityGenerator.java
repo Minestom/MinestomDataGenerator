@@ -111,7 +111,7 @@ public final class EntityGenerator extends DataGenerator {
 
         if (entityType == EntityType.LLAMA_SPIT) return 0.01;
         if (entityType == EntityType.ENDER_PEARL) return 0.01;
-        if (entityType == EntityType.POTION) return 0.01;
+        if (entityType == EntityType.SPLASH_POTION || entityType == EntityType.LINGERING_POTION) return 0.01;
         if (entityType == EntityType.SNOWBALL) return 0.01;
         if (entityType == EntityType.EGG) return 0.01;
         if (entityType == EntityType.TRIDENT) return 0.01;
@@ -142,7 +142,7 @@ public final class EntityGenerator extends DataGenerator {
         if (entityType == EntityType.ARROW) return 0.05;
         if (entityType == EntityType.SPECTRAL_ARROW) return 0.05;
         if (entityType == EntityType.TRIDENT) return 0.05;
-        if (entityType == EntityType.POTION) return 0.05;
+        if (entityType == EntityType.SPLASH_POTION || entityType == EntityType.LINGERING_POTION) return 0.05;
 
         if (entityType == EntityType.LLAMA_SPIT) return 0.06;
         

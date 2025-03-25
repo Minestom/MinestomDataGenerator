@@ -1,8 +1,11 @@
 package net.minestom.datagen;
 
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
+import net.minecraft.util.HashOps;
 import net.minestom.generators.tags.GenericTagGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +18,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class DataGen {
-    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGen.class);
     private static Path OUTPUT = Path.of("../MinestomData/");
 
