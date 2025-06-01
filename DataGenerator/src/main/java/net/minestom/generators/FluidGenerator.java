@@ -13,6 +13,7 @@ public final class FluidGenerator extends DataGenerator {
         for (var fluid : registry) {
             final var location = registry.getKey(fluid);
             JsonObject fluidJson = new JsonObject();
+            fluidJson.addProperty("id", registry.getId(fluid));
             fluidJson.addProperty("bucketId", itemRegistry.getKey(fluid.getBucket()).toString());
             fluids.add(location.toString(), fluidJson);
         }
