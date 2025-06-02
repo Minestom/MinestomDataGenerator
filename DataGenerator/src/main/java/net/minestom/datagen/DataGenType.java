@@ -55,6 +55,7 @@ public enum DataGenType {
     CHICKEN_VARIANTS("chicken_variant", new GenericResourceGenerator("chicken_variant")),
     COW_VARIANTS("cow_variant", new GenericResourceGenerator("cow_variant")),
     DAMAGE_TYPES("damage_type", new GenericResourceGenerator("damage_type")),
+    DIALOGS("dialog", new GenericResourceGenerator("dialog")),
     DIMENSION_TYPES("dimension_type", new GenericResourceGenerator("dimension_type")),
     ENCHANTMENTS("enchantment", new GenericResourceGenerator("enchantment")),
     FROG_VARIANTS("frog_variant", new GenericResourceGenerator("frog_variant")),
