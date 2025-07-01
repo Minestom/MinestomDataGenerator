@@ -53,8 +53,10 @@ nmcpAggregation {
     centralPortal {
         username = System.getenv("SONATYPE_USERNAME")
         password = System.getenv("SONATYPE_PASSWORD")
-        publishingType = "AUTOMATIC"
+        publishingType = "USER_MANAGED"
     }
+
+    publishAllProjectsProbablyBreakingProjectIsolation()
 }
 
 publishing.publications.create<MavenPublication>("maven") {
