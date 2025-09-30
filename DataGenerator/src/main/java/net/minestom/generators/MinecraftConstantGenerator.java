@@ -16,8 +16,8 @@ public class MinecraftConstantGenerator extends DataGenerator {
         obj.addProperty("friendly_name", version.name());
         obj.addProperty("protocol", version.protocolVersion());
         obj.addProperty("world", version.dataVersion().version());
-        obj.addProperty("resourcepack", version.packVersion(PackType.CLIENT_RESOURCES));
-        obj.addProperty("datapack", version.packVersion(PackType.SERVER_DATA));
+        obj.addProperty("resourcepack", version.packVersion(PackType.CLIENT_RESOURCES).toString());
+        obj.addProperty("datapack", version.packVersion(PackType.SERVER_DATA).toString());
         return obj;
     }
 
