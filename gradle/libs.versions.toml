@@ -1,15 +1,14 @@
 metadata.format.version = "1.1"
 
 [versions]
-gson = "2.10.1"
-minecraft = "1.21.9"
+gson = "2.13.2"
+minecraft = "1.21.10"
 
-slf4j-api = "2.0.7"
-logback = "1.4.5"
+slf4j-api = "2.0.17"
+logback = "1.5.19"
 
 vanilla-gradle = "0.2.1-SNAPSHOT"
-blossom = "2.1.0"
-nmcp = "1.0.0-rc.1"
+nmcp = "1.2.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
@@ -23,5 +22,4 @@ logging = ["slf4j-api", "logback-core", "logback-classic"]
 
 [plugins]
 vanilla-gradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "vanilla-gradle" }
-blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
 nmcp = { id = "com.gradleup.nmcp.aggregation", version.ref = "nmcp" }
