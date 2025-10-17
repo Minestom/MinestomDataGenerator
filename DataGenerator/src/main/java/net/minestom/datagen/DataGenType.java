@@ -36,6 +36,7 @@ public enum DataGenType {
     ATTRIBUTES("attribute", new AttributeGenerator()),
     BLOCKS("block", new BlockGenerator()),
     BLOCK_SOUND_TYPES("block_sound_type", new BlockSoundTypeGenerator()),
+    DEFAULT_ATTRIBUTES("default_attributes", new EntityAttributeGenerator()),
     ENTITIES("entity_type", new EntityGenerator()),
     FEATURE_FLAGS("feature_flag", new FeatureFlagGenerator()),
     FLUIDS("fluid", new FluidGenerator()),
