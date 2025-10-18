@@ -6,26 +6,25 @@ import net.minecraft.core.Registry;
 import net.minestom.datagen.DataGenerator;
 import org.jetbrains.annotations.NotNull;
 
-public class GenericRegistryGenerator<T> extends DataGenerator {
+public class GenericRegistryObjectGenerator<T> extends DataGenerator {
     private final Registry<T> registry;
 
-    public GenericRegistryGenerator(@NotNull Registry<T> registry) {
+    public GenericRegistryObjectGenerator(@NotNull Registry<T> registry) {
         this.registry = registry;
     }
 
     @Override
-    public JsonArray generate() {
-        JsonArray output = new JsonArray();
+    public JsonObject generate() {
+        JsonObject output = new JsonObject();
 
         for (T entry : registry) {
             JsonObject result = new JsonObject();
 
             result.addProperty("id", registry.getId(entry));
-            //noinspection DataFlowIssue We got `entry` from the registry, it is not null.
-            result.addProperty("name", registry.getKey(entry).toString());
             appendEntry(result, entry);
 
-            output.add(result);
+            //noinspection DataFlowIssue We got `entry` from the registry, it is not null.
+            output.add(registry.getKey(entry).toString(), result);
         }
 
         return output;
