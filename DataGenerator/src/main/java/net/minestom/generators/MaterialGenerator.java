@@ -46,13 +46,6 @@ public final class MaterialGenerator extends DataGenerator {
                 itemJson.addProperty("correspondingBlock", blockRegistry.getKey(block).toString());
             }
 
-            // Spawn egg properties
-            if (item instanceof SpawnEggItem spawnEggItem) {
-                JsonObject spawnEggProperties = new JsonObject();
-                spawnEggProperties.addProperty("entityType", entityTypeRegistry.getKey(spawnEggItem.getType(ItemStack.EMPTY)).toString());
-                itemJson.add("spawnEggProperties", spawnEggProperties);
-            }
-
             items.add(location.toString(), itemJson);
         }
         return items;

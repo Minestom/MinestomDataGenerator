@@ -30,6 +30,7 @@ public enum DataGenType {
     SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_TYPES("villager_types", new GenericRegistryGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
+    BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
 
     // Static registries
 
