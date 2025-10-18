@@ -1,15 +1,11 @@
 package net.minestom.datagen;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minestom.generators.*;
 import net.minestom.generators.loot_tables.BlockLootTableGenerator;
 import net.minestom.generators.loot_tables.ChestLootTableGenerator;
 import net.minestom.generators.loot_tables.EntityLootTableGenerator;
 import net.minestom.generators.loot_tables.GameplayLootTableGenerator;
-import net.minestom.generators.tags.*;
-
-import java.util.List;
 
 public enum DataGenType {
     CONSTANTS("constants", new MinecraftConstantGenerator()),
@@ -17,20 +13,20 @@ public enum DataGenType {
 
     // Codegen only
 
-    COMMAND_ARGUMENTS("command_arguments", new GenericRegistryGenerator<>(BuiltInRegistries.COMMAND_ARGUMENT_TYPE)),
-    CONSUME_EFFECT("consume_effects", new GenericRegistryGenerator<>(BuiltInRegistries.CONSUME_EFFECT_TYPE)),
+    COMMAND_ARGUMENTS("command_arguments", new GenericRegistryArrayGenerator<>(BuiltInRegistries.COMMAND_ARGUMENT_TYPE)),
+    CONSUME_EFFECT("consume_effects", new GenericRegistryArrayGenerator<>(BuiltInRegistries.CONSUME_EFFECT_TYPE)),
     CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     MAP_COLORS("map_colors", new MapColorGenerator()),
     PARTICLES("particle", new ParticleGenerator()),
     WORLD_EVENTS("world_events", new WorldEventGenerator()),
-    RECIPE_BOOK_CATEGORY("recipe_book_categories", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_BOOK_CATEGORY)),
-    RECIPE_DISPLAY_TYPE("recipe_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_DISPLAY)),
-    RECIPE_TYPE("recipe_types", new GenericRegistryGenerator<>(BuiltInRegistries.RECIPE_TYPE)),
-    SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
+    RECIPE_BOOK_CATEGORY("recipe_book_categories", new GenericRegistryArrayGenerator<>(BuiltInRegistries.RECIPE_BOOK_CATEGORY)),
+    RECIPE_DISPLAY_TYPE("recipe_display_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.RECIPE_DISPLAY)),
+    RECIPE_TYPE("recipe_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.RECIPE_TYPE)),
+    SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
-    VILLAGER_TYPES("villager_types", new GenericRegistryGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
-    BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
+    VILLAGER_TYPES("villager_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
+    BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
 
     // Static registries
 
