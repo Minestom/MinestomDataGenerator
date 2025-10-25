@@ -3,7 +3,12 @@ package net.minestom.generators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -101,9 +106,56 @@ public final class EntityGenerator extends DataGenerator {
             addDefaultable(entity, "drag", findDrag(entityType), DEFAULT_DRAG);
             addDefaultable(entity, "acceleration", findAcceleration(entityType), DEFAULT_ACCELERATION);
             entity.addProperty("clientTrackingRange", entityType.clientTrackingRange());
+
+            if (DefaultAttributes.hasSupplier(entityType)) {
+                JsonObject defaultAttributes = computeDefaultAttributes(entityType);
+
+                if (defaultAttributes != null && defaultAttributes.size() > 0) {
+                    entity.add("defaultAttributes", defaultAttributes);
+                }
+            }
+
             entities.add(location.toString(), entity);
         }
+
         return entities;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JsonObject computeDefaultAttributes(EntityType<?> entityType) {
+        try {
+            EntityType<? extends LivingEntity> livingType = (EntityType<? extends LivingEntity>) entityType;
+            AttributeSupplier supplier = DefaultAttributes.getSupplier(livingType);
+            if (supplier == null) return null;
+
+            Map<Holder<Attribute>, AttributeInstance> instances = getAttributeInstances(supplier);
+            if (instances == null || instances.isEmpty()) return null;
+
+            JsonObject attributes = new JsonObject();
+
+            for (Map.Entry<Holder<Attribute>, AttributeInstance> entry : instances.entrySet()) {
+                String attributeKey = entry.getKey().getRegisteredName();
+                double baseValue = entry.getValue().getBaseValue();
+                attributes.addProperty(attributeKey, baseValue);
+            }
+
+            return attributes;
+        } catch (Throwable throwable) {
+            LOGGER.error("Failed computing default attributes for entity {}", BuiltInRegistries.ENTITY_TYPE.getKey(entityType), throwable);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<Holder<Attribute>, AttributeInstance> getAttributeInstances(AttributeSupplier supplier) {
+        try {
+            Field instancesField = AttributeSupplier.class.getDeclaredField("instances");
+            instancesField.setAccessible(true);
+            return (Map<Holder<Attribute>, AttributeInstance>) instancesField.get(supplier);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            LOGGER.error("Failed to access instances field from AttributeSupplier", e);
+            return null;
+        }
     }
 
     private double findDrag(EntityType<?> entityType) {
