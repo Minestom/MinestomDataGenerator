@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.*;
@@ -137,7 +137,7 @@ public final class BlockGenerator extends DataGenerator {
         return soundTypes;
     }
 
-    private void writeState(ResourceLocation location, Block block, Map<String, SoundType> soundTypes, BlockState blockState, JsonObject blockJson, JsonObject state) {
+    private void writeState(Identifier location, Block block, Map<String, SoundType> soundTypes, BlockState blockState, JsonObject blockJson, JsonObject state) {
         // Data
         appendState(blockJson, state, "canRespawnIn", block.isPossibleToRespawnInThis(blockState), boolean.class);
         appendState(blockJson, state, "hardness", blockState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO), float.class);

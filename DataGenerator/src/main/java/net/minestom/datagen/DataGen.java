@@ -22,7 +22,21 @@ public class DataGen {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGen.class);
     private static Path OUTPUT = Path.of("../MinestomData/");
 
-    private static final List<String> TAG_TYPES = List.of("banner_pattern", "block", "dialog", "damage_type", "enchantment", "entity_type", "fluid", "game_event", "instrument", "item", "painting_variant", "worldgen/biome");
+    private static final List<String> TAG_TYPES = List.of(
+        "banner_pattern",
+        "block",
+        "dialog",
+        "damage_type",
+        "enchantment",
+        "entity_type",
+        "fluid",
+        "game_event",
+        "instrument",
+        "item",
+        "painting_variant",
+        "worldgen/biome",
+        "timeline"
+    );
 
     public static void main(String[] args) throws Exception {
         if (args.length > 0) {
