@@ -46,7 +46,7 @@ public enum DataGenType {
     // Dynamic Registries
 
     BANNER_PATTERNS("banner_pattern", new GenericResourceGenerator("banner_pattern")),
-    BIOMES("worldgen/biome", new BiomeGenerator()),
+    BIOMES("worldgen/biome", new GenericResourceGenerator("worldgen/biome")),
     CAT_VARIANTS("cat_variant", new GenericResourceGenerator("cat_variant")),
     CHAT_TYPES("chat_type", new GenericResourceGenerator("chat_type")),
     CHICKEN_VARIANTS("chicken_variant", new GenericResourceGenerator("chicken_variant")),
@@ -60,10 +60,12 @@ public enum DataGenType {
     INSTRUMENTS("instrument", new GenericResourceGenerator("instrument")),
     PAINTING_VARIANTS("painting_variant", new GenericResourceGenerator("painting_variant")),
     PIG_VARIANTS("pig_variant", new GenericResourceGenerator("pig_variant")),
+    TIMELINE("timeline", new GenericResourceGenerator("timeline")),
     TRIM_MATERIALS("trim_material", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_pattern", new GenericResourceGenerator("trim_pattern")),
     WOLF_VARIANTS("wolf_variant", new GenericResourceGenerator("wolf_variant")),
     WOLF_SOUND_VARIANTS("wolf_sound_variant", new GenericResourceGenerator("wolf_sound_variant")),
+    ZOMBIE_NAUTILUS_VARIANTS("zombie_nautilus_variant", new GenericResourceGenerator("zombie_nautilus_variant")),
 
     // Loot tables (only included for legacy reasons, Minestom doesn't use them)
 
