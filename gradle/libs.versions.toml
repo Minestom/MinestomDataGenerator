@@ -5,10 +5,10 @@ gson = "2.13.2"
 minecraft = "1.21.11"
 
 slf4j-api = "2.0.17"
-logback = "1.5.19"
+logback = "1.5.22"
 
-vanilla-gradle = "0.2.1-SNAPSHOT"
-nmcp = "1.2.0"
+vanilla-gradle = "0.2.2-SNAPSHOT"
+nmcp = "1.3.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
