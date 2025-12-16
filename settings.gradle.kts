@@ -7,7 +7,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
+    id("org.spongepowered.gradle.vanilla") version "0.2.2-SNAPSHOT"
     // ... anything else ...
 }
 
