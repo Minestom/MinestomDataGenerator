@@ -3,10 +3,7 @@ import org.spongepowered.gradle.vanilla.MinecraftExtension
 plugins {
     java
     application
-}
-
-apply {
-    plugin("org.spongepowered.gradle.vanilla")
+    alias(libs.plugins.vanilla.gradle)
 }
 
 group = "net.minestom"
@@ -14,7 +11,7 @@ version = rootProject.version
 
 dependencies {
     implementation(libs.gson)
-    implementation(libs.bundles.logging)
+    //implementation(libs.bundles.logging) Server comes with logging
 }
 
 application {
@@ -22,8 +19,8 @@ application {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 extensions.configure<MinecraftExtension> {
