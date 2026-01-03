@@ -3,7 +3,7 @@ import org.spongepowered.gradle.vanilla.MinecraftExtension
 plugins {
     java
     application
-    alias(libs.plugins.vanilla.gradle)
+    alias(libs.plugins.vanilla.gradle) apply true
 }
 
 group = "net.minestom"
