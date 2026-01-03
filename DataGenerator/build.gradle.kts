@@ -26,4 +26,6 @@ java {
 extensions.configure<MinecraftExtension> {
     version(libs.versions.minecraft.get())
     platform(org.spongepowered.gradle.vanilla.repository.MinecraftPlatform.SERVER)
+
+    accessWideners(file("src/main/resources/minestom.classtweaker"))
 }
