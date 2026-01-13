@@ -2,18 +2,9 @@
 
 pluginManagement {
     repositories {
-        maven(url = "https://repo.spongepowered.org/repository/maven-public/")
+        maven(url = "https://maven.fabricmc.net/")
+        gradlePluginPortal()
     }
-}
-
-plugins {
-    id("org.spongepowered.gradle.vanilla") version "0.3.0"
-    // ... anything else ...
-}
-
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    // repositories declared¥
 }
 
 rootProject.name = "minestom-data"

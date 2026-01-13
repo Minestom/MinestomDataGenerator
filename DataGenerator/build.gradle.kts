@@ -1,15 +1,15 @@
-import org.spongepowered.gradle.vanilla.MinecraftExtension
-
 plugins {
     java
     application
-    alias(libs.plugins.vanilla.gradle) apply true
+    alias(libs.plugins.loom)
 }
 
 group = "net.minestom"
 version = rootProject.version
 
 dependencies {
+    minecraft("com.mojang:minecraft:${libs.versions.minecraft.get()}")
+
     implementation(libs.gson)
     //implementation(libs.bundles.logging) Server comes with logging
 }
@@ -23,9 +23,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_25
 }
 
-extensions.configure<MinecraftExtension> {
-    version(libs.versions.minecraft.get())
-    platform(org.spongepowered.gradle.vanilla.repository.MinecraftPlatform.SERVER)
-
-    accessWideners(file("src/main/resources/minestom.classtweaker"))
+loom {
+    serverOnlyMinecraftJar()
+    accessWidenerPath = file("src/main/resources/minestom.classtweaker")
 }
