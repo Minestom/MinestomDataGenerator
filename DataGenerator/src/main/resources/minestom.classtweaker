@@ -1,0 +1,4 @@
+accessWidener v2 official
+
+accessible	method	net/minecraft/world/level/block/state/BlockBehaviour    getMaxHorizontalOffset ()F
+accessible	method	net/minecraft/world/level/block/state/BlockBehaviour	getMaxVerticalOffset ()F

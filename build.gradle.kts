@@ -1,6 +1,5 @@
 plugins {
     `java-library`
-    alias(libs.plugins.vanilla.gradle) apply false
 
     `maven-publish`
     signing
@@ -15,8 +14,8 @@ java {
     withSourcesJar()
     withJavadocJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 tasks.register("generateData") {
