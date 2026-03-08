@@ -160,7 +160,7 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "replaceable", blockState.canBeReplaced(), false, boolean.class);
         appendState(blockJson, state, "solid", blockState.isSolid(), boolean.class);
         appendState(blockJson, state, "solidBlocking", blockState.blocksMotion(), boolean.class);
-        appendState(blockJson, state, "lightBlock", blockState.getLightBlock(), int.class);
+        appendState(blockJson, state, "lightBlock", blockState.getLightDampening(), int.class);
         // Sounds
         SoundType soundType = blockState.getSoundType();
         for (var entry : soundTypes.entrySet()) {
