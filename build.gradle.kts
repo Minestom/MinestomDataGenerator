@@ -16,6 +16,7 @@ java {
 
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
+    modularity.inferModulePath = true
 }
 
 tasks.register("generateData") {
@@ -42,7 +43,7 @@ tasks.register("generateData") {
 
     // Simplified by Sponge's VanillaGradle
     dependsOn(project(":DataGenerator").tasks.getByName<JavaExec>("run") {
-        args = arrayListOf(rootDir.resolve("src/main/resources").absolutePath)
+        args = arrayListOf(rootDir.resolve("src/main/resources/net/minestom/data").absolutePath)
     })
 }
 

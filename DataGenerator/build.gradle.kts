@@ -21,6 +21,7 @@ application {
 java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
+    // Don't use modules here, as it's prone to breakage every update
 }
 
 loom {
