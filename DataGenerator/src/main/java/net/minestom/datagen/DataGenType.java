@@ -1,6 +1,7 @@
 package net.minestom.datagen;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.clock.ClockTimeMarkers;
 import net.minestom.generators.*;
 import net.minestom.generators.loot_tables.BlockLootTableGenerator;
 import net.minestom.generators.loot_tables.ChestLootTableGenerator;
@@ -27,6 +28,7 @@ public enum DataGenType {
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_TYPES("villager_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
     BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
+    CLOCK_TIME_MARKERS("clock_time_marker", new ClockTimeMarkerGenerator()),
 
     // Static registries
 
