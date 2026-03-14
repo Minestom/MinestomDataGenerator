@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class BlockGenerator extends DataGenerator {
     @Override
@@ -82,18 +83,12 @@ public final class BlockGenerator extends DataGenerator {
                 state.addProperty("stateId", Block.BLOCK_STATE_REGISTRY.getId(bs));
                 writeState(location, block, blockSoundTypes, bs, blockJson, state);
 
-                StringBuilder stateName = new StringBuilder("[");
-                for (var propertyEntry : bs.getValues().entrySet()) {
-                    if (stateName.length() > 1) {
-                        stateName.append(",");
-                    }
-                    stateName.append(propertyEntry.getKey().getName().toLowerCase(Locale.ROOT))
-                            .append("=")
-                            .append(propertyEntry.getValue().toString().toLowerCase(Locale.ROOT));
-                }
-                stateName.append("]");
+                //[property=value,property2=value2,...]
+                String stateName = bs.getValues()
+                        .map(v -> v.toString().toLowerCase(Locale.ROOT))
+                        .collect(Collectors.joining(",", "[", "]"));
 
-                blockStates.add(stateName.toString(), state);
+                blockStates.add(stateName, state);
             }
             blockJson.add("states", blockStates);
             blocks.add(location.toString(), blockJson);
