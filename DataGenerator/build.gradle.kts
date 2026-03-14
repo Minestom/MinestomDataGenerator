@@ -18,6 +18,10 @@ application {
     mainClass.set("net.minestom.datagen.DataGen")
 }
 
+tasks.run {
+    args = arrayListOf(rootDir.resolve("src/main/resources/net/minestom/data").absolutePath)
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
