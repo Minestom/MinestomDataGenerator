@@ -1,6 +1,7 @@
 package net.minestom.datagen;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.clock.ClockTimeMarkers;
 import net.minestom.generators.*;
 import net.minestom.generators.loot_tables.BlockLootTableGenerator;
 import net.minestom.generators.loot_tables.ChestLootTableGenerator;
@@ -27,6 +28,8 @@ public enum DataGenType {
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_TYPES("villager_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
     BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
+    CLOCK_TIME_MARKERS("clock_time_marker", new ClockTimeMarkerGenerator()),
+    GAME_RULES("game_rule", new GameRuleGenerator()),
 
     // Static registries
 
@@ -48,9 +51,12 @@ public enum DataGenType {
     BANNER_PATTERNS("banner_pattern", new GenericResourceGenerator("banner_pattern")),
     BIOMES("worldgen/biome", new GenericResourceGenerator("worldgen/biome")),
     CAT_VARIANTS("cat_variant", new GenericResourceGenerator("cat_variant")),
+    CAT_SOUND_VARIANTS("cat_sound_variant", new GenericResourceGenerator("cat_sound_variant")),
     CHAT_TYPES("chat_type", new GenericResourceGenerator("chat_type")),
     CHICKEN_VARIANTS("chicken_variant", new GenericResourceGenerator("chicken_variant")),
+    CHICKEN_SOUND_VARIANTS("chicken_sound_variant", new GenericResourceGenerator("chicken_sound_variant")),
     COW_VARIANTS("cow_variant", new GenericResourceGenerator("cow_variant")),
+    COW_SOUND_VARIANTS("cow_sound_variant", new GenericResourceGenerator("cow_sound_variant")),
     DAMAGE_TYPES("damage_type", new GenericResourceGenerator("damage_type")),
     DIALOGS("dialog", new GenericResourceGenerator("dialog")),
     DIMENSION_TYPES("dimension_type", new GenericResourceGenerator("dimension_type")),
@@ -60,12 +66,14 @@ public enum DataGenType {
     INSTRUMENTS("instrument", new GenericResourceGenerator("instrument")),
     PAINTING_VARIANTS("painting_variant", new GenericResourceGenerator("painting_variant")),
     PIG_VARIANTS("pig_variant", new GenericResourceGenerator("pig_variant")),
+    PIG_SOUND_VARIANTS("pig_sound_variant", new GenericResourceGenerator("pig_sound_variant")),
     TIMELINE("timeline", new GenericResourceGenerator("timeline")),
     TRIM_MATERIALS("trim_material", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_pattern", new GenericResourceGenerator("trim_pattern")),
     WOLF_VARIANTS("wolf_variant", new GenericResourceGenerator("wolf_variant")),
     WOLF_SOUND_VARIANTS("wolf_sound_variant", new GenericResourceGenerator("wolf_sound_variant")),
     ZOMBIE_NAUTILUS_VARIANTS("zombie_nautilus_variant", new GenericResourceGenerator("zombie_nautilus_variant")),
+    WORLD_CLOCKS("world_clock", new GenericResourceGenerator("world_clock")),
 
     // Loot tables (only included for legacy reasons, Minestom doesn't use them)
 
