@@ -29,6 +29,7 @@ public enum DataGenType {
     VILLAGER_TYPES("villager_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
     BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
     CLOCK_TIME_MARKERS("clock_time_marker", new ClockTimeMarkerGenerator()),
+    GAME_RULES("game_rule", new GameRuleGenerator()),
 
     // Static registries
 
