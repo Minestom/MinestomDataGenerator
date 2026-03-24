@@ -41,10 +41,7 @@ tasks.register("generateData") {
     logger.warn("The data may or may not be the intellectual property of Mojang Studios.")
     logger.warn("")
 
-    // Simplified by Sponge's VanillaGradle
-    dependsOn(project(":DataGenerator").tasks.getByName<JavaExec>("run") {
-        args = arrayListOf(rootDir.resolve("src/main/resources/net/minestom/data").absolutePath)
-    })
+    dependsOn(project(":DataGenerator").tasks.getByName("run"))
 }
 
 tasks.processResources.get().dependsOn("generateData")
