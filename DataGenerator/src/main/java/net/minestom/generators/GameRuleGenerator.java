@@ -19,8 +19,8 @@ public class GameRuleGenerator extends DataGenerator {
         for (var gameRule : BuiltInRegistries.GAME_RULE) {
             var ruleJson = new JsonObject();
             ruleJson.addProperty("id", BuiltInRegistries.GAME_RULE.getId(gameRule));
-            ruleJson.addProperty("category", gameRule.category().id().toShortString());
             ruleJson.addProperty("default", String.valueOf(gameRule.defaultValue()));
+            ruleJson.addProperty("type", gameRule.gameRuleType().getSerializedName());
             markers.add(gameRule.getIdentifier().toShortString(), ruleJson);
         }
         return markers;
