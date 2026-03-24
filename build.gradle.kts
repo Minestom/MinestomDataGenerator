@@ -19,6 +19,10 @@ java {
     modularity.inferModulePath = true
 }
 
+repositories {
+    mavenCentral()
+}
+
 tasks.register("generateData") {
     logger.warn("Mojang requires all source-code and mappings used to be governed by the Minecraft EULA.")
     logger.warn("Please read the Minecraft EULA located at https://account.mojang.com/documents/minecraft_eula.")
