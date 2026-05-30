@@ -15,7 +15,7 @@ public final class MobEffectGenerator extends DataGenerator {
             effect.addProperty("id", registry.getId(mobEffect));
             effect.addProperty("translationKey", mobEffect.getDescriptionId());
             effect.addProperty("color", mobEffect.getColor());
-            effect.addProperty("instantaneous", mobEffect.isInstantenous());
+            effect.addProperty("instantaneous", mobEffect.isInstantaneous());
             effects.add(location.toString(), effect);
         }
         return effects;

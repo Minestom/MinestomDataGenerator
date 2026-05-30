@@ -32,7 +32,7 @@ public final class EntityGenerator extends DataGenerator {
     @Override
     public JsonObject generate() {
         Map<EntityType<?>, Class<?>> entityClasses = new HashMap<>();
-        for (Field declaredField : EntityType.class.getDeclaredFields()) {
+        for (Field declaredField : EntityTypes.class.getDeclaredFields()) {
             if (!EntityType.class.isAssignableFrom(declaredField.getType())) {
                 continue;
             }
@@ -110,7 +110,7 @@ public final class EntityGenerator extends DataGenerator {
             if (DefaultAttributes.hasSupplier(entityType)) {
                 JsonObject defaultAttributes = computeDefaultAttributes(entityType);
 
-                if (defaultAttributes != null && defaultAttributes.size() > 0) {
+                if (defaultAttributes != null && !defaultAttributes.isEmpty()) {
                     entity.add("defaultAttributes", defaultAttributes);
                 }
             }
@@ -126,6 +126,7 @@ public final class EntityGenerator extends DataGenerator {
         try {
             EntityType<? extends LivingEntity> livingType = (EntityType<? extends LivingEntity>) entityType;
             AttributeSupplier supplier = DefaultAttributes.getSupplier(livingType);
+            //noinspection ConstantValue, is actually nullable
             if (supplier == null) return null;
 
             Map<Holder<Attribute>, AttributeInstance> instances = getAttributeInstances(supplier);
@@ -161,52 +162,53 @@ public final class EntityGenerator extends DataGenerator {
     private double findDrag(EntityType<?> entityType) {
         if (isBoat(entityType)) return 0;
 
-        if (entityType == EntityType.LLAMA_SPIT) return 0.01;
-        if (entityType == EntityType.ENDER_PEARL) return 0.01;
-        if (entityType == EntityType.SPLASH_POTION || entityType == EntityType.LINGERING_POTION) return 0.01;
-        if (entityType == EntityType.SNOWBALL) return 0.01;
-        if (entityType == EntityType.EGG) return 0.01;
-        if (entityType == EntityType.TRIDENT) return 0.01;
-        if (entityType == EntityType.SPECTRAL_ARROW) return 0.01;
-        if (entityType == EntityType.ARROW) return 0.01;
+        if (entityType == EntityTypes.LLAMA_SPIT) return 0.01;
+        if (entityType == EntityTypes.ENDER_PEARL) return 0.01;
+        if (entityType == EntityTypes.SPLASH_POTION || entityType == EntityTypes.LINGERING_POTION) return 0.01;
+        if (entityType == EntityTypes.SNOWBALL) return 0.01;
+        if (entityType == EntityTypes.EGG) return 0.01;
+        if (entityType == EntityTypes.TRIDENT) return 0.01;
+        if (entityType == EntityTypes.SPECTRAL_ARROW) return 0.01;
+        if (entityType == EntityTypes.ARROW) return 0.01;
 
-        if (entityType == EntityType.MINECART) return 0.05;
+        if (entityType == EntityTypes.MINECART) return 0.05;
 
-        if (entityType == EntityType.FISHING_BOBBER) return 0.08;
+        if (entityType == EntityTypes.FISHING_BOBBER) return 0.08;
 
         return DEFAULT_DRAG;
     }
 
     private double findAcceleration(EntityType<?> entityType) {
-        if (entityType == EntityType.ITEM_FRAME) return 0;
+        if (entityType == EntityTypes.ITEM_FRAME) return 0;
 
-        if (entityType == EntityType.EGG) return 0.03;
-        if (entityType == EntityType.FISHING_BOBBER) return 0.03;
-        if (entityType == EntityType.ENDER_PEARL) return 0.03;
-        if (entityType == EntityType.SNOWBALL) return 0.03;
+        if (entityType == EntityTypes.EGG) return 0.03;
+        if (entityType == EntityTypes.FISHING_BOBBER) return 0.03;
+        if (entityType == EntityTypes.ENDER_PEARL) return 0.03;
+        if (entityType == EntityTypes.SNOWBALL) return 0.03;
 
         if (isBoat(entityType)) return 0.04;
-        if (entityType == EntityType.TNT) return 0.04;
-        if (entityType == EntityType.FALLING_BLOCK) return 0.04;
-        if (entityType == EntityType.ITEM) return 0.04;
-        if (entityType == EntityType.MINECART) return 0.04;
+        if (entityType == EntityTypes.TNT) return 0.04;
+        if (entityType == EntityTypes.FALLING_BLOCK) return 0.04;
+        if (entityType == EntityTypes.ITEM) return 0.04;
+        if (entityType == EntityTypes.MINECART) return 0.04;
 
-        if (entityType == EntityType.ARROW) return 0.05;
-        if (entityType == EntityType.SPECTRAL_ARROW) return 0.05;
-        if (entityType == EntityType.TRIDENT) return 0.05;
-        if (entityType == EntityType.SPLASH_POTION || entityType == EntityType.LINGERING_POTION) return 0.05;
+        if (entityType == EntityTypes.ARROW) return 0.05;
+        if (entityType == EntityTypes.SPECTRAL_ARROW) return 0.05;
+        if (entityType == EntityTypes.TRIDENT) return 0.05;
+        if (entityType == EntityTypes.SPLASH_POTION || entityType == EntityTypes.LINGERING_POTION) return 0.05;
 
-        if (entityType == EntityType.LLAMA_SPIT) return 0.06;
+        if (entityType == EntityTypes.LLAMA_SPIT) return 0.06;
         
-        if (entityType == EntityType.EXPERIENCE_BOTTLE) return 0.07;
+        if (entityType == EntityTypes.EXPERIENCE_BOTTLE) return 0.07;
 
-        if (entityType == EntityType.FIREBALL) return 0.1;
-        if (entityType == EntityType.WITHER_SKULL) return 0.1;
-        if (entityType == EntityType.DRAGON_FIREBALL) return 0.1;
+        if (entityType == EntityTypes.FIREBALL) return 0.1;
+        if (entityType == EntityTypes.WITHER_SKULL) return 0.1;
+        if (entityType == EntityTypes.DRAGON_FIREBALL) return 0.1;
 
         return DEFAULT_ACCELERATION;
     }
 
+    @SuppressWarnings("unchecked")
     private @NotNull Map<EntityAttachment, List<Vec3>> getAttachmentMap(@NotNull EntityAttachments attachments) {
         try {
             var field = EntityAttachments.class.getDeclaredField("attachments");
