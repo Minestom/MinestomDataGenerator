@@ -2,7 +2,7 @@ metadata.format.version = "1.1"
 
 [versions]
 gson = "2.14.0"
-minecraft = "26.2-pre-2"
+minecraft = "26.2-pre-4"
 
 loom = "1.16-SNAPSHOT"
 nmcp = "1.5.0"
