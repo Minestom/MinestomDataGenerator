@@ -67,6 +67,7 @@ public enum DataGenType {
     PAINTING_VARIANTS("painting_variant", new GenericResourceGenerator("painting_variant")),
     PIG_VARIANTS("pig_variant", new GenericResourceGenerator("pig_variant")),
     PIG_SOUND_VARIANTS("pig_sound_variant", new GenericResourceGenerator("pig_sound_variant")),
+    SULFUR_CUBE_ARCHETYPE("sulfur_cube_archetype", new GenericResourceGenerator("sulfur_cube_archetype")),
     TIMELINE("timeline", new GenericResourceGenerator("timeline")),
     TRIM_MATERIALS("trim_material", new GenericResourceGenerator("trim_material")),
     TRIM_PATTERNS("trim_pattern", new GenericResourceGenerator("trim_pattern")),

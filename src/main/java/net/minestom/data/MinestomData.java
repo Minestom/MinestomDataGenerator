@@ -10,8 +10,26 @@ public final class MinestomData {
     private static final String COMMIT = "&COMMIT";
     private static final String BRANCH = "&BRANCH";
 
-    public static String commit() { return COMMIT; }
-    public static String branch() { return BRANCH; }
+    private MinestomData() {
+    }
+
+    /**
+     * Gets the commit used to generate the current data.
+     *
+     * @return the commit of the data generator used
+     */
+    public static String commit() {
+        return COMMIT;
+    }
+
+    /**
+     * Gets the branch used to generate the current data.
+     *
+     * @return the branch
+     */
+    public static String branch() {
+        return BRANCH;
+    }
 
     /**
      * Gets a resource from the data module.
@@ -24,6 +42,4 @@ public final class MinestomData {
         // Otherwise would fail cause of encapsulation or would require opens.
         return MinestomData.class.getResourceAsStream(path);
     }
-
-    private MinestomData() {}
 }
