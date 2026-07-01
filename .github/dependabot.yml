@@ -1,0 +1,21 @@
+version: 2
+
+updates:
+  # For the master branch we can just update everything
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      non-breaking:
+        patterns:
+          - "*"
+  # GH actions are often non-breaking, just keep them up to date.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      all-actions:
+        patterns:
+          - "*"
