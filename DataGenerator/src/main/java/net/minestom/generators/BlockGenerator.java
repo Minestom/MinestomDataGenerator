@@ -152,6 +152,7 @@ public final class BlockGenerator extends DataGenerator {
         appendState(blockJson, state, "flammable", isFlammable(blockState), boolean.class);
         appendState(blockJson, state, "air", blockState.isAir(), false, boolean.class);
         appendState(blockJson, state, "liquid", blockState.liquid(), false, boolean.class);
+        appendState(blockJson, state, "fluid", !blockState.getFluidState().isEmpty(), false, boolean.class);
         appendState(blockJson, state, "replaceable", blockState.canBeReplaced(), false, boolean.class);
         appendState(blockJson, state, "solid", blockState.isSolid(), boolean.class);
         appendState(blockJson, state, "solidBlocking", blockState.blocksMotion(), boolean.class);
