@@ -45,12 +45,8 @@ public class DataGen {
         for (var type : DataGenType.values()) {
             generate(type.getFileName(), type.getGenerator());
         }
-        for (var tag : TAG_TYPES) {
-            String filename = tag;
-            if (filename.contains("/")) { // Slice off worldgen from worldgen/biome
-                filename = filename.substring(filename.lastIndexOf("/") + 1);
-            }
-            generate("tags/" + filename, new GenericTagGenerator(tag));
+        for (var tag : TAG_TYPES) { // We index by keys
+            generate("tags/" + tag, new GenericTagGenerator(tag));
         }
         LOGGER.info("Generation done!");
     }

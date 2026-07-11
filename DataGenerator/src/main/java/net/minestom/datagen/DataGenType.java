@@ -16,10 +16,10 @@ public enum DataGenType {
 
     COMMAND_ARGUMENTS("command_arguments", new GenericRegistryArrayGenerator<>(BuiltInRegistries.COMMAND_ARGUMENT_TYPE)),
     CONSUME_EFFECT("consume_effects", new GenericRegistryArrayGenerator<>(BuiltInRegistries.CONSUME_EFFECT_TYPE)),
-    CUSTOM_STATISTICS("custom_statistics", new CustomStatisticGenerator()),
+    CUSTOM_STATISTICS("custom_stat", new CustomStatisticGenerator()),
     DYE_COLORS("dye_colors", new DyeColorGenerator()),
     MAP_COLORS("map_colors", new MapColorGenerator()),
-    PARTICLES("particle", new ParticleGenerator()),
+    PARTICLES("particle_type", new ParticleGenerator()),
     WORLD_EVENTS("world_events", new WorldEventGenerator()),
     RECIPE_BOOK_CATEGORY("recipe_book_categories", new GenericRegistryArrayGenerator<>(BuiltInRegistries.RECIPE_BOOK_CATEGORY)),
     RECIPE_DISPLAY_TYPE("recipe_display_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.RECIPE_DISPLAY)),
@@ -27,7 +27,7 @@ public enum DataGenType {
     SLOT_DISPLAY_TYPE("slot_display_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.SLOT_DISPLAY)),
     SOUND_SOURCES("sound_sources", new SoundSourceGenerator()),
     VILLAGER_TYPES("villager_types", new GenericRegistryArrayGenerator<>(BuiltInRegistries.VILLAGER_TYPE)),
-    BLOCK_ENTITY_TYPES("block_entity_types", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
+    BLOCK_ENTITY_TYPES("block_entity_type", new GenericRegistryObjectGenerator<>(BuiltInRegistries.BLOCK_ENTITY_TYPE)),
     CLOCK_TIME_MARKERS("clock_time_marker", new ClockTimeMarkerGenerator()),
     GAME_RULES("game_rule", new GameRuleGenerator()),
 
@@ -41,8 +41,8 @@ public enum DataGenType {
     FLUIDS("fluid", new FluidGenerator()),
     GAME_EVENTS("game_event", new GameEventGenerator()),
     MATERIALS("item", new MaterialGenerator()),
-    MOB_EFFECTS("potion_effect", new MobEffectGenerator()),
-    POTIONS("potion_type", new PotionGenerator()),
+    MOB_EFFECTS("mob_effect", new MobEffectGenerator()),
+    POTIONS("potion", new PotionGenerator()),
     SOUNDS("sound_event", new SoundGenerator()),
     VILLAGER_PROFESSIONS("villager_profession", new VillagerProfessionGenerator()),
 
