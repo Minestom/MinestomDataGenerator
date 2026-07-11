@@ -28,6 +28,7 @@ public class DataGen {
             "instrument",
             "item",
             "painting_variant",
+            "potion",
             "worldgen/biome",
             "timeline"
     );
